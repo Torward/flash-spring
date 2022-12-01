@@ -1,0 +1,98 @@
+.container{
+
+}
+.ql-container.ql-snow{
+    border: none!important;
+}
+.ql-container{
+    border: none!important;
+}
+.ql-editor.ql-blank::before {
+    color: rgb(0, 200, 255)!important;
+}
+.row{
+
+}
+
+.update__forms{
+
+}
+.my_account__content{
+    margin: 35px;
+    font-size: 24px;
+    color: white;
+    font-weight: 600;
+    text-align: center;
+}
+.form_row{
+
+}
+.form_group{
+
+}
+.font_weight_bold{
+    margin: 25px;
+    font-size: 24px;
+    color: rgb(128, 191, 255);
+    font-weight: 600;
+}
+.required{
+    color: red;
+}
+.form_control{
+    width: 100%;
+    opacity: 1;
+    /*transition: opacity 700ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;*/
+    background-color: rgb(0, 30, 60);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    border-radius: 8px;
+    border: 1px solid rgb(30, 73, 118);
+    overflow: hidden;
+    height: 30px;
+    margin-top: 25px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 10px;
+    color: white;
+    outline: none;
+}
+.form_control:hover{
+    border: 1px solid rgb(46, 128, 215);
+}
+.form_control:focus{
+    border: 1px solid rgb(46, 128, 215);
+}
+.form_control::placeholder{
+    color: rgb(0, 200, 255);
+}
+.clearfix{
+
+}
+.editor{
+    width: 100%;
+}
+.react_quill{
+    /*opacity: 1;*/
+    /*!*transition: opacity 700ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;*!*/
+    /*background-color: rgb(0, 30, 60);*/
+    /*transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;*/
+    /*border-radius: 8px;*/
+    /*border: 1px solid rgb(30, 73, 118);*/
+    /*overflow: hidden;*/
+    /*color: white;*/
+}
+.react_quill::placeholder{
+    color: rgb(0, 200, 255);
+}
+.toolbar{
+    background-color: rgb(0, 30, 60);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    border-radius: 8px;
+    border: 1px solid rgb(30, 73, 118);
+    overflow: hidden;
+    color: white;
+}
+.ReactQuill{
+    border: 1px solid rgb(30, 73, 118);
+    color: rgb(0, 200, 255)!important;
+}

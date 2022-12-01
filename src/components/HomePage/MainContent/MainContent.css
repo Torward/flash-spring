@@ -1,0 +1,81 @@
+@font-face {
+    font-family: "Palace of Sports";
+    font-style: normal;
+    src: url("../../../fonts/palace_of_sports.otf");
+    font-family: "Petrogradsky";
+    font-style: normal;
+    src: url("../../../fonts/petrogradski.otf");
+}
+
+body {
+    height: 100%;
+    background: linear-gradient(to bottom right,  rgb(10, 25, 41), rgb(1, 40, 77));
+}
+
+input[type="text"i] {
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    appearance: none;
+}
+
+.main__searchbar {
+    margin-top: 5px;
+    margin-left: 25px;
+    margin-right: 25px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.searchbar-input {
+    width: 100%;
+    opacity: 1;
+    transition: opacity 700ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    background-color: rgb(0, 30, 60);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    border-radius: 8px;
+    border: 1px solid rgb(30, 73, 118);
+    overflow: hidden;
+    height: 30px;
+    margin-top: 20px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 10px;
+
+}
+.status_section{
+    color: rgb(128, 191, 255);
+    background: linear-gradient(to right bottom, rgb(0, 51, 102), rgb(0, 31, 63) 120%);
+    /* background: linear-gradient(to right bottom, rgb(0, 127, 255), rgb(0, 89, 178) 120%);
+    box-shadow: rgb(0, 89, 178) 0px 0px 25px, rgb(0, 89, 178) 0px 0px 15px;
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; */
+    border-radius: 10px;
+    margin: 25px 35px;
+    display: flex;
+    overflow-x: auto;
+
+}
+.statusbar-header {
+    margin: 25px 25px;
+    font-size: 24px;
+    font-family: "Petrogradsky";
+    color: rgb(2, 90, 179);
+    cursor: default;
+    font-weight: 600;
+}
+
+.searchbar-input::placeholder {
+    color: rgb(159, 205, 252);
+}
+.add_new_link{
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+    color: white;
+    margin: 30px;
+    padding: 10px;
+    border-bottom-color: white;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}

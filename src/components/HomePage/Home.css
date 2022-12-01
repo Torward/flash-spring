@@ -1,0 +1,31 @@
+@font-face {
+    font-family: "Palace of Sports";
+    font-style: normal;
+    src: url("../../fonts/palace_of_sports.otf");
+}
+
+body {
+    background: linear-gradient(to left, rgb(0, 26, 53), rgb(10, 25, 41) 120%);
+    /* background-color: rgb(10, 25, 41); */
+}
+body::-webkit-scrollbar{
+    display: none;
+}
+input[type="text"i] {
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    appearance: none;
+}
+
+.home-page__navbar {
+
+    display: flex;
+    position: sticky;
+    top: 0;
+    bottom: 0;
+    max-width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: visible;
+}

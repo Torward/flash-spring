@@ -1,0 +1,161 @@
+@font-face {
+    font-family: "Palace of Sports";
+    font-style: normal;
+    src: url("../../../fonts/palace_of_sports.otf");
+    font-family: "Petrogradsky";
+    font-style: normal;
+    src: url("../../../fonts/petrogradski.otf");
+}
+
+ul{
+    list-style:  none;
+}
+a{
+    text-decoration: none;
+}
+
+.navbar {
+    /* background: linear-gradient(to right bottom, rgb(0, 127, 255), rgb(0, 89, 178) 120%); */
+    margin: 25px;
+    color: rgb(128, 191, 255);
+    border: 1px solid rgb(30, 73, 118);
+    background-color: rgb(0, 30, 60);
+    box-shadow: rgb(0, 30, 60) 0 0 25px,
+        rgb(0, 30, 60) 0 0 15px;
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    border-radius: 10px;
+    padding: 10px;
+    justify-content: center;
+    margin-left: auto;
+    max-width: 300px;
+
+}
+
+.navbar__iconblock {
+    display: flex;
+}
+
+.navbar__button {
+    margin: 10px;
+    text-decoration: none;
+    color: rgb(128, 191, 255);
+}
+.navbar__button:hover {
+    color: white;
+}
+.dropdown_menu{
+    position: absolute;
+    top: 100px;
+    right: 63px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px 20px;
+    width: 200px;
+    color: #807f7f;
+    z-index: 1;
+}
+.dropdown_menu::before{
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: 200px;
+    height: 20px;
+    width: 20px;
+    background: #ffffff;
+    transform: rotate(45deg);
+}
+.dropdown_menu a{
+    color: #807f7f;
+}
+
+.dropdown_menu ul li{
+    padding: 5px 0;
+    text-align: center;
+    border-top: 1px solid #807f7f;
+}
+
+.dropdown_menu ul li:hover a{
+    color: #cc0000;
+    cursor: pointer;
+}
+
+.dropdown_menu.active{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: 0.5s ease;
+}
+.dropdown_menu.inactive{
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: 0.8s ease;
+}
+
+.menu_username{
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    padding: 10px 0;
+    font-weight: 500;
+    color: rgba(19, 35, 74, 0.78);
+    line-height: 1.2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu_location{
+    font-size: 14px;
+    color: #807f7f;
+    font-weight: 400;
+}
+
+.iconblock__avatar {
+    margin: 4px auto ;
+}
+
+.groups-body {
+    margin: 25px;
+    padding: 0 10px;
+    justify-content: center;
+    max-width: 300px;
+}
+
+.suggestion-header {
+    margin: 15px 25px 15px 25px;
+    font-size: 24px;
+    font-weight: 600;
+    font-family: "Petrogradsky";
+    color: rgb(2, 90, 179);
+    cursor: default;
+
+}
+
+.suggestion-body {
+    /*  */
+    margin: 25px;
+    color: rgb(128, 191, 255);
+    border: 1px solid rgb(30, 73, 118);
+    background-color: rgb(0, 30, 60);
+    box-shadow: rgb(0, 30, 60) 0px 0px 25px,
+        rgb(0, 30, 60) 0px 0px 15px;
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    border-radius: 10px;
+    padding: 0 10px;
+    justify-content: center;
+    max-width: 300px;
+
+}
+
+.suggestion-footer {
+    color: rgb(128, 191, 255);
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+.active{
+    color: white;
+}
