@@ -108,9 +108,9 @@ class Post extends Component {
             >
               bookmark_border_outlined
             </Icon>{" "}
-            <div className="likes-block">
+            <div className="appLikes-block">
               {" "}
-              <span>{this.props.likes}</span>{" "}
+              <span>{this.props.appLikes}</span>{" "}
             </div>{" "}
           </div>{" "}
           <div className="post-container__comments">

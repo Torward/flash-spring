@@ -2,14 +2,23 @@
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    justify-content: right;
+
+}
+
+.col_1{
+
+}
+.col_2{
+
 }
 
 .messages_text_item{
-    color: #07afff;
+    color: #7dd6fd;
     box-shadow: inset 20px 20px 20px rgba(0,0,0,0.05), 25px 35px 20px rgba(0,0,0,0.05), 25px 30px 30px rgba(0,0,0,0.05),
 inset -20px -20px 25px rgb(46, 121, 174);
     text-align: right;
-    margin: 25px;
+    margin: 10px 10px;
     padding: 30px;
     transition: 0.5s ease-in-out;
     display: flex;
@@ -23,12 +32,12 @@ inset -20px -20px 25px rgb(46, 121, 174);
     border-radius: 57% 43% 43% 57% / 43% 43% 57% 53%;
 }
 
-.messages_text_item:nth-child(3){
-    border-radius: 43% 57% 43% 57% / 43% 70% 57% 43%;
-}
-.messages_text_item:nth-child(2){
-    border-radius: 73% 27% 59% 41% / 57% 59% 41% 43%;
-}
+/*.messages_text_item:nth-child(3){*/
+/*    border-radius: 43% 57% 43% 57% / 43% 70% 57% 43%;*/
+/*}*/
+/*.messages_text_item:nth-child(2){*/
+/*    border-radius: 73% 27% 59% 41% / 57% 59% 41% 43%;*/
+/*}*/
 
 .messages_text_item:hover{
     border-radius: 50%;

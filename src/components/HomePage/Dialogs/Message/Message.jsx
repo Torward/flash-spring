@@ -1,13 +1,12 @@
-import React, {Component} from "react";
-import {Avatar, Icon, Stack} from "@mui/material";
+import React from "react";
+import {Avatar} from "@mui/material";
 import style from "./Message.module.css";
-import {NavLink} from "react-router-dom";
 
 const Message = (props) => {
     return (
         <div>
             <div className={style.user_chat_content}>
-
+                <div className={style.col_2}>
                     <div className={style.messages_text_item}>
                         <div className={style.ufo}>
 
@@ -25,6 +24,9 @@ const Message = (props) => {
                         <p className={style.chat_time}><i className="ri-time-line align-middle"></i> <span
                             className="align-middle">{props.time}</span></p>
                     </div>
+                </div>
+
+
 
                     {/*<div className="dropdown align-self-start">*/}
                     {/*    <a className="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"*/}

@@ -8,6 +8,7 @@ import RightSide from "./RightSide/RightSide";
 import ProfileContent from "./ProfileContent/ProfileContent";
 import Dialogs from "./Dialogs/Dialogs";
 import AddPost from "./Post/AddPost/AddPost";
+import {updateMessageHandler} from "../../adapters/state";
 
 
 class Home extends Component {
@@ -33,6 +34,7 @@ class Home extends Component {
                 avatarImg:
                     "https://mon.medikforum.ru/uploads/stars/portos_/medium_c6d5ddb22642d08ce79afae12ecb8783.jpeg",
                 posts: 52,
+                backgroundImg: '',
                 followers: 772,
                 following: 182,
                 location: "Paris"
@@ -99,24 +101,29 @@ class Home extends Component {
                 <Grid item xs={2}>
                     <div className="home-page__navbar">
 
-                            <SideBar
-                                username={userData[0].username}
-                                details={userData[0].details}
-                                avatarImg={userData[0].avatarImg}
-                                posts={userData[0].posts}
-                                followers={userData[0].followers}
-                                following={userData[0].following}
-                            />
+                        <SideBar
+                            username={userData[0].username}
+                            details={userData[0].details}
+                            avatarImg={userData[0].avatarImg}
+                            posts={userData[0].posts}
+                            followers={userData[0].followers}
+                            following={userData[0].following}
+                        />
 
                     </div>
                 </Grid>
                 <Grid item xs={8}>
                     <Routes>
                         <Route index path={'feed'} element={<MainContent posts={this.props.feedState.posts}
-                                    statuses={this.props.feedState.statuses}
+                                                                         statuses={this.props.feedState.statuses}
                         />}/>
 
-                         <Route path={'dialogs/*'} element={<Dialogs  dialogs={this.props.dialogsState.dialogs}  messages={this.props.dialogsState.messages}/>}/>
+                        <Route path={'dialogs/*'} element={<Dialogs dialogs={this.props.dialogsState.dialogs}
+                                                                    messages={this.props.dialogsState.messages}
+                                                                    newMessageText={this.props.dialogsState.newMessageText}
+                                                                    addMessage={this.props.addMessage}
+                                                                    updateMessageHandler={this.props.updateMessageHandler}
+                        />}/>
 
 
                         {this.state.profileDetailsList.map((item, index) => (
@@ -127,13 +134,15 @@ class Home extends Component {
                             />}/>
                         ))}
 
-                        <Route path={'add_post'} element={<AddPost />}/>
+                        <Route path={'add_post'} element={<AddPost
+                            addPost={this.props.addPost}
+                        />}/>
 
                     </Routes>
                 </Grid>
                 <Grid item xs={2}>
 
-                        <RightSide id={userData[0].id}  avatarImg={userData[0].avatarImg}/>
+                    <RightSide id={userData[0].id} avatarImg={userData[0].avatarImg}/>
 
                 </Grid>
             </Grid>

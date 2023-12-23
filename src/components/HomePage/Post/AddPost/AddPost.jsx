@@ -4,12 +4,12 @@ import EditorToolbar, { modules, formats } from "../EditToolbar/EditToolbar"
 // import {useHistory} from 'react-router-dom'
 import axios from 'axios'
 
-import style from "./AddPost.module.css"
+import "./AddPost.css"
 import "react-quill/dist/quill.snow.css";
 
 
 
-function AddPost() {
+function AddPost( {active, setActive} ) {
     // let history = useHistory();
     const [userInfo, setUserInfo] = useState({
         title: '',
@@ -62,24 +62,23 @@ function AddPost() {
                 })
         } catch (error) { throw error;}
     }
-
     return(
-        <div>
-            <div className={style.container}>
-                <div className={style.row}>
-                    <form onSubmit={addDetails} className={style.update__forms}>
-                        <h3 className={style.my_account__content}> Создай свои впечатления  </h3>
-                        <div className={style.form_row}>
-                            <div className={style.form_group}>
-                                <label className={style.font_weight_bold}> Title <span className={style.required}> * </span> </label>
-                                <input type="text" name="title" value={userInfo.title} onChange={onChangeValue}  className={style.form_control} placeholder="Заглавие" required />
+        <div className={active ? 'modal active' : 'modal'} onClick={() =>setActive(false)}>
+            <div className={active ? 'modal__content active' : 'modal__content'} onClick={event => event.stopPropagation()}>
+                <div className={'row'}>
+                    <form onSubmit={addDetails} className={'update__forms'}>
+                        <h3 className={'my_account__content'}> Создай свои впечатления  </h3>
+                        <div className={'form_row'}>
+                            <div className={'form_group'}>
+                                <label className={'font_weight_bold'}> Title <span className={'required'}> * </span> </label>
+                                <input type="text" name="title" value={userInfo.title} onChange={onChangeValue}  className={'form_control'} placeholder="Заглавие" required />
                             </div>
-                            <div className={style.clearfix}></div>
-                            <div className={style.editor}>
-                                <label className={style.font_weight_bold}> Description <span className={style.required}> * </span> </label>
+                            <div className={'clearfix'}></div>
+                            <div className={'editor'}>
+                                <label className={'font_weight_bold'}> Description <span className={'required'}> * </span> </label>
                                 <EditorToolbar toolbarId={'t1'}/>
                                 <ReactQuill
-                                    className={style.react_quill}
+                                    className={'react_quill'}
                                     theme="snow"
                                     value={userInfo.description}
                                     onChange={onDescription}
@@ -92,7 +91,7 @@ function AddPost() {
                             </div>
                             <br />
                             <div className="form-group col-md-12 editor">
-                                <label className={style.font_weight_bold}> Additional Information  </label>
+                                <label className={'font_weight_bold'}> Additional Information  </label>
                                 <EditorToolbar toolbarId={'t2'}/>
                                 <ReactQuill
                                     theme="snow"

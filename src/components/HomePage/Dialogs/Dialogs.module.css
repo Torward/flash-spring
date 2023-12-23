@@ -1,3 +1,4 @@
+
 .background{
     height: 960px;
     width: 43%;
@@ -47,12 +48,12 @@
 
 }
 .messages{
-    position: center;
-    width: fit-content;
-    display: flex;
+    position: relative;
+    width: 100%;
     flex-direction: column;
     gap: 0.5rem;
     overflow: scroll;
+
 }
 
 .messages::-webkit-scrollbar{
@@ -68,20 +69,101 @@
     height: auto;
     flex-wrap: nowrap;
     padding-right: 25px;
-    -webkit-box-pack: start;
-    -ms-flex-pack: start;
-    justify-content: center;
+    /*-webkit-box-pack: start;*/
+    /*-ms-flex-pack: start;*/
+    /*justify-content: center;*/
     align-content: flex-start;
     -webkit-box-align: start;
     -ms-flex-align: start;
     align-items: flex-start;
-
+    justify-content: flex-end;
+}
+.messages_content__user{
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    gap: 1rem;
+    height: auto;
+    flex-wrap: nowrap;
+    padding-right: 25px;
+    align-content: flex-start;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-end;
+    justify-content: flex-end;
 }
 
 .active{
     border-color: #02ff02;
     text-decoration: none;
+
 }
 .link_dialog{
     text-decoration: none;
+}
+.input_container{
+    position: absolute;
+    right: 250px;
+    bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+    background-color:rgb(30, 73, 118);
+    border-radius: 40px;
+    transform: translate(50%,50%);
+    color: white;
+    fill: white;
+    height: fit-content;
+    z-index: 77;
+    overflow-x: revert;
+}
+
+ .input_field.active{
+    width: 640px;
+    padding: 0 35px;
+     margin: 10px 0;
+}
+ .input_field.inactive{
+
+ }
+
+.input_field{
+    border: none;
+    background: none;
+    outline: none;
+    resize: none;
+    padding: 0;
+    width: 0;
+    /*max-height: 40px;*/
+    float: left;
+    color: white;
+    font-size: 16px;
+    transition: 0.4s;
+    line-height: 20px;
+}
+.input_field::placeholder{
+    color: #07afff;
+}
+.input_field::-webkit-scrollbar{
+    display: none;
+}
+.input_field:is(:focus, :valid){
+}
+.send_button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:  white;
+    float: right;
+    width: 40px;
+    height: 40px;
+    background-color: rgb(30, 73, 118);
+    box-shadow: rgb(1, 68, 127) 0px 0px 25px,
+    rgb(0, 74, 142) 0px 0px 15px;
+    padding: 5px;
+    border: 1px solid rgb(0, 200, 255);
+    border-radius: 50px;
+
 }

@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Icon from '@mui/material/Icon';
 import "./SideBar.css";
 
-import {Avatar, Stack} from "@mui/material";
+import {Avatar, Box, Stack} from "@mui/material";
 import Stories from "../Stories/Stories";
 import {NavLink} from "react-router-dom";
 
@@ -19,14 +19,17 @@ class SideBar extends Component {
             <Stack container>
                 <div className="sidebar-content__logo">ВСПЫШКА</div>
                 <div className="sidebar-content__avatar">
-                    <div className="avatar__block">
-                        <Avatar
-                            src={this.props.avatarImg}
-                            sx={{
-                                width: 125, height: 125,
-                            }}
-                        />
-                    </div>
+                    <Box className={'w-full'}>
+                        <div className="avatar__block">
+                            <Avatar
+                                src={this.props.avatarImg}
+                                sx={{
+                                    width: 125, height: 125,
+                                }}
+                            />
+                        </div>
+                    </Box>
+
                     <div className="sidebar-content__name">
                         <span className="username">{this.props.username}</span>
                         <span className="details">{this.props.details}</span>

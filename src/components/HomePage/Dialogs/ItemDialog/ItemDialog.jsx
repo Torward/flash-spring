@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Avatar, Icon, Stack } from "@mui/material";
-import style from "./ItemDialog.module.css";
 import {NavLink} from "react-router-dom";
+
+import style from "./ItemDialog.module.css";
+
 
 const ItemDialog =(props) => {
     let path = "/dialogs/"+ props.id
