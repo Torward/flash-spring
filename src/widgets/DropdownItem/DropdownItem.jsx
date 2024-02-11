@@ -7,7 +7,7 @@ import style from "./DropdownItem.module.css"
 const DropdownItem = (props) => {
   return(
       <li className={style.dropdown_item}>
-            <NavLink to={"/"}>
+            <NavLink to={`${props.link}`}>
                 {props.text}
             </NavLink>
       </li>

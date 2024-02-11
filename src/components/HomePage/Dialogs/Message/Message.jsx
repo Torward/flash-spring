@@ -1,52 +1,33 @@
 import React from "react";
-import {Avatar} from "@mui/material";
+import {Avatar, Box, Typography} from "@mui/material";
 import style from "./Message.module.css";
 
 const Message = (props) => {
     return (
-        <div>
-            <div className={style.user_chat_content}>
-                <div className={style.col_2}>
-                    <div className={style.messages_text_item}>
-                        <div className={style.ufo}>
+        <Box>
+            <Box className={'flex flex-col w-full'}
+                 sx={{
+                     padding: '10px 20px',
+                     border: '1px solid rgba(255, 255, 255, .25)',
+                     borderRadius: '20px',
+                     boxShadow: '0 0 10px 1px rgba(0, 0, 0, 0.25)',
+                     backdropFilter: 'blur(15px)',
+                     backgroundColor: 'rgba(255, 255, 255, 0.45)'
+                 }}>
+                <div className={'w-full'}>
 
-                        </div>
-                        <div className={style.user_info}>
-                            <h4>{props.username}</h4>
-                            <Avatar
-                                src={props.avatarImg}
-                            />
-                        </div>
-                        <p className="mb-0">
-                            {props.text}
-                        </p>
-
-                        <p className={style.chat_time}><i className="ri-time-line align-middle"></i> <span
-                            className="align-middle">{props.time}</span></p>
-                    </div>
+                    <p className="mb-0">
+                        <Typography color={'black'} >{props.text}</Typography>
+                    </p>
+                    <Box className={'w-full'} sx={{textAlign: 'right'}}>
+                        <Typography fontSize={'13px'} color={'#545454'} variant={'subtitle1'}>{props.username}</Typography>
+                    </Box>
+                    <p className={style.chat_time}>
+                        <Typography fontSize={'13px'} color={'#545454'}>{props.time}</Typography>
+                    </p>
                 </div>
-
-
-
-                    {/*<div className="dropdown align-self-start">*/}
-                    {/*    <a className="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"*/}
-                    {/*       aria-haspopup="true" aria-expanded="false">*/}
-                    {/*        <i className="ri-more-2-fill"></i>*/}
-                    {/*    </a>*/}
-                    {/*    /!*<div className="dropdown-menu">*!/*/}
-                    {/*    /!*    <a className="dropdown-item" href="#">Copy <i*!/*/}
-                    {/*    /!*        className="ri-file-copy-line float-end text-muted"></i></a>*!/*/}
-                    {/*    /!*    <a className="dropdown-item" href="#">Save <i*!/*/}
-                    {/*    /!*        className="ri-save-line float-end text-muted"></i></a>*!/*/}
-                    {/*    /!*    <a className="dropdown-item" href="#">Forward <i*!/*/}
-                    {/*    /!*        className="ri-chat-forward-line float-end text-muted"></i></a>*!/*/}
-                    {/*    /!*    <a className="dropdown-item" href="#">Delete <i*!/*/}
-                    {/*    /!*        className="ri-delete-bin-line float-end text-muted"></i></a>*!/*/}
-                    {/*    /!*</div>*!/*/}
-                    {/*</div>*/}
-
-            </div>
-        </div>
+            </Box>
+        </Box>
     )
 
 }

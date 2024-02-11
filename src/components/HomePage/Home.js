@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useState} from "react";
 import {Route, Routes} from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import "./Home.css";
@@ -7,73 +7,58 @@ import MainContent from "./MainContent/MainContent";
 import RightSide from "./RightSide/RightSide";
 import ProfileContent from "./ProfileContent/ProfileContent";
 import Dialogs from "./Dialogs/Dialogs";
-import AddPost from "./Post/AddPost/AddPost";
-import {updateMessageHandler} from "../../adapters/state";
+import AddPostForm from "./Post/AddPost/AddPostForm";
+import BookmarksContent from "./BookmarksContent/BookmarksContent";
 
 
-class Home extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            profileDetailsList: [],
-        };
-    }
+const Home =(props) => {
+    let data = [
+        {
+            username: "Портос",
+            id: 2,
+            details:
+                "Вспышка — быстрое сгорание газопаровоздушной смеси над поверхностью горючего вещества, сопровождающееся кратковременным видимым свечением",
+            avatarImg:
+                "https://storage.googleapis.com/pai-images/1a1ba887dbdb40928296a2163fa65b35.jpeg",
+            posts: 52,
+            backgroundImg: '',
+            followers: 772,
+            following: 182,
+            location: "Paris"
+        },
+        {
+            username: 'Атос',
+            id: 1,
+            details: "Не влюбляйтесь, гиблое дело",
+            avatarImg: "https://mon.medikforum.ru/uploads/stars/atos_/medium_cd8efa6879b92dab9f473bf24fd35fcc.jpeg",
+            posts: 72,
+            followers: 782,
+            following: 187,
+            location: "Paris"
+        },
+        {
+            username: 'Арамис',
+            id: 1,
+            details: "Не влюбляйтесь, гиблое дело",
+            avatarImg: "https://mon.medikforum.ru/uploads/stars/atos_/medium_cd8efa6879b92dab9f473bf24fd35fcc.jpeg",
+            posts: 72,
+            followers: 782,
+            following: 187,
+            location: "Paris"
+        },
+        {
+            username: "Д'Артаньян",
+            id: 1,
+            details: "Не влюбляйтесь, гиблое дело",
+            avatarImg: "https://mon.medikforum.ru/uploads/stars/atos_/medium_cd8efa6879b92dab9f473bf24fd35fcc.jpeg",
+            posts: 72,
+            followers: 782,
+            following: 187,
+            location: "Paris"
+        }
+    ];
 
-    componentDidMount() {
-        this.getProfileDetails();
-    }
-
-    // Сюда подаём profileDetails
-    getProfileDetails = () => {
-        let data = [
-            {
-                username: "Портос",
-                id: 2,
-                details:
-                    "Вспышка — быстрое сгорание газопаровоздушной смеси над поверхностью горючего вещества, сопровождающееся кратковременным видимым свечением",
-                avatarImg:
-                    "https://mon.medikforum.ru/uploads/stars/portos_/medium_c6d5ddb22642d08ce79afae12ecb8783.jpeg",
-                posts: 52,
-                backgroundImg: '',
-                followers: 772,
-                following: 182,
-                location: "Paris"
-            },
-            {
-                username: 'Атос',
-                id: 1,
-                details: "Не влюбляйтесь, гиблое дело",
-                avatarImg: "https://mon.medikforum.ru/uploads/stars/atos_/medium_cd8efa6879b92dab9f473bf24fd35fcc.jpeg",
-                posts: 72,
-                followers: 782,
-                following: 187,
-                location: "Paris"
-            },
-            {
-                username: 'Арамис',
-                id: 1,
-                details: "Не влюбляйтесь, гиблое дело",
-                avatarImg: "https://mon.medikforum.ru/uploads/stars/atos_/medium_cd8efa6879b92dab9f473bf24fd35fcc.jpeg",
-                posts: 72,
-                followers: 782,
-                following: 187,
-                location: "Paris"
-            },
-            {
-                username: "Д'Артаньян",
-                id: 1,
-                details: "Не влюбляйтесь, гиблое дело",
-                avatarImg: "https://mon.medikforum.ru/uploads/stars/atos_/medium_cd8efa6879b92dab9f473bf24fd35fcc.jpeg",
-                posts: 72,
-                followers: 782,
-                following: 187,
-                location: "Paris"
-            }
-        ];
-        this.setState({profileDetailsList: data});
-    };
-
-    render() {
+const [profileDetailsList, setProfileDetailsList] = useState(data)
         let userData = [{
             username: "Портос",
             id: 2,
@@ -86,21 +71,11 @@ class Home extends Component {
             following: 182,
             location: "Paris"
         }];
-        // let dialogsComponent = this.state.profileDetailsList.map(item => <Dialogs
-        //         username={item.username}
-        //         id={item.id}
-        //         avatarImg={item.avatarImg}
-        //         details={item.details}
-        //         location={item.location}
-        //     />
-
-        // );
         return (
 
             <Grid container>
                 <Grid item xs={2}>
                     <div className="home-page__navbar">
-
                         <SideBar
                             username={userData[0].username}
                             details={userData[0].details}
@@ -114,40 +89,47 @@ class Home extends Component {
                 </Grid>
                 <Grid item xs={8}>
                     <Routes>
-                        <Route index path={'feed'} element={<MainContent posts={this.props.feedState.posts}
-                                                                         statuses={this.props.feedState.statuses}
+                        <Route index element={<MainContent posts={props.feedState.posts}
+                                                           statuses={props.feedState.statuses}
+                                                           addPost={props.addPost}
+                        />}/>
+                        <Route index path={'feed'} element={<MainContent posts={props.feedState.posts}
+                                                                         statuses={props.feedState.statuses}
+                                                                         addPost={props.addPost}
+                        />}/>
+                        <Route path={'bookmarks'}
+                               element={<BookmarksContent savedPosts={props.feedState.posts}/>}/>
+
+                        <Route path={'dialogs/*'} element={<Dialogs dialogs={props.dialogsState.dialogs}
+                                                                    messages={props.dialogsState.messages}
+                                                                    newMessageText={props.dialogsState.newMessageText}
+                                                                    addMessage={props.addMessage}
+                                                                    updateMessageHandler={props.updateMessageHandler}
                         />}/>
 
-                        <Route path={'dialogs/*'} element={<Dialogs dialogs={this.props.dialogsState.dialogs}
-                                                                    messages={this.props.dialogsState.messages}
-                                                                    newMessageText={this.props.dialogsState.newMessageText}
-                                                                    addMessage={this.props.addMessage}
-                                                                    updateMessageHandler={this.props.updateMessageHandler}
-                        />}/>
 
-
-                        {this.state.profileDetailsList.map((item, index) => (
-                            <Route path={'profile'} element={<ProfileContent
+                        {profileDetailsList.map((item, index) => (
+                            <Route path={'profile/*'} element={<ProfileContent
+                                key={index}
                                 username={item.username}
                                 details={item.details}
                                 avatarImg={item.avatarImg}
                             />}/>
                         ))}
 
-                        <Route path={'add_post'} element={<AddPost
-                            addPost={this.props.addPost}
+                        <Route path={'add_post'} element={<AddPostForm
+                            addPost={props.addPost}
                         />}/>
 
                     </Routes>
                 </Grid>
                 <Grid item xs={2}>
 
-                    <RightSide id={userData[0].id} avatarImg={userData[0].avatarImg}/>
+                    <RightSide id={userData[0].id} avatarImg={userData[0].avatarImg} addPost={props.addPost}/>
 
                 </Grid>
             </Grid>
         );
-    }
 }
 
 export default Home;

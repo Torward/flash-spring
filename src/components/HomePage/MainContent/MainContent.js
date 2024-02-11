@@ -1,35 +1,29 @@
-import React, {Component} from "react";
-import {Icon, Stack} from "@mui/material";
+import React, {useState} from "react";
+import {Box, Icon, Stack} from "@mui/material";
 import "./MainContent.css";
 import StatusBar from "../StatusBar/StatusBar";
-import PostForm from "../Post/PostForm/PostForm";
-import {NavLink} from "react-router-dom";
-import ItemDialog from "../Dialogs/ItemDialog/ItemDialog";
 import Post from "../Post/Post";
+import AddPostForm from "../Post/AddPost/AddPostForm";
 
-class MainContent extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {};
-    }
-
-    render() {
-        let postComponents = this.props.posts.map(p => <Post
+const MainContent = (props) => {
+    let [modalActive, setModalActive] = useState(false);
+        let postComponents = props.posts.map(p => <Post
             id={p.postId}
             userName={p.username}
             location={p.location}
             userAvatar={p.userAvatar}
             postImage={p.postImageURL}
+            postContent={p.postContent}
             likes={p.likes}
         />)
-        let statusComponents = this.props.statuses.map(s => <StatusBar
+        let statusComponents = props.statuses.map(s => <StatusBar
             id={s.postId}
             userName={s.username}
             imageURL={s.imageURL}
             userAvatar={s.userAvatar}
 
         />)
+       const openWindow = () => setModalActive(true);
         return (
             <div className="main">
                 <div className="main__searchbar">
@@ -44,24 +38,23 @@ class MainContent extends Component {
                         <div className="statusbar-header">
                             <span>ИСТОРИИ</span>
                         </div>
-                        <div className={'status_section'}>
+                        <Box className={'status_section'} sx={{
+                            justifyContent: 'center',
+                        }}>
                             {statusComponents}
-                        </div>
+                        </Box>
                     </div>
-                    <div>
-                        {/*<PostForm />*/}
-                        <NavLink to={'/add_post'} className={'add_new_link'}>
+                    <div className={'add_new_link'}  onClick={openWindow} >
                             <span>Поделись впечатлениями</span>
                             <Icon>add</Icon>
-                        </NavLink>
                     </div>
                     <div>
                         {postComponents}
                     </div>
                 </Stack>
+                <AddPostForm active={modalActive} setActive={setModalActive} addPost={props.addPost}/>
             </div>
         );
-    }
 }
 
 export default MainContent;

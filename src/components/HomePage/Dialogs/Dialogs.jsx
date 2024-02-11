@@ -12,17 +12,18 @@ const Dialogs = (props) => {
     const [open, setOpen] = useState(false);
     let [modalActive, setModalActive] = useState(false);
 
-    let dialogComponents = props.dialogs.map(d => <ItemDialog username={d.username}
-                                                              id={d.id}
-                                                              avatarImg={d.avatarImg}
-                                                              details={d.details}
-                                                              location={d.location}
+    const dialogComponents = props.dialogs.map(dialog => <ItemDialog username={dialog.username}
+                                                              id={dialog.id}
+                                                              avatarImg={dialog.avatarImg}
+                                                              details={dialog.details}
+                                                              location={dialog.location}
+                                                              isActive={dialog.isActive}
     />)
-    let messageComponents = props.messages.map(m => <Message id={m.id}
-                                                             text={m.text}
-                                                             time={m.time}
-                                                             username={m.username}
-                                                             avatarImg={m.avatarImg}
+    const messageComponents = props.messages.map(message => <Message id={message.id}
+                                                             text={message.text}
+                                                             time={message.time}
+                                                             username={message.username}
+                                                             avatarImg={message.avatarImg}
     />)
 
     let containerRef = useRef();

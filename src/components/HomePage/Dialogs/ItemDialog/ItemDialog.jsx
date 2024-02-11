@@ -1,16 +1,25 @@
-import React, { Component } from "react";
-import { Avatar, Icon, Stack } from "@mui/material";
+import React, {useState} from "react";
+import {Avatar} from "@mui/material";
 import {NavLink} from "react-router-dom";
 
 import style from "./ItemDialog.module.css";
 
 
 const ItemDialog =(props) => {
-    let path = "/dialogs/"+ props.id
+    const [active, setActive] = useState(false)
+    let path = `/dialogs/`+ props.id
+    const handleClick = () => {
+        if (active) {
+            setActive(false)
+        } else {
+            setActive(true)
+        }
+
+    }
         return (
-            <div>
+            <div onClick={handleClick}>
                 <NavLink to={path} className={style.link_dialog}>
-                    <div className={style.suggestion_body__element}>
+                    <div className={active ? style.suggestion_body__element_active :style.suggestion_body__element}>
                         <Avatar
                             className={style.element__img}
                             src={props.avatarImg}
@@ -22,7 +31,7 @@ const ItemDialog =(props) => {
                         <div className={style.element__info}>
                             <span className={style.element__info__username}>{props.username}</span>
                             <span className={style.element__info__details}>{props.details}</span>
-                            <span className={style.element__info__location}>{props.location}</span>
+                            <span className={props.isActive ? style.element__info__location_active :style.element__info__location}>{props.location}</span>
                         </div>
                     </div>
                 </NavLink>

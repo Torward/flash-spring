@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component, useState} from "react";
 import Grid from "@mui/material/Grid";
 import inst_image from "../../images/9364675fb26a.svg";
 import go from "../../images/google.svg";
@@ -6,20 +6,14 @@ import "./LoginPage.css";
 import SignIn from "./SignIn/SignIn";
 import SignUp from "./SignUp/SignUp";
 
-class LoginPage extends Component {
-  constructor(props) {
-    super(props);
+const LoginPage = (props) => {
 
-    this.state = {
-      isLogin: true,
-    };
-  }
-  changeLoginState = () => {
-    if (this.state.isLogin) this.setState({ isLogin: false });
-    else this.setState({ isLogin: true });
+  const [isLogin, setLoginState] = useState(true);
+ const changeLoginState = () => {
+    if (isLogin) setLoginState(false);
+    else setLoginState(true);
   };
 
-  render() {
     return (
       <Grid container>
         <Grid item xs={3}></Grid>
@@ -32,7 +26,7 @@ class LoginPage extends Component {
               <div className="login-page__right-component">
                 <span className="login-page__logo">ВСПЫШКА</span>
                 <div className="login-page__sign-in">
-                  {this.state.isLogin ? <SignIn /> : <SignUp />}
+                  {isLogin ? <SignIn /> : <SignUp addUser={props.addUser}/>}
 
                   <div className="login-page__ordiv">
                     <div className="login-page__divider"></div>
@@ -51,11 +45,11 @@ class LoginPage extends Component {
               </div>
 
               <div className="login-page__signup-option">
-                {this.state.isLogin ? (
+                {isLogin ? (
                   <div className="login-page__sign-in-prop">
                     <span>
                       Ты ещё не с нами?{" "}
-                      <button onClick={this.changeLoginState}>
+                      <button onClick={changeLoginState}>
                         Регистрируйся!
                       </button>
                     </span>
@@ -63,7 +57,7 @@ class LoginPage extends Component {
                 ) : (
                   <div className="login-page__sign-up-prop">
                     Есть регистрация?{" "}
-                    <button onClick={this.changeLoginState}>Зайди.</button>
+                    <button onClick={changeLoginState}>Зайди.</button>
                   </div>
                 )}
               </div>
@@ -74,6 +68,6 @@ class LoginPage extends Component {
       </Grid>
     );
   }
-}
+
 
 export default LoginPage;

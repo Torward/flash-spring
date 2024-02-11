@@ -20,6 +20,9 @@
 }
 
 .post-container__header {
+    display: flex;
+    justify-content: space-between;
+    max-height: 70px;
     border-bottom: 2px solid white;
 }
 
@@ -125,4 +128,7 @@
 
 .comment-input__input::placeholder {
     color: rgb(159, 205, 252);
+}
+.content-field::-webkit-scrollbar{
+    display: none;
 }

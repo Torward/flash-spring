@@ -69,6 +69,7 @@ input[type="text"i] {
     color: rgb(159, 205, 252);
 }
 .add_new_link{
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
     text-decoration: none;

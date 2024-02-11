@@ -4,7 +4,7 @@ import {Editor} from 'react-draft-wysiwyg'
 import {Route, Routes} from "react-router-dom";
 import style from "./PostForm.module.css"
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import AddPost from "../AddPost/AddPost";
+import AddPostForm from "../AddPost/AddPostForm";
 import EditPost from "../EditPost/EditPost";
 
 
@@ -52,7 +52,7 @@ class PostForm extends Component {
         return (
             <div className={style.post_input_bar}>
                 <Routes>
-                    <Route  path={'add_post'} element={<AddPost/>}/>
+                    <Route  path={'add_post'} element={<AddPostForm/>}/>
                     <Route  path={'edit_post/:postID'} element={<EditPost/>}/>
                 </Routes>
             </div>
