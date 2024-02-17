@@ -322,16 +322,14 @@ export const addComment = (postId) => {
     rerenderEntireTree(state);
 }
 export const addUser = async (newUser) => {
+    console.log(newUser);
+    const apiUrl = 'http://localhost:8187/auth/signup';
     try {
-    const response = await axios.post('http://localhost:5555/auth/signup', {
-        username: newUser.username.value,
+    const response = await axios.post(apiUrl, {
         password: newUser.password.value,
-        confirmPassword: newUser.confirmPassword.value,
         email: newUser.email.value,
         firstName: newUser.firstName.value,
         lastName: newUser.lastName.value,
-        phoneNumber: newUser.phoneNumber.value,
-        address: newUser.address.value
     });
     console.log(response);
     alert("Вы успешно зарегистрированы");

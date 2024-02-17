@@ -1,10 +1,15 @@
 .dropdown_item {
+    color: rgb(30, 73, 118);
     display: flex;
     margin: 10px auto;
 }
 
 .dropdown_item a{
+
     max-width: 200px;
     margin-left: 10px;
     transition: 1s;
+}
+.link{
+    color: rgb(30, 73, 118);
 }

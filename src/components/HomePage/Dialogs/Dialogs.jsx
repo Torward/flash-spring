@@ -12,18 +12,22 @@ const Dialogs = (props) => {
     const [open, setOpen] = useState(false);
     let [modalActive, setModalActive] = useState(false);
 
-    const dialogComponents = props.dialogs.map(dialog => <ItemDialog username={dialog.username}
-                                                              id={dialog.id}
-                                                              avatarImg={dialog.avatarImg}
-                                                              details={dialog.details}
-                                                              location={dialog.location}
-                                                              isActive={dialog.isActive}
+    const dialogComponents = props.dialogs.map(dialog => <ItemDialog
+        key={dialog.id}
+        username={dialog.username}
+        id={dialog.id}
+        avatarImg={dialog.avatarImg}
+        details={dialog.details}
+        location={dialog.location}
+        isActive={dialog.isActive}
     />)
-    const messageComponents = props.messages.map(message => <Message id={message.id}
-                                                             text={message.text}
-                                                             time={message.time}
-                                                             username={message.username}
-                                                             avatarImg={message.avatarImg}
+    const messageComponents = props.messages.map(message => <Message
+        key={message.id}
+        id={message.id}
+        text={message.text}
+        time={message.time}
+        username={message.username}
+        avatarImg={message.avatarImg}
     />)
 
     let containerRef = useRef();
@@ -41,9 +45,11 @@ const Dialogs = (props) => {
     }
 
     let addMessage = () => {
-        if (!textAreaRef.current.value.onChange){
+
+        if (!textAreaRef.current.value.onChange) {
             props.addMessage();
         }
+        // setModalActive(false)
 
     }
     let onMassageChange = () => {

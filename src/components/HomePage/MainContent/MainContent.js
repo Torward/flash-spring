@@ -8,6 +8,7 @@ import AddPostForm from "../Post/AddPost/AddPostForm";
 const MainContent = (props) => {
     let [modalActive, setModalActive] = useState(false);
         let postComponents = props.posts.map(p => <Post
+            key={p.postId}
             id={p.postId}
             userName={p.username}
             location={p.location}
@@ -17,6 +18,7 @@ const MainContent = (props) => {
             likes={p.likes}
         />)
         let statusComponents = props.statuses.map(s => <StatusBar
+            key={s.postId}
             id={s.postId}
             userName={s.username}
             imageURL={s.imageURL}

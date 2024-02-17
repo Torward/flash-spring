@@ -37,6 +37,7 @@ const SignUp = (props) => {
     })
 
     const addUserHandler = (values) => {
+        console.log(values);
         props.addUser(values);
     };
 
@@ -165,7 +166,7 @@ const SignUp = (props) => {
                             type="password"
                             size={'small'}
                             sx={{
-                                mt: '1rem',
+                                // mt: '1rem',
                                 height: '36px'
                             }}
                             onChange={formik.handleChange}

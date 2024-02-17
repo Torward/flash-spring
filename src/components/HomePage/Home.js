@@ -72,7 +72,6 @@ const [profileDetailsList, setProfileDetailsList] = useState(data)
             location: "Paris"
         }];
         return (
-
             <Grid container>
                 <Grid item xs={2}>
                     <div className="home-page__navbar">
@@ -84,7 +83,6 @@ const [profileDetailsList, setProfileDetailsList] = useState(data)
                             followers={userData[0].followers}
                             following={userData[0].following}
                         />
-
                     </div>
                 </Grid>
                 <Grid item xs={8}>
@@ -106,8 +104,6 @@ const [profileDetailsList, setProfileDetailsList] = useState(data)
                                                                     addMessage={props.addMessage}
                                                                     updateMessageHandler={props.updateMessageHandler}
                         />}/>
-
-
                         {profileDetailsList.map((item, index) => (
                             <Route path={'profile/*'} element={<ProfileContent
                                 key={index}
@@ -116,17 +112,13 @@ const [profileDetailsList, setProfileDetailsList] = useState(data)
                                 avatarImg={item.avatarImg}
                             />}/>
                         ))}
-
                         <Route path={'add_post'} element={<AddPostForm
                             addPost={props.addPost}
                         />}/>
-
                     </Routes>
                 </Grid>
                 <Grid item xs={2}>
-
                     <RightSide id={userData[0].id} avatarImg={userData[0].avatarImg} addPost={props.addPost}/>
-
                 </Grid>
             </Grid>
         );

@@ -4,10 +4,6 @@
     src: url("../../fonts/palace_of_sports.otf");
 }
 
-body {
-    background-color: rgb(10, 25, 41);
-}
-
 input[type="text"i] {
     padding-top: 0;
     padding-right: 0;
@@ -23,9 +19,7 @@ input[type="password"i] {
 }
 
 .login-page__main {
-    display: flex;
     margin-top: 25px;
-
 }
 
 .login-page__right-component {

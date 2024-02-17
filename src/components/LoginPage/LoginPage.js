@@ -1,10 +1,11 @@
-import React, {Component, useState} from "react";
+import React, {useState} from "react";
 import Grid from "@mui/material/Grid";
-import inst_image from "../../images/9364675fb26a.svg";
+import inst_image from "../../images/logo.png";
 import go from "../../images/google.svg";
 import "./LoginPage.css";
 import SignIn from "./SignIn/SignIn";
 import SignUp from "./SignUp/SignUp";
+import {Avatar, Box} from "@mui/material";
 
 const LoginPage = (props) => {
 
@@ -14,13 +15,33 @@ const LoginPage = (props) => {
     else setLoginState(true);
   };
 
+
     return (
       <Grid container>
-        <Grid item xs={3}></Grid>
-        <Grid item xs={6}>
-          <div className="login-page__main">
-            <div>
-              <img src={inst_image} width="454px" alt="" />
+        <Grid item xs={2}></Grid>
+        <Grid item xs={8}>
+          <div className="login-page__main flex justify-center items-center">
+            <div
+                className={'mr-[200px]'}
+            >
+                {isLogin?
+                <Box className={'h-full w-full mr-[170px]  flex justify-center items-center'}>
+                    <Box className={'p-3 rounded-full ring-2 ring-[rgb(22, 136, 250)] dark:ring-gray-500 flex justify-center items-center'}>
+                        <Avatar
+                            className={'ring-2 ring-[rgb(159, 205, 252)] dark:ring-gray-500'}
+                            sx={{
+                                width: '15rem',
+                                height: '15rem',
+                            }}/>
+                    </Box>
+                </Box>
+                    :
+                    <Box className={'h-full w-full flex justify-center items-center'}>
+                        <img src={inst_image} width="454px" alt="" />
+                    </Box>
+
+                }
+
             </div>
             <div>
               <div className="login-page__right-component">
@@ -64,7 +85,7 @@ const LoginPage = (props) => {
             </div>
           </div>
         </Grid>
-        <Grid item xs={3}></Grid>
+        <Grid item xs={2}></Grid>
       </Grid>
     );
   }

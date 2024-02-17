@@ -71,7 +71,7 @@ a{
 .dropdown_menu ul li{
     padding: 5px 0;
     text-align: center;
-    border-top: 1px solid #807f7f;
+    border-top: 1px solid #233562;
 }
 
 .dropdown_menu ul li:hover a{
@@ -106,7 +106,7 @@ a{
 
 .menu_location{
     font-size: 14px;
-    color: #807f7f;
+    color: #233562;
     font-weight: 400;
 }
 
