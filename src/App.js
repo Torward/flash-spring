@@ -1,33 +1,44 @@
 import "./App.css";
-import React from 'react';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {BrowserRouter, Routes, Route, useNavigate} from 'react-router-dom';
 import LoginPage from "./components/LoginPage/LoginPage";
 import Home from "./components/HomePage/Home";
-import {updateMessageHandler} from "./redux/state";
-import {Provider} from "react-redux";
-import {store} from "./store/store";
+import {Provider, useDispatch, useSelector} from "react-redux";
 import { StyledEngineProvider } from '@mui/material/styles';
+import {getUserProfile} from "./store/Auth/Action";
 
 function App(props) {
-    const { dialogsPage, loginPage, feedPage, updateMessageHandler } = props.state;
+
+    const { dialogsPage, loginPage, feedPage} = props.state;
+    const jwt = localStorage.getItem('jwt');
+    const {auth} = useSelector(store => store)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (auth.jwt) {
+           dispatch(getUserProfile(jwt))
+            navigate('/')
+        }
+    },[auth.jwt, dispatch, jwt])
     return (
         <div className="App">
-            <BrowserRouter>
-                <Provider store={store}>
+
                     <StyledEngineProvider injectFirst>
                     <Routes>
-                        <Route path='/login' element={<LoginPage loginState={loginPage} addUser={props.addUser}/>}/>
-                        <Route path={'/*'} element={<Home
-                            dialogsState={dialogsPage}
-                            feedState={feedPage}
-                            addPost={props.addPost}
-                            addMessage={props.addMessage}
-                            updateMessageHandler={props.updateMessageHandler}
-                        />}/>
+                        <Route path='/*' element={auth.user? <Home
+                                dialogsState={dialogsPage}
+                                feedState={feedPage}
+                                addPost={props.addPost}
+                                addMessage={props.addMessage}
+                                updateMessageHandler={props.updateMessageHandler}
+                            />
+                            :
+                            <LoginPage loginState={loginPage}
+                               addUser={props.addUser}/>
+                        }/>
                     </Routes>
                     </StyledEngineProvider>
-                </Provider>
-            </BrowserRouter>
         </div>
     );
 }

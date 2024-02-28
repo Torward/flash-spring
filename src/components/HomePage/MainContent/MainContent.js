@@ -1,14 +1,20 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Box, Icon, Stack} from "@mui/material";
 import "./MainContent.css";
 import StatusBar from "../StatusBar/StatusBar";
 import Post from "../Post/Post";
 import AddPostForm from "../Post/AddPost/AddPostForm";
+import {useDispatch, useSelector} from "react-redux";
+import {getAllPosts} from "../../../store/Post/Action";
 
 const MainContent = (props) => {
+    const dispatch = useDispatch()
     let [modalActive, setModalActive] = useState(false);
+    const {post} = useSelector((state) => state);
+    console.log(post)
         let postComponents = props.posts.map(p => <Post
             key={p.postId}
+            post={p}
             id={p.postId}
             userName={p.username}
             location={p.location}
@@ -25,6 +31,9 @@ const MainContent = (props) => {
             userAvatar={s.userAvatar}
 
         />)
+    useEffect(() => {
+        dispatch(getAllPosts())
+    }, [])
        const openWindow = () => setModalActive(true);
         return (
             <div className="main">

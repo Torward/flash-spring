@@ -1,16 +1,20 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Avatar, Icon, IconButton, Stack} from "@mui/material";
+import {Avatar, Button, Icon, IconButton, Stack} from "@mui/material";
 import Groups from "../Groups/Groups";
 import Advertisment from "../Advertisment/Advertisment";
 import Suggestions from "../Suggestions/Suggestions";
-import {NavLink, redirect} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import DropdownItem from "../../../widgets/DropdownItem/DropdownItem";
 
 import "./RightSide.css";
 import {AddBox} from "@mui/icons-material";
 import AddPostForm from "../Post/AddPost/AddPostForm";
+import {useDispatch} from "react-redux";
+import {logoutUser} from "../../../store/Auth/Action";
 
 const RightSide = (props) => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     let openMenu = () => {
         setOpen(!open)
     }
@@ -34,7 +38,8 @@ const RightSide = (props) => {
 
 
     let logoutHandler = () => {
-        redirect("/login")
+        console.log("logout")
+        dispatch(logoutUser())
     }
     return (
         <Stack>
@@ -42,7 +47,7 @@ const RightSide = (props) => {
                 <div className="navbar__iconblock">
 
                     <div className={'menu_container'} ref={menuRef}>
-                        <div className={'dropdown_trigger'} onClick={openMenu}>
+                        <div className={'dropdown_trigger'} onClick={() => openMenu()}>
                             <Avatar
                                 className={'iconblock__avatar'}
                                 src={props.avatarImg}
@@ -59,13 +64,15 @@ const RightSide = (props) => {
                                 <DropdownItem text={'твой профиль'}/>
                                 <DropdownItem text={'редактировать'}/>
                                 <DropdownItem text={'настройки'}/>
-                                <DropdownItem link={"/login"} text={'выход'}>{() => window.location.href = "/login"}</DropdownItem>
+                                <Button variant={'text'} sx={{
+                                    color: 'rgb(147,196,241)',
+                                    marginLeft: '5px',
+                                    borderTop: '1px solid rgb(30, 73, 118)'
+                                }} onClick={logoutHandler}>выход</Button>
 
                             </ul>
                         </div>
                     </div>
-
-
                     <IconButton type={'button'} onClick={openWindow} aria-label="open add post form"
                                 className={'open_modal_btn'}>
                         <AddBox className={'modal_btn__icon'}/>

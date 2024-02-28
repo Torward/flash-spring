@@ -15,18 +15,20 @@
     transition: 0.5s;
 }
 
-.modal.active{
+.modal.active {
     opacity: 1;
     pointer-events: all;
 }
 
 .modal__content {
+    height: 500px;
     padding: 20px;
     border-radius: 12px;
     background-color: rgba(81, 116, 186, 0.78);
     transform: scale(0.5);
     transition: 0.4s all;
 }
+
 .modal__content.active {
     transform: scale(1);
 }
@@ -48,7 +50,7 @@
 }
 
 .update__forms {
-
+    height: 400px;
 }
 
 .my_account__content {
@@ -60,11 +62,19 @@
 }
 
 .form_row {
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 87%;
 }
 
 .form_group {
 
+}
+
+.image_input {
+    display: none;
+    cursor: pointer;
 }
 
 .font_weight_bold {
@@ -94,22 +104,6 @@
     padding-left: 10px;
     color: white;
     outline: none;
-}
-
-.form_control:hover {
-    border: 1px solid rgb(46, 128, 215);
-}
-
-.form_control:focus {
-    border: 1px solid rgb(46, 128, 215);
-}
-
-.form_control::placeholder {
-    color: rgb(0, 200, 255);
-}
-
-.clearfix {
-
 }
 
 .editor {

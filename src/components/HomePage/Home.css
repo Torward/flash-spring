@@ -5,7 +5,7 @@
 }
 
 body {
-    background: linear-gradient(to left, rgb(0, 26, 53), rgb(10, 25, 41) 120%);
+    /*background: linear-gradient(to left, rgb(0, 26, 53), rgb(10, 25, 41) 120%);*/
     /* background-color: rgb(10, 25, 41); */
 }
 body::-webkit-scrollbar{

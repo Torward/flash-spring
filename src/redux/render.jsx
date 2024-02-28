@@ -8,20 +8,24 @@ import {addMessage, addPost, addUser, updateMessageHandler} from "./state";
 
 import '../index.css';
 import reportWebVitals from "../reportWebVitals";
+import {store} from "../store/store";
+import {Provider} from "react-redux";
+import {BrowserRouter} from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 export let rerenderEntireTree = (state) =>{
 
     root.render(
+        <BrowserRouter>
+        <Provider store={store}>
             <DevSupport ComponentPreviews={ComponentPreviews}
                         useInitialHook={useInitial}>
                 <App state={state}
-                     addUser={addUser}
-                     addPost={addPost}
                      addMessage={addMessage}
                      updateMessageHandler={updateMessageHandler}/>
-
             </DevSupport>
+        </Provider>
+        </BrowserRouter>
     );
 }
 

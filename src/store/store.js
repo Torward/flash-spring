@@ -1,19 +1,12 @@
 import {applyMiddleware, combineReducers, legacy_createStore} from "redux";
 import {thunk} from "redux-thunk";
-import state from "../redux/state";
+import {authReducer} from "./Auth/Reducer";
+import {postReducer} from "./Post/Reducer";
+import {userReducer} from "./User/Reducer";
 
 export const rootReducers = combineReducers({
-    // user: (state = {
-    //     user: null,
-    //     isAuthenticated: false,
-    //     isAuthenticating: false,
-    //     isAuthenticatingError: null,
-    //     isAuthenticatingSuccess: false,
-    //     isAuthenticatingSuccessMessage: null,
-    //     isAuthenticatingSuccessMessageColor: null,
-    //     isAuthenticatingSuccessMessageDuration: null,
-    //     isAuthenticatingSuccessMessageIcon: null,
-    //     isAuthenticatingSuccessMessageTitle: null,
-    // }),
+   auth: authReducer,
+   post: postReducer,
+   user: userReducer
 })
 export const store = legacy_createStore(rootReducers, applyMiddleware(thunk));

@@ -9,7 +9,7 @@ import {Avatar, Box} from "@mui/material";
 
 const LoginPage = (props) => {
 
-  const [isLogin, setLoginState] = useState(true);
+  const [isLogin, setLoginState] = useState(false);
  const changeLoginState = () => {
     if (isLogin) setLoginState(false);
     else setLoginState(true);
@@ -39,9 +39,7 @@ const LoginPage = (props) => {
                     <Box className={'h-full w-full flex justify-center items-center'}>
                         <img src={inst_image} width="454px" alt="" />
                     </Box>
-
                 }
-
             </div>
             <div>
               <div className="login-page__right-component">

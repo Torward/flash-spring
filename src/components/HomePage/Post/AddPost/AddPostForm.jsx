@@ -1,137 +1,249 @@
 import React, {useState} from "react";
-// import {useHistory} from 'react-router-dom'
-import axios from 'axios'
 import "./AddPost.css"
 import "react-quill/dist/quill.snow.css";
-import {Box, Button, TextField, Typography} from "@mui/material";
+import {Box, Button, FormControl, TextField, Typography} from "@mui/material";
+import * as Yup from "yup";
+import {Field, useFormik} from "formik";
+import {useDispatch} from "react-redux";
+import {addPost} from "../../../../store/Post/Action";
+import {EmojiEmotions, Image, LocationOn, MusicNote, PlayCircle, VideoFile, VideoLabel} from "@mui/icons-material";
 
+const validationSchema = Yup.object().shape({
+    content: Yup.string().required('Содержание обязательно'),
+    // image: Yup.string().required('Картинка обязательна'),
+})
 
-function AddPostForm({active, setActive, addPost}) {
-    // let history = useHistory();
-    const [userInfo, setUserInfo] = useState(''
-    //     {
-    //     // title: '',
-    //     // content: '',
+function AddPostForm({active, setActive}) {
+
+    const [uploadingImage, setUploadingImage] = useState(false);
+    const [selectedImage, setSelectedImage] = useState("");
+
+    const [uploadingVideo, setUploadingVideo] = useState(false);
+    const [selectedVideo, setSelectedVideo] = useState("");
+
+    const [uploadingMusic, setUploadingMusic] = useState(false);
+    const [selectedMusic, setSelectedMusic] = useState("");
+
+    const [input, setInput] = useState('');
+    const [speed, setSpeed] = useState(0);
+    const [startTime, setStartTime] = useState(null)
+    // const [userInfo, setUserInfo] = useState(''
+    //     //     {
+    //     //     // title: '',
+    //     //     // content: '',
+    //     // }
+    // );
+    const dispatch = useDispatch();
+
+    const handleSelectImage = (e) => {
+        e.preventDefault();
+        setUploadingImage(true);
+        const imgUrl = e.target.files[0];
+        formik.setFieldValue("image", imgUrl);
+        setSelectedImage(imgUrl);
+        setUploadingImage(false);
+    };
+    function handleSelectVideo(e) {
+        e.preventDefault();
+        setUploadingVideo(true);
+        const vidUrl = e.target.files[0];
+        formik.setFieldValue("video", vidUrl);
+        setSelectedVideo(vidUrl);
+        setUploadingVideo(false);
+    }
+    const handleSelectMusic = (e) => {
+        e.preventDefault();
+        setUploadingMusic(true);
+        const musicUrl = e.target.files[0];
+        formik.setFieldValue("music", musicUrl);
+        setSelectedMusic(musicUrl);
+        setUploadingMusic(false);
+    }
+
+    const formik = useFormik({
+        initialValues: {
+            content: '',
+            image: '',
+            video: '',
+            music: '',
+        },
+        validationSchema: validationSchema,
+        onSubmit: (values) => {
+            console.log(values);
+            dispatch(addPost(values))
+        },
+    })
+    const onChangeStatistic = (e) => {
+        if (e.target.value.length === 1) {
+            setStartTime(new Date());
+        } else if (e.target.value.length > 1) {
+            const currentTime = new Date();
+            const timeDiff = (currentTime - startTime) / 1000;// Разница во времени в секундах
+            const currentSpeed = (input.length / 5) / (timeDiff / 60); // Скорость ввода в символа в секунду
+            setSpeed(currentSpeed.toFixed(2));
+        }
+        setInput(e.target.value);
+    }
+    // const [isError, setError] = useState(null);
+    // const textAreaStyleProperties = {
+    //     color: "white",
+    //     backgroundColor: "rgb(0, 30, 60)",
+    //     padding: "10px",
+    //     fontFamily: "Arial",
+    //     border: "1px solid rgb(30, 73, 118)!important",
+    //     borderRadius: "0 0 10px 10px",
+    //     placeholderColor: "rgb(0, 200, 255)"
     // }
-    );
+    // const addPostHandler = (event) => {
+    //     event.preventDefault();
+    //     event.persist();
+    //     console.log(userInfo)
+    //     addPost(userInfo)
+    //     setUserInfo('')
 
-    const onChangeValue = (e) => {
-        setUserInfo({
-            ...userInfo,
-            title: e.target.value
-        });
-    }
-    const onDescription = (e) => {
-        setUserInfo(
-            e.target.value
-        //     {
-        //     ...userInfo,
-        //     content: e.target.value
-        // }
-        );
-    }
-    const onInformation = (value) => {
-        setUserInfo({
-            ...userInfo,
-            information: value
-        });
-    }
-    const [isError, setError] = useState(null);
-    const textAreaStyleProperties = {
-        color: "white",
-        backgroundColor: "rgb(0, 30, 60)",
-        padding: "10px",
-        fontFamily: "Arial",
-        border: "1px solid rgb(30, 73, 118)!important",
-        borderRadius: "0 0 10px 10px",
-        placeholderColor: "rgb(0, 200, 255)"
-    }
-    const addPostHandler = (event) => {
-        event.preventDefault();
-        event.persist();
-        console.log(userInfo)
-        addPost(userInfo)
-        setUserInfo('')
 
-        // try {
-        //     event.preventDefault();
-        //     event.persist();
-        //     if(userInfo.content.length < 1){
-        //         setError('Поле не должно оставаться пустым!');
-        //         return;
-        //     }
-        //     axios.post(`http://localhost:8080/addPost`, {
-        //         title: userInfo.title,
-        //         content: userInfo.content,
-        //     })
-        //         .then(res => {
-        //             if(res.data.success === true){
-        //                 // history.push('/');
-        //             }
-        //         })
-        // } catch (error) { throw error;}
-    }
+    // }
     return (
         <Box sx={{maxHeight: '100vh', width: '100vw', overflow: 'scroll'}} className={active ? 'modal active' : 'modal'}
              onClick={() => setActive(false)}>
             <div className={active ? 'modal__content active' : 'modal__content'}
                  onClick={event => event.stopPropagation()}>
                 <div className={'row'}>
-                    <form
-                        // onSubmit={addPost}
-                        className={'update__forms'}>
+                    <form onSubmit={formik.handleSubmit} className={'update__forms'}>
                         <h3 className={'my_account__content'}> Создай свои впечатления </h3>
                         <div className={'form_row'}>
-                            {/*<div className={'form_group'}>*/}
-                            {/*    <label className={'font_weight_bold'}> Заглавие <span className={'required'}> * </span>*/}
-                            {/*    </label>*/}
-                            {/*    <input type="text" name="title" value={userInfo.title} onChange={onChangeValue}*/}
-                            {/*           className={'form_control'} placeholder="Назови..." required/>*/}
-                            {/*</div>*/}
-                            <Box className={'clearfix'} my={2}></Box>
-                            <div className={'editor'}>
-                                <label className={'font_weight_bold'}> Суть <span className={'required'}> * </span>
-                                </label>
-                                <TextField
-                                    multiline
-                                    type={"text"}
-                                    className={'w-full'}
-                                    placeholder={"Напиши что-нибудь..."}
-                                    sx={{
-                                        display: 'flex',
-                                        outline: 'none',
-                                        color: "rgb(176,176,176)",
-                                        backgroundColor: "rgb(0, 30, 60)",
-                                        borderRadius: '10px',
-                                        border: '1px solid rgb(30, 73, 118)',
-                                        '& .MuiOutlinedInput-root': {color: 'white', outline: 'none'},
-                                    }}
-                                    inputProps={{
-                                        sx: {
-                                            '&::placeholder': {
-                                                color: 'rgb(0, 200, 255)',
-                                                opacity: 1,
+                            <Box className={'relative w-full flex justify-center items-center  my-2'}>
+                                <FormControl className={'w-full absolute top-0 left-0 flex justify-start items-start'}
+                                             sx={{color: 'white'}}>
+                                    <TextField
+                                        fullWidth
+                                        multiline
+                                        label={'Содержание поста'}
+                                        id="content"
+                                        name="content"
+                                        type={"text"}
+                                        placeholder={"Напиши что-нибудь..."}
+                                        value={formik.values.content}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        error={formik.touched.content && Boolean(formik.errors.content)}
+                                        helperText={formik.touched.content && formik.errors.content}
+                                        maxRows={8}
+                                        sx={{
+                                            position: 'absolute',
+                                            top: 5,
+                                            left: 0,
+                                        }}
+                                        inputProps={{
+                                            style: {
+                                                height: '170px',
+                                                borderRadius: '5px',
+                                                color: 'rgb(51, 153, 255)',
+                                                '&::placeholder': {
+                                                    color: 'rgb(109,174,234)',
+                                                },
+                                                '&:hover': {
+                                                    borderColor: 'rgba(71, 163, 255, 0.767)',
+                                                },
+                                                '& ::helper': {
+                                                    fontSize: '12px',
+                                                }
+                                            },
+                                        }}
+                                        InputLabelProps={{
+                                            style: {
+                                                color: 'rgb(109,174,234)',
                                             }
-                                        }
-                                    }}
-                                    value={userInfo}
-                                    onChange={onDescription}/>
-                            </div>
-                            <br/>
-                            <br/>
-                            {isError !== null && <div className="errors"> {isError} </div>}
-                            <Box className="form-group w-full" sx={{
+                                        }}
+                                    />
+                                </FormControl>
+                            </Box>
+
+                            <Box className="w-full" sx={{
                                 display: 'flex',
                                 justifyContent: 'end',
                                 alignItems: 'center',
                             }}>
-                                <Button type="submit" variant="outlined" sx={{color: 'rgb(128, 191, 255)'}} onClick={addPostHandler}> <Typography
+                                <Box className={'relative w-full flex justify-start items-center  my-2'}>
+                                    <label className={'flex justify-center items-center cursor-pointer'}>
+                                        <Image sx={{
+                                            color: 'rgb(128, 191, 255)',
+                                            cursor: 'pointer',
+                                            '&:hover': {
+                                                color: 'rgb(220,234,243)',
+                                            }
+                                        }}/>
+                                        <input type="file"
+                                               name="imageUrl"
+                                               className={'image_input'}
+                                               onChange={handleSelectImage}
+                                        />
+                                    </label>
+                                    <label className={'flex justify-center items-center cursor-pointer'}>
+                                        <PlayCircle sx={{
+                                            color: 'rgb(128, 191, 255)',
+                                            cursor: 'pointer',
+                                            '&:hover': {
+                                                color: 'rgb(220,234,243)',
+                                            }
+                                        }}/>
+                                        <input type="file"
+                                               name="videoUrl"
+                                               className={'image_input'}
+                                               onChange={handleSelectVideo}
+                                        />
+                                    </label>
+                                    <label className={'flex justify-center items-center cursor-pointer'}>
+                                        <MusicNote sx={{
+                                            color: 'rgb(128, 191, 255)',
+                                            cursor: 'pointer',
+                                            '&:hover': {
+                                                color: 'rgb(220,234,243)',
+                                            }
+                                        }}/>
+                                        <input type="file"
+                                               name="musicUrl"
+                                               className={'image_input'}
+                                               onChange={handleSelectMusic}
+                                        />
+                                    </label>
+                                    <label className={'flex justify-center items-center cursor-pointer'}>
+                                        <LocationOn sx={{
+                                            color: 'rgb(128, 191, 255)',
+                                            cursor: 'pointer',
+                                            '&:hover': {
+                                                color: 'rgb(220,234,243)',
+                                            }
+                                        }}/>
+                                        {/*location*/}
+                                    </label>
+                                    <label className={'flex justify-center items-center cursor-pointer'}>
+                                        <EmojiEmotions sx={{
+                                            color: 'rgb(128, 191, 255)',
+                                            cursor: 'pointer',
+                                            '&:hover': {
+                                                color: 'rgb(220,234,243)',
+                                            }
+                                        }}/>
+                                        {/*emojis*/}
+                                    </label>
+                                </Box>
+                                <Button type="submit"
+                                        variant="outlined"
+                                        sx={{
+                                            color: 'rgb(128, 191, 255)',
+                                            '&.MuiButton-root': {
+                                                minWidth: '150px',
+                                            }
+                                        }}> <Typography
                                     sx={{
-                                        letterSpacing: '1px'
-                                    }} fontWeight={600}>Опубликовать</Typography> </Button>
+                                        letterSpacing: '1px',
+                                    }} fontSize={14} fontWeight={600}>Опубликовать</Typography> </Button>
                             </Box>
                         </div>
                     </form>
+                    {/*<p>Скорость ввода: {speed} символов/мин</p>*/}
+                    {/*<p>Количество введённых символов: {input.length}</p>*/}
                 </div>
             </div>
         </Box>
