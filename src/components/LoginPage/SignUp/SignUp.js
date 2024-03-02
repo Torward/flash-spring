@@ -70,7 +70,7 @@ const SignUp = (props) => {
                                     '&:hover': {
                                         borderColor: 'rgba(71, 163, 255, 0.767)',
                                     },
-                                    '& ::helper': {
+                                    '&::helper': {
                                         fontSize: '12px',
                                     }
                                 },

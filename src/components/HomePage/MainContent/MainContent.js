@@ -12,16 +12,17 @@ const MainContent = (props) => {
     let [modalActive, setModalActive] = useState(false);
     const {post} = useSelector((state) => state);
     console.log(post)
-        let postComponents = props.posts.map(p => <Post
+        let postComponents = post.posts.map(p => <Post
             key={p.postId}
             post={p}
-            id={p.postId}
-            userName={p.username}
-            location={p.location}
-            userAvatar={p.userAvatar}
-            postImage={p.postImageURL}
-            postContent={p.postContent}
-            likes={p.likes}
+            // id={p.postId}
+            // comments={p.comments.map(c => c.comment)}
+            // userName={p.username}
+            // location={p.location}
+            // userAvatar={p.userAvatar}
+            // postImage={p.postImageURL}
+            // postContent={p.postContent}
+            // likes={p.likes}
         />)
         let statusComponents = props.statuses.map(s => <StatusBar
             key={s.postId}

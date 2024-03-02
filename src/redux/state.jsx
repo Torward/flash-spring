@@ -203,6 +203,15 @@ let state = {
                 userAvatar: "https://mon.medikforum.ru/uploads/stars/portos_/medium_c6d5ddb22642d08ce79afae12ecb8783.jpeg",
                 postImageURL: "https://vsegda-pomnim.com/uploads/posts/2022-04/1651049541_52-vsegda-pomnim-com-p-shtorm-v-okeane-foto-56.jpg",
                 postContent: 'Прииивет! Как дела?',
+                comments: [{
+                    id: 1,
+                    author: 'Егоров Тарас',
+                    content: 'крутое фото'
+                },{
+                    id: 2,
+                    author: 'Егоров Тарас',
+                    content: 'крутое фото'
+                },],
                 timeStamp: "11.10.2022",
                 likes: "7772",
             },
@@ -213,6 +222,15 @@ let state = {
                 userAvatar: "https://mon.medikforum.ru/uploads/stars/portos_/medium_c6d5ddb22642d08ce79afae12ecb8783.jpeg",
                 postImageURL: "https://iodb.ru/uploads/2020/07/les.jpg",
                 postContent: '',
+                comments: [{
+                    id: 1,
+                    author: 'Егоров Тарас',
+                    content: 'крутое фото'
+                },{
+                    id: 2,
+                    author: 'Егоров Тарас',
+                    content: 'крутое фото'
+                },],
                 timeStamp: "11.10.2022",
                 likes: "7772",
             },

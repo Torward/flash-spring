@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MusicPlayer = () => {
+const MusicPlayer = ({src}) => {
     return (
         <div>MusicPlayer</div>
     )
