@@ -1,15 +1,18 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {Box} from "@mui/material";
 import Post from "../Post/Post";
+import {useDispatch, useSelector} from "react-redux";
+import {findPostByBookmarksContainsUser} from "../../../store/Post/Action";
 
-const BookmarksContent = (props) => {
-    let postComponents = props.savedPosts.map(p => <Post
-        id={p.postId}
-        userName={p.username}
-        location={p.location}
-        userAvatar={p.userAvatar}
-        postImage={p.postImageURL}
-        likes={p.likes}
+const BookmarksContent = () => {
+    const {post} = useSelector((state) => state);
+    const dispatch = useDispatch();
+    useEffect(()=>{
+        dispatch(findPostByBookmarksContainsUser())
+    },[])
+    let postComponents = post.posts.map(p => <Post
+        key={p.postId}
+        post={p}
     />)
     return (
         <Box className={'w-full flex-col'}>{postComponents}</Box>

@@ -29,7 +29,6 @@ function App(props) {
                         <Route path='/*' element={auth.user? <Home
                                 dialogsState={dialogsPage}
                                 feedState={feedPage}
-                                addPost={props.addPost}
                                 addMessage={props.addMessage}
                                 updateMessageHandler={props.updateMessageHandler}
                             />

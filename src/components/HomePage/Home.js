@@ -1,6 +1,5 @@
-import React, {useState} from "react";
-import {Route, Routes} from "react-router-dom";
-import Grid from "@mui/material/Grid";
+import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import "./Home.css";
 import SideBar from "./SideNavBar/SideBar";
 import MainContent from "./MainContent/MainContent";
@@ -10,8 +9,7 @@ import Dialogs from "./Dialogs/Dialogs";
 import AddPostForm from "./Post/AddPost/AddPostForm";
 import BookmarksContent from "./BookmarksContent/BookmarksContent";
 
-
-const Home =(props) => {
+const Home = (props) => {
     let data = [
         {
             username: "Портос",
@@ -58,70 +56,63 @@ const Home =(props) => {
         }
     ];
 
-const [profileDetailsList, setProfileDetailsList] = useState(data)
-        let userData = [{
-            username: "Портос",
-            id: 2,
-            details:
-                "Вспышка — быстрое сгорание газопаровоздушной смеси над поверхностью горючего вещества, сопровождающееся кратковременным видимым свечением",
-            avatarImg:
-                "https://mon.medikforum.ru/uploads/stars/portos_/medium_c6d5ddb22642d08ce79afae12ecb8783.jpeg",
-            posts: 52,
-            followers: 772,
-            following: 182,
-            location: "Paris"
-        }];
-        return (
-            <Grid container>
-                <Grid item xs={2}>
-                    <div className="home-page__navbar">
-                        <SideBar
-                            username={userData[0].username}
-                            details={userData[0].details}
-                            avatarImg={userData[0].avatarImg}
-                            posts={userData[0].posts}
-                            followers={userData[0].followers}
-                            following={userData[0].following}
-                        />
-                    </div>
-                </Grid>
-                <Grid item xs={8}>
-                    <Routes>
-                        <Route index element={<MainContent posts={props.feedState.posts}
-                                                           statuses={props.feedState.statuses}
-                                                           addPost={props.addPost}
-                        />}/>
-                        <Route index path={'feed'} element={<MainContent posts={props.feedState.posts}
-                                                                         statuses={props.feedState.statuses}
-                                                                         addPost={props.addPost}
-                        />}/>
-                        <Route path={'bookmarks'}
-                               element={<BookmarksContent savedPosts={props.feedState.posts}/>}/>
+    const [profileDetailsList, setProfileDetailsList] = useState(data);
+    let userData = [{
+        username: "Портос",
+        id: 2,
+        details:
+            "Вспышка — быстрое сгорание газопаровоздушной смеси над поверхностью горючего вещества, сопровождающееся кратковременным видимым свечением",
+        avatarImg:
+            "https://mon.medikforum.ru/uploads/stars/portos_/medium_c6d5ddb22642d08ce79afae12ecb8783.jpeg",
+        posts: 52,
+        followers: 772,
+        following: 182,
+        location: "Paris"
+    }];
 
-                        <Route path={'dialogs/*'} element={<Dialogs dialogs={props.dialogsState.dialogs}
-                                                                    messages={props.dialogsState.messages}
-                                                                    newMessageText={props.dialogsState.newMessageText}
-                                                                    addMessage={props.addMessage}
-                                                                    updateMessageHandler={props.updateMessageHandler}
-                        />}/>
-                        {profileDetailsList.map((item, index) => (
-                            <Route path={'profile/*'} element={<ProfileContent
-                                key={index}
-                                username={item.username}
-                                details={item.details}
-                                avatarImg={item.avatarImg}
-                            />}/>
-                        ))}
-                        <Route path={'add_post'} element={<AddPostForm
-                            addPost={props.addPost}
-                        />}/>
-                    </Routes>
-                </Grid>
-                <Grid item xs={2}>
-                    <RightSide id={userData[0].id} avatarImg={userData[0].avatarImg} addPost={props.addPost}/>
-                </Grid>
-            </Grid>
-        );
+    return (
+        <div className="flex flex-col md:flex-row">
+            <div className="w-full md:w-1/6">
+                <div className="home-page__navbar h-screen">
+                    <SideBar
+                        username={userData[0].username}
+                        details={userData[0].details}
+                        avatarImg={userData[0].avatarImg}
+                        posts={userData[0].posts}
+                        followers={userData[0].followers}
+                        following={userData[0].following}
+                    />
+                </div>
+            </div>
+            <div className="w-full md:w-4/6">
+                <Routes>
+                    <Route index element={<MainContent statuses={props.feedState.statuses} />} />
+                    <Route index path={'feed'} element={<MainContent statuses={props.feedState.statuses} />} />
+                    <Route path={'bookmarks'} element={<BookmarksContent />} />
+                    <Route path={'dialogs/*'} element={<Dialogs dialogs={props.dialogsState.dialogs}
+                                                                messages={props.dialogsState.messages}
+                                                                newMessageText={props.dialogsState.newMessageText}
+                                                                addMessage={props.addMessage}
+                                                                updateMessageHandler={props.updateMessageHandler}
+                    />} />
+                    {profileDetailsList.map((item, index) => (
+                        <Route path={'profile/*'} element={<ProfileContent
+                            key={index}
+                            username={item.username}
+                            details={item.details}
+                            avatarImg={item.avatarImg}
+                        />} />
+                    ))}
+                    <Route path={'add_post'} element={<AddPostForm
+                        addPost={props.addPost}
+                    />} />
+                </Routes>
+            </div>
+            <div className="w-full md:w-1/6">
+                <RightSide id={userData[0].id} avatarImg={userData[0].avatarImg} addPost={props.addPost} />
+            </div>
+        </div>
+    );
 }
 
 export default Home;

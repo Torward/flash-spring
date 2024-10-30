@@ -10,7 +10,6 @@ import {EmojiEmotions, Image, LocationOn, MusicNote, PlayCircle, VideoFile, Vide
 
 const validationSchema = Yup.object().shape({
     content: Yup.string().required('Содержание обязательно'),
-    // image: Yup.string().required('Картинка обязательна'),
 })
 
 function AddPostForm({active, setActive}) {
@@ -27,12 +26,7 @@ function AddPostForm({active, setActive}) {
     const [input, setInput] = useState('');
     const [speed, setSpeed] = useState(0);
     const [startTime, setStartTime] = useState(null)
-    // const [userInfo, setUserInfo] = useState(''
-    //     //     {
-    //     //     // title: '',
-    //     //     // content: '',
-    //     // }
-    // );
+
     const dispatch = useDispatch();
 
     const handleSelectImage = (e) => {
@@ -69,8 +63,10 @@ function AddPostForm({active, setActive}) {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            console.log(values);
+            console.log("Значения поста",values);
             dispatch(addPost(values))
+            setActive(false);
+            formik.resetForm();
         },
     })
     const onChangeStatistic = (e) => {
@@ -84,25 +80,7 @@ function AddPostForm({active, setActive}) {
         }
         setInput(e.target.value);
     }
-    // const [isError, setError] = useState(null);
-    // const textAreaStyleProperties = {
-    //     color: "white",
-    //     backgroundColor: "rgb(0, 30, 60)",
-    //     padding: "10px",
-    //     fontFamily: "Arial",
-    //     border: "1px solid rgb(30, 73, 118)!important",
-    //     borderRadius: "0 0 10px 10px",
-    //     placeholderColor: "rgb(0, 200, 255)"
-    // }
-    // const addPostHandler = (event) => {
-    //     event.preventDefault();
-    //     event.persist();
-    //     console.log(userInfo)
-    //     addPost(userInfo)
-    //     setUserInfo('')
 
-
-    // }
     return (
         <Box sx={{maxHeight: '100vh', width: '100vw', overflow: 'scroll'}} className={active ? 'modal active' : 'modal'}
              onClick={() => setActive(false)}>

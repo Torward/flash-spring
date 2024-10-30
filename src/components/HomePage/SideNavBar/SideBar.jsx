@@ -9,11 +9,12 @@ import {useSelector} from "react-redux";
 
 const SideBar = (props) => {
     const {auth} = useSelector(store => store)
-    return (<div className="sidebar-content">
+    return (
+        <div className="sidebar-content ">
         <Stack container>
-            <div className="sidebar-content__logo">ВСПЫШКА</div>
+
             <div className="sidebar-content__avatar">
-                <Box className={'w-full'}>
+                <Box className={'flex w-full justify-center xl:mt-20 lg:mt-20 md:mt-6 sm:mt-6'}>
                     <div className="avatar__block">
                         <Avatar
                             src={auth.user?.image}
@@ -48,39 +49,42 @@ const SideBar = (props) => {
                     <span>{props.following}</span>
                 </div>
             </div>
-            <div className="sidebar-content__tools">
-                <NavLink to={'/profile'} className="link">
-                    <div className="sidebar-content__tools__profile content">
-                        <Icon sx={{marginRight: 1}}>person</Icon>
-                        <span>Ты</span>
+            <div className="sidebar-content__tools items-center xl:space-y-3 lg:space-y-3 space-y-4 xl:text-lg lg:text-lg md:space-y-6 sm:space-y-6 md:text-2xl sm:text-2xl">
+                <NavLink to={'/profile'} className="link w-1/4">
+                    <div className="sidebar-content__tools__profile  content flex">
+                        <div className={'flex items-start '}>
+                            <Icon sx={{marginRight: 1}}>person</Icon>
+                        </div>
+
+                        <span className={'flex w-full'}>Ты</span>
                     </div>
                 </NavLink>
-                <NavLink to={'/feed'} className="link">
-                    <div className="sidebar-content__tools__feed content">
+                <NavLink to={'/feed'} className="link w-1/4">
+                    <div className="sidebar-content__tools__feed content flex">
                         <Icon sx={{marginRight: 1}}>feed</Icon>
                         <span>Лента</span>
                     </div>
                 </NavLink>
-                <NavLink to={'/explore'} className="link">
-                    <div className="sidebar-content__tools__explore content">
+                <NavLink to={'/explore'} className="link w-1/4">
+                    <div className="sidebar-content__tools__explore content flex">
                         <Icon sx={{marginRight: 1}}>explore</Icon>
                         <span>Исследуй</span>
                     </div>
                 </NavLink>
-                <NavLink to={'/bookmarks'} className="link">
-                    <div className="sidebar-content__tools__saved content">
+                <NavLink to={'/bookmarks'} className="link w-1/4">
+                    <div className="sidebar-content__tools__saved content flex">
                         <Icon sx={{marginRight: 1}}>bookmarks</Icon>
                         <span>Закладки</span>
                     </div>
                 </NavLink>
-                <NavLink to={'/dialogs'} className="link">
-                    <div className="sidebar-content__tools__trending content">
+                <NavLink to={'/dialogs'} className="link w-1/4">
+                    <div className="sidebar-content__tools__trending content flex">
                         <Icon sx={{marginRight: 1}}>hub</Icon>
-                        <span>Сообщальник</span>
+                        <span>Гонец</span>
                     </div>
                 </NavLink>
 
-                <div className="sidebar-content__tools__insights content">
+                <div className="sidebar-content__tools__insights content flex w-1/4">
                     <Icon sx={{marginRight: 1,}}>insights</Icon>
                     <span>Развитие</span>{" "}
                 </div>

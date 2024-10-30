@@ -3,13 +3,22 @@ import {
     ADD_POST_COMMENT_FAILURE,
     ADD_POST_COMMENT_SUCCESS,
     ADD_POST_FAILURE,
-    ADD_POST_SUCCESS, DELETE_POST_FAILURE, DELETE_POST_SUCCESS,
+    ADD_POST_SUCCESS, BOOKMARK_POST_FAILURE, BOOKMARK_POST_SUCCESS,
+    DELETE_POST_FAILURE,
+    DELETE_POST_SUCCESS,
     GET_POST_BY_ID_FAILURE,
-    GET_POST_BY_ID_SUCCESS, GET_POST_COMMENT_LIST_FAILURE, GET_POST_COMMENT_LIST_SUCCESS,
+    GET_POST_BY_ID_SUCCESS,
+    GET_POST_COMMENT_LIST_FAILURE,
+    GET_POST_COMMENT_LIST_SUCCESS,
     GET_POST_LIST_BY_USER_FAILURE,
     GET_POST_LIST_BY_USER_SUCCESS,
     GET_POST_LIST_FAILURE,
-    GET_POST_LIST_SUCCESS, REPOST_POST_FAILURE, REPOST_POST_SUCCESS, USER_LIKE_POST_FAILURE, USER_LIKE_POST_SUCCESS
+    GET_POST_LIST_SUCCESS, LIKE_POST_FAILURE, LIKE_POST_SUCCESS,
+    REPOST_POST_FAILURE,
+    REPOST_POST_SUCCESS, USER_BOOKMARK_POST_FAILURE,
+    USER_BOOKMARK_POST_SUCCESS,
+    USER_LIKE_POST_FAILURE,
+    USER_LIKE_POST_SUCCESS
 } from "./ActionType";
 
 export const getAllPosts = () => async (dispatch) => {
@@ -44,6 +53,17 @@ export const findPostByLikesContainsUser = (userId) => async (dispatch) => {
     } catch (error) {
         console.log("findPostByLikesContainsUser ошибка: ", error);
         dispatch({type: USER_LIKE_POST_FAILURE, payload: error.message});
+    }
+
+}
+export const findPostByBookmarksContainsUser = () => async (dispatch) => {
+    try {
+        const {data} = await api.get(`/api/posts/user/bookmarks`);
+        console.log("Пользователю понравился пост: ", data);
+        dispatch({type: USER_BOOKMARK_POST_SUCCESS, payload: data})
+    } catch (error) {
+        console.log("findPostByLikesContainsUser ошибка: ", error);
+        dispatch({type: USER_BOOKMARK_POST_FAILURE, payload: error.message});
     }
 
 }
@@ -92,11 +112,43 @@ export const addComment = (commentData) => async (dispatch) => {
 }
 export const likePost = (postId) => async (dispatch) => {
     try {
-        const {data} = await api.put(`/api/${postId}/like`);
+        const {data} = await api.post(`/api/${postId}/like`);
         console.log("Пользователю понравился пост: ", data);
-        dispatch({type: USER_LIKE_POST_SUCCESS, payload: data})
+        dispatch({type: LIKE_POST_SUCCESS, payload: data})
     } catch (error) {
         console.log("likePost ошибка: ", error);
+        dispatch({type: LIKE_POST_FAILURE, payload: error.message});
+    }
+}
+
+export const bookmark = (postId) => async (dispatch) => {
+    try {
+        const {data} = await api.put(`/api/posts/${postId}/save`);
+        console.log("Пользователь запомнил пост: ", data);
+        dispatch({type: BOOKMARK_POST_SUCCESS, payload: data})
+    } catch (error) {
+        console.log("BookmarkPost ошибка: ", error);
+        dispatch({type: BOOKMARK_POST_FAILURE, payload: error.message});
+    }
+}
+// export const unbookmark = (postId) => async (dispatch) => {
+//     try {
+//         const {data} = await api.delete(`/api/bookmarks/${postId}`);
+//         console.log("Пользователь забыл пост: ", data);
+//         dispatch({type: BOOKMARK_POST_SUCCESS, payload: data})
+//     } catch (error) {
+//         console.log("BookmarkPost ошибка: ", error);
+//         dispatch({type: BOOKMARK_POST_FAILURE, payload: error.message});
+//     }
+// }
+
+export const sharePost = (postId) => async (dispatch) => {
+    try {
+        const {data} = await api.put(`/api/${postId}/share`);
+        console.log("Пользователю поделился постом: ", data);
+        dispatch({type: USER_LIKE_POST_SUCCESS, payload: data})
+    } catch (error) {
+        console.log("sharePost ошибка: ", error);
         dispatch({type: USER_LIKE_POST_FAILURE, payload: error.message});
     }
 }

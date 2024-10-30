@@ -1,16 +1,18 @@
+
 import React from "react";
 
 import {Avatar, Box, Button, Icon, Menu, MenuItem, Stack, TextField, Typography} from "@mui/material";
 import "./Post.css";
 import {useNavigate} from "react-router-dom";
-import {Chat, Favorite, MoreVert, Repeat, Share} from "@mui/icons-material";
+import {Bookmark, BookmarkBorder, Chat, Favorite, MoreVert, Repeat, Share} from "@mui/icons-material";
 import VideoPlayer from "../../../widgets/VideoPlayer/VideoPlayer";
 import MusicPlayer from "../../../widgets/MusicPlayer/MusicPlayer";
 import {CommentList} from "../../../widgets/CommentList/CommentList";
 import * as Yup from "yup";
 import {useFormik} from "formik";
+import {useDispatch} from "react-redux";
+import {addComment, bookmark, deletePost, likePost, repost} from "../../../store/Post/Action";
 
-// import postImage from "../../images/postfoto.jpg";
 const validationSchema = Yup.object({
     content: Yup.string().required('Пустую строку отправить нельзя'),
 })
@@ -18,6 +20,7 @@ const Post = ({post}) => {
     const navigate = useNavigate()
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+    const dispatch = useDispatch();
 
     const formik = useFormik({
         initialValues: {
@@ -26,16 +29,19 @@ const Post = ({post}) => {
         validationSchema,
         onSubmit: (values) => {
             console.log("Значения ответа переданые для отправки", values);
+            dispatch(addComment(values))
         },
     })
 
     const handleLikePost = (e) => {
         e.preventDefault();
         console.log(post.id);
+        dispatch(likePost(post.id))
     }
     const handleDeletePost = (e) => {
         e.preventDefault();
         console.log(post.id);
+        dispatch(deletePost(post.id))
         handleClose()
     }
 
@@ -68,16 +74,10 @@ const Post = ({post}) => {
     function getCorrectWord(number, one, two, five) {
         let n = Math.abs(number);
         n %= 100;
-        if (n >= 5 && n <= 20) {
-            return five;
-        }
+        if (n >= 5 && n <= 20) {return five;}
         n %= 10;
-        if (n === 1) {
-            return one;
-        }
-        if (n >= 2 && n <= 4) {
-            return two;
-        }
+        if (n === 1) {return one;}
+        if (n >= 2 && n <= 4) {return two;}
         return five;
     }
 
@@ -91,12 +91,21 @@ const Post = ({post}) => {
         setAnchorEl(null);
     }
 
-    function handleCreateRepost() {
-
+    function handleCreateRepost(e) {
+        e.preventDefault();
+        console.log(post.id);
+        dispatch(repost(post.id))
     }
 
     function handleOpenModalComments() {
 
+    }
+
+
+    function handleSavePost(e) {
+        e.preventDefault();
+        console.log(post.id);
+        dispatch(bookmark(post.id))
     }
 
     return (
@@ -148,6 +157,7 @@ const Post = ({post}) => {
                             }}
                         >
                             <MenuItem onClick={handleDeletePost}>Удалить</MenuItem>
+                            <MenuItem>Изменить</MenuItem>
                             {/*<MenuItem onClick={handleClose}>Another action</MenuItem>*/}
                             {/*<MenuItem onClick={handleClose}>Something else here</MenuItem>*/}
                         </Menu>
@@ -173,64 +183,73 @@ const Post = ({post}) => {
                     }}>
                     <Typography className={'flex justify-start items-center'}>{post.content}</Typography>
                 </Box>
-                <div className="post-container__header__time">
-                    {/*<span>{post.time}</span>*/}
-                </div>
                 <div className="post-container__analitics">
+
+
                     <Box
-                        className={'flex justify-around items-center text-center w-[70px] bg-blue-300 rounded-full py-0.5'}>
-                        {!post.liked ?
-                            (
-                                <Icon className="text-blue-950"
-                                      onClick={handleLikePost}
-                                >
-                                    favorite_border_outlined
-                                </Icon>
-                            )
-                            :
-                            (
-                                <Favorite className="favorite"
-                                          color="error"
-                                          onClick={handleLikePost}/>
-                            )
-                        }
-                        <Typography className={'text-center text-blue-950'}>{post.totalLikes}</Typography>
+                        className={'flex justify-around items-center text-center bg-blue-300 rounded-[10px] px-2 py-1'}>
+                        <Box className={'flex justify-around items-center text-center'}>
+                            {!post.liked ?
+                                (
+                                    <Icon className="text-blue-950 cursor-pointer" onClick={handleLikePost}>
+                                        favorite_border_outlined
+                                    </Icon>
+                                )
+                                :
+                                (
+                                    <Favorite className="favorite cursor-pointer"
+                                              color="error"
+                                              onClick={handleLikePost}/>
+                                )
+                            }
+                            <Typography className={'text-center text-blue-950'}>{post.totalLikes}</Typography>
+                        </Box>
+                        <Box
+                            className={'flex justify-center items-center w-[45px] text-blue-950 text-center rounded-full'}>
+                            <Chat className="chat ml-1" onClick={handleOpenModalComments}/>
+                            <Typography>{post.totalReplies}</Typography>
+                        </Box>
+                        <Box
+                            className={'flex justify-center items-center text-center w-[45px] text-blue-950 rounded-full'}>
+                            <Share className="share"/>
+                            <Typography>{post.totalShares}</Typography>
+                        </Box>
+
+
+                        <Box
+                            className={'flex justify-center items-center text-center w-[45px] text-blue-950 rounded-full'}>
+                            {post.reposted ?
+                                <Repeat className="cursor-pointer text-red-500" onClick={handleCreateRepost}/>
+                                :
+                                <Repeat className="cursor-pointer text-blue-950" onClick={handleCreateRepost}/>
+                            }
+                            <Typography>{post.totalReposts}</Typography>
+                        </Box>
+                        {/*<div className="appLikes-block">*/}
+                        {/*    {" "}*/}
+                        {/*    <span>{props.likes}</span>{" "}*/}
+                        {/*</div>*/}
                     </Box>
-
-                    <Chat className="chat" sx={{margin: 1,}} onClick={handleOpenModalComments}/>
-                    <Share
-                        className="share"
-                        // sx={{
-                        //     margin: 1,
-                        // }}
-                    />
-                    <Icon
-                        className="bookmark"
-                        sx={{
-                            margin: 1,
-                        }}
-                    >
-                        bookmark_border_outlined
-                    </Icon>{" "}
-                    <Repeat className="cursor-pointer" onClick={handleCreateRepost}/>
-
-                    {/*<div className="appLikes-block">*/}
-                    {/*    {" "}*/}
-                    {/*    <span>{props.likes}</span>{" "}*/}
-                    {/*</div>*/}
                 </div>
                 {post.commentsCount > 0 &&
                     <div className="post-container__comments">
                         <CommentList comments={post.posts.map().replyPost}/>
                     </div>
                 }
-
+                {post.bookmarked ?
+                    <Bookmark className="cursor-pointer text-red-500" onClick={handleSavePost}/>
+                    :
+                    <BookmarkBorder className="cursor-pointer text-blue-950" onClick={handleSavePost}/>
+                }
                 <div className="post-container__comment-input">
                     <form onSubmit={formik.handleSubmit}>
                         <TextField
+                            id={'content'}
+                            type="text"
                             multiline
                             fullWidth
                             name="content"
+                            variant={"filled"}
                             value={formik.values.content}
                             editing={formik.isSubmitting}
                             error={formik.touched.content && Boolean(formik.errors.content)}
@@ -240,8 +259,16 @@ const Post = ({post}) => {
                             InputProps={{
                                 style: {
                                     padding: '3px 40px',
-                                    outline: 'none',
+                                    '& ::before': {
+                                        outline: 'none!important',
+                                        border: 'none!important',
+                                    },
+                                    '& ::after': {
+                                        outline: 'none!important',
+                                        border: 'none!important',
+                                    },
                                     '&.MuiInputBase': {
+                                        border: 'none',
                                         outline: 'none',
                                     },
                                 },
@@ -249,7 +276,7 @@ const Post = ({post}) => {
                                     border: 'none!important',
                                     outline: 'none!important',
                                     '&.MuiInputBase': {
-                                        outline: 'none',
+                                        outline: 'none!important',
                                         border: 'none!important',
                                     },
                                     '&:hover fieldset': {
@@ -260,21 +287,44 @@ const Post = ({post}) => {
                                         border: 'none!important',
                                         outline: 'none!important',
                                     },
+
                                 },
                             }}
                             inputProps={{
                                 style: {
+                                    height: '20px',
+                                    border: 'none!important',
+                                    outline: 'none!important',
                                     color: 'rgb(51, 153, 255)',
                                     '&::placeholder': {
                                         color: 'rgb(109,174,234)',
                                     },
+
                                     '& :hover': {
                                         border: 'none',
                                         outline: 'none',
                                     },
+                                    '&.MuiInputBase': {
+                                        outline: 'none!important',
+                                        border: 'none!important',
+                                    },
                                     '& :focus': {
                                         border: 'none',
                                         outline: 'none',
+                                    },
+
+                                },
+                                sx: {
+                                    border: 'none!important',
+                                    outline: 'none!important',
+                                    '&.MuiInputBase': {
+                                        outline: 'none',
+                                        border: 'none!important',
+
+                                    },
+                                    '&:hover fieldset': {
+                                        border: 'none!important',
+                                        outline: 'none!important',
                                     },
                                 }
                             }}

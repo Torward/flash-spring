@@ -14,7 +14,8 @@ export const loginUser = (loginData) => async (dispatch) => {
     const {data} = await axios.post(`${API_BASE_URL}/auth/signIn`, loginData );
     console.log("попытка входа: ",data);
     if (data.jwt){
-        localStorage.setItem("jwt", data.jwt);
+        localStorage.setItem('jwt', data.jwt);
+        console.log("jwt: ",localStorage.getItem("jwt"))
     }
         dispatch({type: LOGIN_USER_SUCCESS, payload: data.jwt});
     } catch (error) {
@@ -28,7 +29,7 @@ export const registerUser = (registerData) => async (dispatch) => {
     const {data} = await axios.post(`${API_BASE_URL}/auth/signup`, registerData );
         console.log("попытка регистрации: ",data);
     if (data.jwt){
-        localStorage.setItem("jwt", data.jwt);
+        localStorage.setItem('jwt', data.jwt);
     }
         dispatch({type: REGISTER_USER_SUCCESS, payload: data.jwt});
     } catch (error) {

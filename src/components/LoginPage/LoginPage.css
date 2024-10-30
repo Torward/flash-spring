@@ -18,9 +18,9 @@ input[type="password"i] {
     padding-bottom: 0;
 }
 
-.login-page__main {
-    margin-top: 25px;
-}
+/*.login-page__main {*/
+/*    margin-top: 25px;*/
+/*}*/
 
 .login-page__right-component {
     width: 350px;
@@ -29,8 +29,8 @@ input[type="password"i] {
     background-color: rgb(0, 30, 60);
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     border-radius: 8px;
-    /*border: 1px solid rgb(30, 73, 118);*/
-    border-image: linear-gradient(#f6b73c, #fbfbf5) 45%;
+    border: 1px solid rgb(30, 73, 118);
+    /*border-image: linear-gradient(#f6b73c, #fbfbf5) 45%;*/
     border-width: 1px;
     border-style: solid;
     overflow: hidden;

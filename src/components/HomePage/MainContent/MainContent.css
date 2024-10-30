@@ -8,7 +8,7 @@
 }
 
 body {
-    height: 100vh;
+    /*height: 100vh;*/
     background: linear-gradient(to bottom right,  rgb(10, 25, 41), rgb(1, 40, 77));
 }
 
@@ -79,4 +79,23 @@ input[type="text"i] {
     border-bottom-color: white;
     border-bottom-width: 1px;
     border-bottom-style: solid;
+}
+
+
+
+@keyframes stackCards {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.animate-stack-cards {
+    animation: stackCards 1s forwards;
+}
+
+.card:nth-child(n+2) {
+    margin-left: -20px;
 }

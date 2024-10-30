@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import "./SignUp.css";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
 import {Box, FormControl, TextField} from "@mui/material";
 import {useDispatch} from "react-redux";
-import {loginUser, registerUser} from "../../../store/Auth/Action";
+import {registerUser} from "../../../store/Auth/Action";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -22,6 +23,7 @@ const validationSchema = Yup.object().shape({
 });
 const SignUp = (props) => {
     const dispatch = useDispatch()
+    const [visibility, setVisibility] = useState(false)
     const formik = useFormik({
         initialValues: {
             firstName: "",
@@ -40,7 +42,7 @@ const SignUp = (props) => {
         <Box>
             <form onSubmit={formik.handleSubmit}>
                 <Box className={'w-[310px] flex flex-col justify-around items-center py-1'}>
-                    <Box className={'relative w-full h-[70px]  flex justify-center items-center overflow-hidden  mt-2'}>
+                    <Box className={'relative w-full h-[70px] flex justify-center items-center overflow-hidden  mt-2'}>
                     <FormControl className={'w-full absolute top-0 left-0'} sx={{color: 'white'}}>
                         <TextField
                             fullWidth
@@ -176,7 +178,7 @@ const SignUp = (props) => {
                             label={'Пароль'}
                             id="password"
                             name="password"
-                            type="password"
+                            type={visibility?'text':'password'}
                             size={'small'}
                             sx={{
                                 position: 'absolute',
@@ -210,6 +212,15 @@ const SignUp = (props) => {
                                 }
                             }}
                         />
+                        <Box className={'z-10 absolute h-[24px] w-[24px] right-2 top-3'}>
+                            {visibility?
+                                <Visibility className={'text-gray-600'} onClick={() => setVisibility(false)}/>
+                                :
+                                <VisibilityOff className={'text-gray-600'} onClick={() => setVisibility(true)}/>
+                            }
+                        </Box>
+
+
                     </FormControl>
                     </Box>
                     <button type={'submit'} className="login-page__sign-in__button">Регистрируюсь</button>

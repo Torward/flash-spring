@@ -2,7 +2,6 @@
 
 .albums-container{
     width: 100%;
-    margin: 25px 35px;
     display: flex;
     overflow-x: auto;
     color: rgb(0, 200, 255);

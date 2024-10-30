@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Avatar, Icon, Stack } from "@mui/material";
+import React, {Component} from "react";
+import {Avatar} from "@mui/material";
 import "./Groups.css";
 
 class Groups extends Component {

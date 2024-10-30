@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import "./SignIn.css";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {Box, TextField} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {loginUser} from "../../../store/Auth/Action";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 const validationSchema = Yup.object({
     email: Yup.string()
@@ -16,7 +17,7 @@ const validationSchema = Yup.object({
 })
 const SignIn = (props) => {
     const dispatch = useDispatch()
-
+    const [visibility, setVisibility] = useState(false)
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -67,7 +68,7 @@ const SignIn = (props) => {
                        fullWidth
                        id="password"
                        name="password"
-                       type="password"
+                       type={visibility?'text':'password'}
                        size={'small'}
                        sx={{
                            position: 'absolute',
@@ -101,6 +102,14 @@ const SignIn = (props) => {
                            }
                        }}
             />
+                <Box className={'z-10 absolute h-[24px] w-[24px] right-2 top-3'}>
+                    {visibility?
+                        <Visibility className={'text-gray-600'} onClick={() => setVisibility(false)}/>
+                        :
+                        <VisibilityOff className={'text-gray-600'} onClick={() => setVisibility(true)}/>
+                    }
+                </Box>
+
             </Box>
             <button type={'submit'} className="login-page__sign-in__button">Входи</button>
         </div>

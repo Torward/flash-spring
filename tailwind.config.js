@@ -1,7 +1,7 @@
 const colors = require('tailwindcss/colors');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ["./src/**/*.{html,js}"],
+    content: ["./src/**/*.{html,js,jsx}"],
     theme: {
         screens: {
             sm: '480px',
@@ -10,6 +10,9 @@ module.exports = {
             xl: '1440px',
             },
         extend: {
+            backgroundImage: {
+                'custom-gradient': 'linear-gradient(to right bottom, rgb(0, 51, 102), rgb(0, 31, 63) 120%)',
+            },
             colors: {
                 'primary': 'rgb(0, 30, 60)',
                 'secondary': 'rgb(30, 73, 118)',
@@ -28,5 +31,8 @@ module.exports = {
         },
 
     },
-    plugins: [],
+    plugins: [
+        require('tailwindcss-animate'),
+
+    ],
 }

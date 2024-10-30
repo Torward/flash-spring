@@ -2,35 +2,30 @@
     font-family: "Palace of Sports";
     font-style: normal;
     src: url("../../../fonts/palace_of_sports.otf");
+}
+
+@font-face {
     font-family: "Petrogradsky";
     font-style: normal;
     src: url("../../../fonts/petrogradski.otf");
 }
 
-.profile_content{
+.profile_content {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(0, 23, 98, 0.66));
     height: 100%;
 }
 
 .person {
-    width: 100%;
+    width: 97%;
     margin-top: 10px;
-    margin-left: 25px;
-    margin-right: 25px;
     padding: 25px;
-    column-count: 2;
-    column-gap: 10px;
     border: 1px solid rgb(30, 73, 118);
     border-radius: 10px;
-
 }
 
 .person_info {
-    margin-right: 20px;
     display: flex;
     flex-direction: column;
-
-
 }
 
 .section {
@@ -38,15 +33,13 @@
     margin-top: 10px;
     border: 1px solid rgb(30, 73, 118);
     background-color: rgb(0, 30, 60);
-    box-shadow: rgb(0, 30, 60) 0px 0px 25px,
-        rgb(0, 30, 60) 0px 0px 15px;
+    box-shadow: rgb(0, 30, 60) 0px 0px 25px, rgb(0, 30, 60) 0px 0px 15px;
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     border-radius: 10px;
     padding: 10px;
     width: 100%;
     justify-content: space-between;
     cursor: pointer;
-
 }
 
 .section:hover {
@@ -59,46 +52,48 @@
     color: rgb(0, 200, 255);
 }
 
-.cover{
-    margin: 0 25px;
-    width: 100%;
+.cover {
+    width: 97%;
     height: 350px;
 }
-.cover img{
+
+.cover img {
     width: 100%;
     height: 100%;
-    border-radius: 0 0 10px 10px  ;
+    border-radius: 0 0 10px 10px;
 }
-.gradient{
+
+.gradient {
     position: absolute;
-    width: 64%;
+    width: 94%;
     height: 20%;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.66));
     margin-top: -197px;
-    border-radius: 0 0 10px 10px  ;
-
+    border-radius: 0 0 10px 10px;
 }
 
 .value {
     color: rgb(128, 191, 255);
-    width: 35%;
+    width: 55%;
     text-align: end;
 }
-.interests{
-    width: 100%;
+
+.interests {
+    width: 97%;
     margin-top: 10px;
-    margin-left: 25px;
-    margin-right: 25px;
     padding: 25px;
-    column-count: 2;
-    column-gap: 30px;
     border: 1px solid rgb(30, 73, 118);
     border-radius: 10px;
-    /*display: flex;*/
-    /*flex-direction: column;*/
 }
-.interests_info{
-    margin-right: 20px;
+
+.interests_info {
     display: flex;
     flex-direction: column;
+}
+
+@media (max-width: 768px) {
+    .person, .interests, .cover {
+        margin-left: 0;
+        margin-right: 0;
+    }
 }

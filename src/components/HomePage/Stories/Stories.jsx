@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {Avatar, Icon, Stack} from "@mui/material";
+import React, { Component } from "react";
+import { Avatar } from "@mui/material";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import "./Stories.css";
 
@@ -35,18 +35,19 @@ class Stories extends Component {
             albumList: data,
         });
     };
+
     render() {
         return (
-
-            <div className="albums-container">
-                <AddCircleIcon sx={{width: 60, height: 60}}>add_circle</AddCircleIcon>
-                {this.state.albumList.map((item, index) => (
-                <div className="albums-container__payload">
-                    <Avatar src={item.imageURL}  sx={{width: 50, height: 50}}/>
+            <div className="flex justify-center mt-2 space-x-4 overflow-x-auto">
+                <div className="flex items-center">
+                    <AddCircleIcon sx={{ width: 60, height: 60 }} className={'text-blue-400'}>add_circle</AddCircleIcon>
                 </div>
+                {this.state.albumList.map((item, index) => (
+                    <div key={index} className="flex items-center">
+                        <Avatar src={item.imageURL} sx={{ width: 50, height: 50 }} />
+                    </div>
                 ))}
             </div>
-
         );
     }
 }

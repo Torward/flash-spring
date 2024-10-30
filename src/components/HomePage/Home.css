@@ -24,7 +24,6 @@ input[type="text"i] {
     top: 0;
     bottom: 0;
     max-width: 100%;
-    min-height: 100vh;
     overflow-x: hidden;
     overflow-y: hidden;
 }
