@@ -1,0 +1,20 @@
+server:
+  port: 8187
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/flash
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+
+      ddl-auto: update
+    show-sql: true
+logging:
+  level:
+    root: debug
+    web: trace
+    ru:
+      lomov:
+        flashbackend: info

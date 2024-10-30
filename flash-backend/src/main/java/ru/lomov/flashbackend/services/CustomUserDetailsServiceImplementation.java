@@ -1,0 +1,32 @@
+package ru.lomov.flashbackend.services;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import ru.lomov.flashbackend.entities.AppUser;
+import ru.lomov.flashbackend.exceptions.UserNotFoundException;
+import ru.lomov.flashbackend.repositories.UserRepository;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class CustomUserDetailsServiceImplementation implements UserDetailsService {
+    private final UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        AppUser user = userRepository.findAppUserByEmail(username).orElseThrow(() -> new UserNotFoundException("Пользователь" + username + " не найден!"));
+        if (user == null || user.isLogin_with_google() || user.isLogin_with_vk()){
+            throw new UsernameNotFoundException("Имя пользователя: "+username+" не найдено!");
+        }
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        return new User(user.getEmail(), user.getPassword(), authorities);
+    }
+}
