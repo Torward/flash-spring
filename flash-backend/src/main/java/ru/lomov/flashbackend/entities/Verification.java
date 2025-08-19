@@ -14,5 +14,4 @@ public class Verification {
     private LocalDateTime startedAt;
     private LocalDateTime endsAt;
     private String planType;
-
 }

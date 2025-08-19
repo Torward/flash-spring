@@ -1,5 +1,9 @@
 server:
   port: 8187
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 50
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/flash
@@ -8,13 +12,13 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-
       ddl-auto: update
     show-sql: true
+
 logging:
   level:
-    root: debug
+    root: info
     web: trace
     ru:
       lomov:
-        flashbackend: info
+        flashbackend: warn

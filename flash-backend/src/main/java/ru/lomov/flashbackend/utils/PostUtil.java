@@ -27,4 +27,8 @@ public class PostUtil {
         }
         return false;
     }
+
+    public static boolean isBookmarkedByReqUser(AppUser reqUser, Post post) {
+        return reqUser.getSavedPosts().contains(post);
+    }
 }

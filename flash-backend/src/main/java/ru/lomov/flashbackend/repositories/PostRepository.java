@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    @Query("SELECT p FROM Post p JOIN FETCH p.appUser WHERE p.isPost = true ORDER BY p.createdAt ASC")
+    @Query("SELECT p FROM Post p JOIN FETCH p.appUser WHERE p.isPost = true  ORDER BY p.createdAt ASC")
     List<Post> findAllByIsPostTrueOrderByCreatedAtAsc();
 
     @Query("SELECT p FROM Post p WHERE :appUser MEMBER OF p.repostAppUser OR p.appUser.userId = :userId AND p.isPost = true ORDER BY p.createdAt DESC")
@@ -92,4 +92,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("SELECT p FROM Post p JOIN p.replyFor r WHERE r = :user")
     List<Post> findPostsByRepliesForContainsAppUser(@Param("user") AppUser user);
+
+    List<Post> findByLikes_AppUser(AppUser user);
+
 }

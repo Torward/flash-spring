@@ -4,6 +4,7 @@ package ru.lomov.flashbackend.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.lomov.flashbackend.dto.PostDto;
 import ru.lomov.flashbackend.entities.AppUser;
 import ru.lomov.flashbackend.entities.Post;
@@ -11,6 +12,7 @@ import ru.lomov.flashbackend.exceptions.PostNotFoundException;
 import ru.lomov.flashbackend.exceptions.UserNotFoundException;
 import ru.lomov.flashbackend.request.PostReplyRequest;
 import ru.lomov.flashbackend.responses.ApiResponse;
+import ru.lomov.flashbackend.services.FileStorageService;
 import ru.lomov.flashbackend.services.LikeService;
 import ru.lomov.flashbackend.services.PostService;
 import ru.lomov.flashbackend.services.UserService;
@@ -26,6 +28,7 @@ public class PostController {
     private final PostService postService;
     private final UserService userService;
     private final LikeService likeService;
+    private final FileStorageService fileStorageService;
 
     @PostMapping
     public PostDto createPost(@RequestBody Post req, @RequestHeader("Authorization") String jwt) throws PostNotFoundException, UserNotFoundException {
@@ -33,6 +36,17 @@ public class PostController {
         Post post = postService.createPost(req, user);
         PostDto postDto = PostDtoMapper.postToDto(post, user);
         return postDto;
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
+        try {
+            String fileName = fileStorageService.save(file); // Ваш сервис для сохранения файла
+            String fileUrl = "/uploads/" + fileName; // Или URL облачного хранилища
+            return ResponseEntity.ok(fileUrl);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Ошибка загрузки");
+        }
     }
 
     @PostMapping("/reply")

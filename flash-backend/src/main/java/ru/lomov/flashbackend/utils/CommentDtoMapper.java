@@ -7,30 +7,23 @@ import ru.lomov.flashbackend.entities.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CommentDtoMapper {
     public static CommentDto commentToDto(Comment comment, AppUser reqUser) {
-        UserDto userDto = UserDtoMapper.userToDto(comment.getUser());
-        boolean isLiked = CommentUtil.isLikedByReqUser(reqUser, comment);
-        CommentDto commentDto = CommentDto.builder()
-                .id(comment.getId())
-                .content(comment.getContent())
-                .createdAt(comment.getCreatedAt())
-                .media(comment.getMedia())
-                .totalLikes(comment.getLikes().size())
-                .totalReplies(comment.getReplyComments().size())
-                .user(userDto)
-                .isLiked(isLiked)
-                .replyComments(commentToDto(comment.getReplyComments(), reqUser))
-                .build();
-        return commentDto;
+        Objects.requireNonNull(comment, "Comment cannot be null");
+        Objects.requireNonNull(reqUser, "ReqUser cannot be null");
+
+        return toReplyCommentDto(comment, reqUser);
     }
 
     public static List<CommentDto> commentToDto(List<Comment> comments, AppUser reqUser) {
+        Objects.requireNonNull(comments, "Comments cannot be null");
+        Objects.requireNonNull(reqUser, "ReqUser cannot be null");
+
         List<CommentDto> commentDtos = new ArrayList<>();
         for (Comment comment : comments) {
-            CommentDto commentDto = toReplyCommentDto(comment, reqUser);
-            commentDtos.add(commentDto);
+            commentDtos.add(toReplyCommentDto(comment, reqUser));
         }
         return commentDtos;
     }
@@ -38,7 +31,7 @@ public class CommentDtoMapper {
     private static CommentDto toReplyCommentDto(Comment comment, AppUser reqUser) {
         UserDto userDto = UserDtoMapper.userToDto(comment.getUser());
         boolean isLiked = CommentUtil.isLikedByReqUser(reqUser, comment);
-        CommentDto commentDto = CommentDto.builder()
+        return CommentDto.builder()
                 .id(comment.getId())
                 .content(comment.getContent())
                 .createdAt(comment.getCreatedAt())
@@ -48,6 +41,5 @@ public class CommentDtoMapper {
                 .user(userDto)
                 .isLiked(isLiked)
                 .build();
-        return commentDto;
     }
 }

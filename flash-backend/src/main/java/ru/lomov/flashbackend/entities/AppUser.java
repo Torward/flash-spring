@@ -1,4 +1,3 @@
-
 package ru.lomov.flashbackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -77,8 +76,6 @@ public class AppUser {
     @OneToMany(mappedBy = "appUser")
     private List<Post> posts = new ArrayList<>();
 
-
-
     @ManyToMany
     @JoinTable(
             name = "user_saved_posts",
@@ -87,7 +84,6 @@ public class AppUser {
     )
     private List<Post> savedPosts = new ArrayList<>();
 
-
     @JsonIgnore
     @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AppLike> appLikes = new ArrayList<>();
@@ -95,19 +91,12 @@ public class AppUser {
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     private List<AppUser> followers = new ArrayList<>();
-
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     private List<AppUser> following = new ArrayList<>();
-
     @Embedded
     private Verification verification;
-
-
     private LocalDateTime createdAt;
-
     private LocalDateTime modifiedAt;
-
     private LocalDateTime deletedAt;
-
 }

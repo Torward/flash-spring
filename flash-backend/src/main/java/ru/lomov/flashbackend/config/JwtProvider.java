@@ -22,7 +22,7 @@ public class JwtProvider {
     public String generateToken(Authentication authentication){
         String jwt = Jwts.builder()
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 100000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000))
                 .claim("email", authentication.getName())
                 .signWith(secretKey)
                 .compact();
@@ -53,7 +53,7 @@ public class JwtProvider {
         String email = String.valueOf(claims.get("email"));
         return Jwts.builder()
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 100000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000))
                 .claim("email", email)
                 .signWith(secretKey)
                 .compact();

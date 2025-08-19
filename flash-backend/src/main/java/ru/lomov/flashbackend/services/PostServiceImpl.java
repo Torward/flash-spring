@@ -19,6 +19,7 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final UserService userService;
 
+
     @Override
     public Post createPost(Post req, AppUser user) throws UserNotFoundException {
         Post post = new Post();
@@ -35,6 +36,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post createReply(PostReplyRequest replyRequest, AppUser user) throws PostNotFoundException {
         Post replyFor = findById(replyRequest.getPostId());
+        if (replyFor == null) {
+            throw new PostNotFoundException("Пост с номером " + replyRequest.getPostId() + " не найден!");
+        }
         Post post = new Post();
         post.setContent(replyRequest.getContent());
         post.setCreatedAt(LocalDateTime.now());
@@ -45,13 +49,17 @@ public class PostServiceImpl implements PostService {
         post.setReplyFor(replyFor);
         Post savedReply = postRepository.save(post);
         replyFor.getReplyPosts().add(savedReply);
-        postRepository.save(replyFor); // Сохраняем изменения в replyFor
-        return savedReply; // Возвращаем сохраненный ответ
+        postRepository.save(replyFor);
+        return savedReply;
     }
+
 
     @Override
     public Post repost(Long postId, AppUser user) throws UserNotFoundException, PostNotFoundException {
         Post post = findById(postId);
+        if (post == null) {
+            throw new PostNotFoundException("Пост с номером " + postId + " не найден!");
+        }
         if (post.getRepostAppUser().contains(user)) {
             post.getRepostAppUser().remove(user);
         } else {
@@ -85,7 +93,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> findByLikesContainsUser(AppUser user) {
-        return postRepository.findByAppLikesAndAppUser_UserId(user.getUserId());
+        return postRepository.findByLikes_AppUser(user);
     }
 
     @Override

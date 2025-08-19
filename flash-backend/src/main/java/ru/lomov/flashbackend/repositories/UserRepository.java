@@ -6,7 +6,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.lomov.flashbackend.entities.AppUser;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -29,34 +28,6 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 
     @Query("SELECT u FROM AppUser u WHERE u.fullName LIKE %:query%")
     List<AppUser> searchUserByFullName(@Param("query") String query);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     @Query("SELECT DISTINCT u FROM AppUser u WHERE u.fullName LIKE %:query% OR u.email LIKE %:query%")
     List<AppUser> searchUser(@Param("query") String query);

@@ -14,10 +14,12 @@ public class PostDtoMapper {
         UserDto userDto = UserDtoMapper.userToDto(post.getAppUser());
         boolean isLiked = PostUtil.isLikedByReqUser(reqUser, post);
         boolean isReposted = PostUtil.isRepostedByReqUser(reqUser, post);
+        boolean isBookmarked = PostUtil.isBookmarkedByReqUser(reqUser, post);
         List<Long> repostUserId = new ArrayList<>();
         for (AppUser user: post.getRepostAppUser()) {
             repostUserId.add(user.getUserId());
         }
+        
         PostDto postDto = PostDto.builder()
                 .id(post.getPostId())
                 .content(post.getContent())
@@ -30,9 +32,11 @@ public class PostDtoMapper {
                 .totalReplies(post.getReplyPosts().size())
                 .totalReposts(post.getRepostAppUser().size())
                 .totalShares(post.getShares().size())
+                .bookmarkCount((long) post.getAppUser().getSavedPosts().size())
                 .user(userDto)
                 .isLiked(isLiked)
                 .isReposted(isReposted)
+                .isBookmarked(isBookmarked)
                 .repostUsersId(repostUserId)
                 .replyPost(postToDto(post.getReplyPosts(), reqUser))
                 .video(post.getVideo())
@@ -53,6 +57,7 @@ public class PostDtoMapper {
         UserDto userDto = UserDtoMapper.userToDto(post.getAppUser());
         boolean isLiked = PostUtil.isLikedByReqUser(reqUser, post);
         boolean isReposted = PostUtil.isRepostedByReqUser(reqUser, post);
+        boolean isBookmarked = PostUtil.isBookmarkedByReqUser(reqUser, post);
         List<Long> repostUserId = new ArrayList<>();
         for (AppUser user: post.getRepostAppUser()) {
             repostUserId.add(user.getUserId());
@@ -69,9 +74,11 @@ public class PostDtoMapper {
                 .totalShares(post.getShares().size())
                 .totalReplies(post.getReplyPosts().size())
                 .totalReposts(post.getRepostAppUser().size())
+                .bookmarkCount((long) post.getAppUser().getSavedPosts().size())
                 .user(userDto)
                 .isLiked(isLiked)
                 .isReposted(isReposted)
+                .isBookmarked(isBookmarked)
                 .repostUsersId(repostUserId)
                 .video(post.getVideo())
                 .build();
