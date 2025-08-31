@@ -1,0 +1,13 @@
+package ru.lomov.flash.balance;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+
+@SpringBootApplication
+@EnableEurekaClient
+public class BalanceServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(BalanceServiceApplication.class, args);
+    }
+}

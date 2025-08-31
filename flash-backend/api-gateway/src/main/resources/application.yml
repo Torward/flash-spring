@@ -1,0 +1,282 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # User Service
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/users/**, /api/users/**
+          filters:
+            - RewritePath=/api/users/(?<segment>.*), /users/$\{segment}
+        
+        # Post Service
+        - id: post-service
+          uri: lb://post-service
+          predicates:
+            - Path=/posts/**, /api/posts/**
+          filters:
+            - RewritePath=/api/posts/(?<segment>.*), /posts/$\{segment}
+        
+        # Group Service
+        - id: group-service
+          uri: lb://group-service
+          predicates:
+            - Path=/groups/**, /api/groups/**
+          filters:
+            - RewritePath=/api/groups/(?<segment>.*), /groups/$\{segment}
+        
+        # Follow Service
+        - id: follow-service
+          uri: lb://follow-service
+          predicates:
+            - Path=/follow/**, /api/follow/**
+          filters:
+            - RewritePath=/api/follow/(?<segment>.*), /follow/$\{segment}
+        
+        # Story Service
+        - id: story-service
+          uri: lb://story-service
+          predicates:
+            - Path=/story/**, /api/story/**
+          filters:
+            - RewritePath=/api/story/(?<segment>.*), /story/$\{segment}
+        
+        # Reels Service
+        - id: reels-service
+          uri: lb://reels-service
+          predicates:
+            - Path=/reels/**, /api/reels/**
+          filters:
+            - RewritePath=/api/reels/(?<segment>.*), /reels/$\{segment}
+        
+        # Product Service
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/product/**, /api/product/**
+          filters:
+            - RewritePath=/api/product/(?<segment>.*), /product/$\{segment}
+        
+        # Balance Service
+        - id: balance-service
+          uri: lb://balance-service
+          predicates:
+            - Path=/balance/**, /api/balance/**
+          filters:
+            - RewritePath=/api/balance/(?<segment>.*), /balance/$\{segment}
+        
+        # Tokens Service
+        - id: tokens-service
+          uri: lb://tokens-service
+          predicates:
+            - Path=/tokens/**, /api/tokens/**
+          filters:
+            - RewritePath=/api/tokens/(?<segment>.*), /tokens/$\{segment}
+        
+        # Live Service
+        - id: live-service
+          uri: lb://live-service
+          predicates:
+            - Path=/live/**, /api/live/**
+          filters:
+            - RewritePath=/api/live/(?<segment>.*), /live/$\{segment}
+        
+        # Podcast Service
+        - id: podcast-service
+          uri: lb://podcast-service
+          predicates:
+            - Path=/podcast/**, /api/podcast/**
+          filters:
+            - RewritePath=/api/podcast/(?<segment>.*), /podcast/$\{segment}
+        
+        # Party Service
+        - id: party-service
+          uri: lb://party-service
+          predicates:
+            - Path=/party/**, /api/party/**
+          filters:
+            - RewritePath=/api/party/(?<segment>.*), /party/$\{segment}
+        
+        # Calling Service
+        - id: calling-service
+          uri: lb://calling-service
+          predicates:
+            - Path=/calling/**, /api/calling/**
+          filters:
+            - RewritePath=/api/calling/(?<segment>.*), /calling/$\{segment}
+        
+        # Likes Service
+        - id: likes-service
+          uri: lb://likes-service
+          predicates:
+            - Path=/likes/**, /api/likes/**
+          filters:
+            - RewritePath=/api/likes/(?<segment>.*), /likes/$\{segment}
+        
+        # Reaction Service
+        - id: reaction-service
+          uri: lb://reaction-service
+          predicates:
+            - Path=/reaction/**, /api/reaction/**
+          filters:
+            - RewritePath=/api/reaction/(?<segment>.*), /reaction/$\{segment}
+        
+        # Saves Service
+        - id: saves-service
+          uri: lb://saves-service
+          predicates:
+            - Path=/saves/**, /api/saves/**
+          filters:
+            - RewritePath=/api/saves/(?<segment>.*), /saves/$\{segment}
+        
+        # SavesReel Service
+        - id: saves-reel-service
+          uri: lb://saves-reel-service
+          predicates:
+            - Path=/savesReel/**, /api/savesReel/**
+          filters:
+            - RewritePath=/api/savesReel/(?<segment>.*), /savesReel/$\{segment}
+        
+        # Report Services
+        - id: report-post-service
+          uri: lb://report-post-service
+          predicates:
+            - Path=/reportPost/**, /api/reportPost/**
+          filters:
+            - RewritePath=/api/reportPost/(?<segment>.*), /reportPost/$\{segment}
+        
+        - id: report-reel-service
+          uri: lb://report-reel-service
+          predicates:
+            - Path=/reportReel/**, /api/reportReel/**
+          filters:
+            - RewritePath=/api/reportReel/(?<segment>.*), /reportReel/$\{segment}
+        
+        - id: report-user-service
+          uri: lb://report-user-service
+          predicates:
+            - Path=/reportUser/**, /api/reportUser/**
+          filters:
+            - RewritePath=/api/reportUser/(?<segment>.*), /reportUser/$\{segment}
+        
+        - id: report-product-service
+          uri: lb://report-product-service
+          predicates:
+            - Path=/reportProduct/**, /api/reportProduct/**
+          filters:
+            - RewritePath=/api/reportProduct/(?<segment>.*), /reportProduct/$\{segment}
+        
+        - id: groups-report-service
+          uri: lb://groups-report-service
+          predicates:
+            - Path=/groupsReport/**, /api/groupsReport/**
+          filters:
+            - RewritePath=/api/groupsReport/(?<segment>.*), /groupsReport/$\{segment}
+        
+        - id: user-report-service
+          uri: lb://user-report-service
+          predicates:
+            - Path=/userReport/**, /api/userReport/**
+          filters:
+            - RewritePath=/api/userReport/(?<segment>.*), /userReport/$\{segment}
+        
+        # Verification Service
+        - id: verification-service
+          uri: lb://verification-service
+          predicates:
+            - Path=/verification/**, /api/verification/**
+          filters:
+            - RewritePath=/api/verification/(?<segment>.*), /verification/$\{segment}
+        
+        # Request Service
+        - id: request-service
+          uri: lb://request-service
+          predicates:
+            - Path=/request/**, /api/request/**
+          filters:
+            - RewritePath=/api/request/(?<segment>.*), /request/$\{segment}
+        
+        # Code Service
+        - id: code-service
+          uri: lb://code-service
+          predicates:
+            - Path=/code/**, /api/code/**
+          filters:
+            - RewritePath=/api/code/(?<segment>.*), /code/$\{segment}
+        
+        # Admin Service
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/admin/**, /api/admin/**
+          filters:
+            - RewritePath=/api/admin/(?<segment>.*), /admin/$\{segment}
+        
+        # Ads Service
+        - id: ads-service
+          uri: lb://ads-service
+          predicates:
+            - Path=/ads/**, /api/ads/**
+          filters:
+            - RewritePath=/api/ads/(?<segment>.*), /ads/$\{segment}
+        
+        # Chats Service
+        - id: chats-service
+          uri: lb://chats-service
+          predicates:
+            - Path=/chats/**, /api/chats/**
+          filters:
+            - RewritePath=/api/chats/(?<segment>.*), /chats/$\{segment}
+        
+        # Location Service
+        - id: location-service
+          uri: lb://location-service
+          predicates:
+            - Path=/location/**, /api/location/**
+          filters:
+            - RewritePath=/api/location/(?<segment>.*), /location/$\{segment}
+        
+        # PostExtra Service
+        - id: post-extra-service
+          uri: lb://post-extra-service
+          predicates:
+            - Path=/postExtra/**, /api/postExtra/**
+          filters:
+            - RewritePath=/api/postExtra/(?<segment>.*), /postExtra/$\{segment}
+        
+        # ReelsLike Service
+        - id: reels-like-service
+          uri: lb://reels-like-service
+          predicates:
+            - Path=/reelsLike/**, /api/reelsLike/**
+          filters:
+            - RewritePath=/api/reelsLike/(?<segment>.*), /reelsLike/$\{segment}
+        
+        # ReelViews Service
+        - id: reel-views-service
+          uri: lb://reel-views-service
+          predicates:
+            - Path=/reelViews/**, /api/reelViews/**
+          filters:
+            - RewritePath=/api/reelViews/(?<segment>.*), /reelViews/$\{segment}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, gateway

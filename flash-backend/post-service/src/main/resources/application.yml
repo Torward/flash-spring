@@ -1,0 +1,91 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: post-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/flash_posts?createDatabaseIfNotExist=true
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    show-sql: true
+  cloud:
+    discovery:
+      enabled: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+logging:
+  level:
+    ru.lomov.flashbackend: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  file:
+    name: logs/post-service.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# Post service specific configurations
+post:
+  max-content-length: 10000
+  max-media-files: 10
+  allowed-media-types: image/jpeg,image/png,image/gif,video/mp4,video/quicktime
+  cache:
+    enabled: true
+    ttl-minutes: 30
+
+# Rate limiting for social features
+rate-limit:
+  posts:
+    create: 10
+    per-minute: 60
+  comments:
+    create: 20
+    per-minute: 120
+  likes:
+    create: 50
+    per-minute: 300
+
+# Content moderation settings
+moderation:
+  enabled: true
+  api-key: ${MODERATION_API_KEY:}
+  threshold: 0.8
+  auto-delete: false
+
+# Analytics and metrics
+analytics:
+  enabled: true
+  flush-interval: 60
+  batch-size: 1000
+
+# Push notifications for post interactions
+notifications:
+  enabled: true
+  new-comment: true
+  new-like: true
+  new-share: true
+  mention: true

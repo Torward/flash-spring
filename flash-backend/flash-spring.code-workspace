@@ -1,0 +1,97 @@
+{
+  "folders": [
+    {
+      "name": "API Gateway",
+      "path": "api-gateway"
+    },
+    {
+      "name": "Auth Service",
+      "path": "auth-service"
+    },
+    {
+      "name": "User Service",
+      "path": "user-service"
+    },
+    {
+      "name": "Post Service",
+      "path": "post-service"
+    },
+    {
+      "name": "Notification Service",
+      "path": "notification-service"
+    },
+    {
+      "name": "Media Service",
+      "path": "media-service"
+    },
+    {
+      "name": "Groups Service",
+      "path": "groups-service"
+    },
+    {
+      "name": "Service Discovery",
+      "path": "service-discovery"
+    },
+    {
+      "name": "Flash Backend (Monolith)",
+      "path": "flash-backend"
+    },
+    {
+      "name": "Flash Frontend",
+      "path": "flash-front"
+    },
+    {
+      "name": "Root Configuration",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.import.gradle.enabled": false,
+    "java.import.maven.enabled": true,
+    "java.project.referencedLibraries": [
+      "lib/**/*.jar"
+    ],
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true,
+      "**/*.class": true,
+      "**/target": true,
+      "**/node_modules": true,
+      "**/logs": true,
+      "**/uploads": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**/*.code-search": true,
+      "**/target": true
+    },
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": true,
+    "java.compile.nullAnalysis.mode": "disabled"
+  },
+  "extensions": {
+    "recommendations": [
+      "vscjava.vscode-java-pack",
+      "pivotal.vscode-spring-boot",
+      "vmware.vscode-spring-boot-dashboard",
+      "vscjava.vscode-maven",
+      "vscjava.vscode-java-dependency",
+      "ms-vscode.vscode-json",
+      "redhat.vscode-yaml",
+      "ms-azuretools.vscode-docker",
+      "ms-vscode-remote.remote-containers",
+      "eamodio.gitlens",
+      "christian-kohler.path-intellisense",
+      "esbenp.prettier-vscode",
+      "ms-vscode.vscode-typescript-next",
+      "bradlc.vscode-tailwindcss"
+    ]
+  }
+}
