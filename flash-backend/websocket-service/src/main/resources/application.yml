@@ -1,0 +1,42 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: websocket-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+
+logging:
+  level:
+    ru.lomov.flash.websocket: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.messaging: DEBUG
+
+# WebSocket Configuration
+websocket:
+  # SockJS fallback options
+  sockjs:
+    heartbeat-value: 25000
+    disconnect-delay: 5000
+    stream-bytes-limit: 131072
+    http-message-cache-size: 1000
+    websocket-enabled: true
+
+# STOMP Configuration
+stomp:
+  # Message size limits
+  message:
+    max-size: 65536
+  # Heartbeat settings
+  heartbeat:
+    server: 10000
+    client: 10000
+
+# Prohibition notice: NO Firebase dependencies allowed
+# This service provides Firebase-compatible real-time features using WebSocket/STOMP

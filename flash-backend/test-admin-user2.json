@@ -1,0 +1,8 @@
+{
+  "userId": "mod001",
+  "username": "moderator",
+  "email": "mod@admin.com",
+  "role": "MODERATOR",
+  "isActive": true,
+  "createdAt": "2025-09-03T00:00:00"
+}
