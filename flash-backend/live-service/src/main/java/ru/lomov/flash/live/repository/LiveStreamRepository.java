@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface LiveStreamRepository extends JpaRepository<LiveStream, Long> {
+public interface LiveStreamRepository extends JpaRepository<LiveStream, String> {
     Optional<LiveStream> findByRoomId(String roomId);
     List<LiveStream> findByUserId(String userId);
     List<LiveStream> findByIsActiveTrue();

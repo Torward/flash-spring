@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface GroupService {
     Group createGroup(Group group);
-    Group getGroupById(Long id);
+    Group getGroupById(String id);
     List<Group> getAllGroups();
-    Group updateGroup(Long id, Group group);
-    void deleteGroup(Long id);
-    List<Group> getGroupsByCreatorId(Long creatorId);
-    List<Group> getGroupsByParticipant(Long userId);
+    Group updateGroup(String id, Group group);
+    void deleteGroup(String id);
+    List<Group> getGroupsByCreatorId(String creatorId);
+    List<Group> getGroupsByParticipant(String userId);
     List<Group> searchGroupsByName(String name);
 }

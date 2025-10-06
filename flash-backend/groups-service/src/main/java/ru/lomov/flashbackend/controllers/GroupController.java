@@ -28,7 +28,7 @@ public class GroupController {
     
     @GetMapping("/{id}")
     @Operation(summary = "Get group by ID")
-    public ResponseEntity<Group> getGroupById(@PathVariable Long id) {
+    public ResponseEntity<Group> getGroupById(@PathVariable String id) {
         Group group = groupService.getGroupById(id);
         return ResponseEntity.ok(group);
     }
@@ -42,28 +42,28 @@ public class GroupController {
     
     @PutMapping("/{id}")
     @Operation(summary = "Update group")
-    public ResponseEntity<Group> updateGroup(@PathVariable Long id, @RequestBody Group group) {
+    public ResponseEntity<Group> updateGroup(@PathVariable String id, @RequestBody Group group) {
         Group updatedGroup = groupService.updateGroup(id, group);
         return ResponseEntity.ok(updatedGroup);
     }
-    
+
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete group")
-    public ResponseEntity<Void> deleteGroup(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteGroup(@PathVariable String id) {
         groupService.deleteGroup(id);
         return ResponseEntity.noContent().build();
     }
-    
+
     @GetMapping("/creator/{creatorId}")
     @Operation(summary = "Get groups by creator ID")
-    public ResponseEntity<List<Group>> getGroupsByCreatorId(@PathVariable Long creatorId) {
+    public ResponseEntity<List<Group>> getGroupsByCreatorId(@PathVariable String creatorId) {
         List<Group> groups = groupService.getGroupsByCreatorId(creatorId);
         return ResponseEntity.ok(groups);
     }
-    
+
     @GetMapping("/participant/{userId}")
     @Operation(summary = "Get groups by participant ID")
-    public ResponseEntity<List<Group>> getGroupsByParticipant(@PathVariable Long userId) {
+    public ResponseEntity<List<Group>> getGroupsByParticipant(@PathVariable String userId) {
         List<Group> groups = groupService.getGroupsByParticipant(userId);
         return ResponseEntity.ok(groups);
     }
@@ -77,16 +77,16 @@ public class GroupController {
     
     @PostMapping("/{groupId}/participants/{userId}")
     @Operation(summary = "Add participant to group")
-    public ResponseEntity<Group> addParticipant(@PathVariable Long groupId, @PathVariable Long userId) {
+    public ResponseEntity<Group> addParticipant(@PathVariable String groupId, @PathVariable String userId) {
         Group group = groupService.getGroupById(groupId);
         group.getParticipants().add(userId);
         Group updatedGroup = groupService.updateGroup(groupId, group);
         return ResponseEntity.ok(updatedGroup);
     }
-    
+
     @DeleteMapping("/{groupId}/participants/{userId}")
     @Operation(summary = "Remove participant from group")
-    public ResponseEntity<Group> removeParticipant(@PathVariable Long groupId, @PathVariable Long userId) {
+    public ResponseEntity<Group> removeParticipant(@PathVariable String groupId, @PathVariable String userId) {
         Group group = groupService.getGroupById(groupId);
         group.getParticipants().remove(userId);
         Group updatedGroup = groupService.updateGroup(groupId, group);

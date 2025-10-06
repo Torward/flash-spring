@@ -1,4 +1,4 @@
-package ru.lomov.flash.admin;
+package ru.lomov.flashbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,9 +6,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class AdminServiceApplication {
-
+public class ReelViewsApplication {
     public static void main(String[] args) {
-        SpringApplication.run(AdminServiceApplication.class, args);
+        SpringApplication.run(ReelViewsApplication.class, args);
     }
 }

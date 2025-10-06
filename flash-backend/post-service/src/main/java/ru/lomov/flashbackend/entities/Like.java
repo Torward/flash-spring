@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
 
@@ -19,14 +20,14 @@ import java.time.LocalDateTime;
 @Builder
 public class Like {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long likeId;
+    @UuidGenerator
+    private String likeId;
 
     @Column(nullable = false)
-    private Long postId;
+    private String postId;
 
     @Column(nullable = false)
-    private Long userId;
+    private String userId;
 
     @Column
     private String reactionType; // Для разных типов реакций (like, love, haha, wow, sad, angry)
@@ -36,14 +37,14 @@ public class Like {
     private LocalDateTime createdAt;
 
     // Конструктор для базового лайка
-    public Like(Long postId, Long userId) {
+    public Like(String postId, String userId) {
         this.postId = postId;
         this.userId = userId;
         this.reactionType = "like";
     }
 
     // Конструктор для реакции с типом
-    public Like(Long postId, Long userId, String reactionType) {
+    public Like(String postId, String userId, String reactionType) {
         this.postId = postId;
         this.userId = userId;
         this.reactionType = reactionType;

@@ -7,8 +7,8 @@ import ru.lomov.flashbackend.entities.Group;
 import java.util.List;
 
 @Repository
-public interface GroupRepository extends JpaRepository<Group, Long> {
-    List<Group> findByCreatorId(Long creatorId);
-    List<Group> findByParticipantsContaining(Long userId);
+public interface GroupRepository extends JpaRepository<Group, String> {
+    List<Group> findByCreatorId(String creatorId);
+    List<Group> findByParticipantsContaining(String userId);
     List<Group> findByNameContainingIgnoreCase(String name);
 }

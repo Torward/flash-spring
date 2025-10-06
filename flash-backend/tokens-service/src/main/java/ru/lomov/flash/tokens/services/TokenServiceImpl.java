@@ -2,80 +2,117 @@ package ru.lomov.flash.tokens.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.lomov.flash.tokens.dto.TokenRequest;
+import org.springframework.transaction.annotation.Transactional;
+import ru.lomov.flash.tokens.dto.TokenResponse;
 import ru.lomov.flash.tokens.entities.Token;
 import ru.lomov.flash.tokens.repositories.TokenRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TokenServiceImpl implements TokenService {
 
     private final TokenRepository tokenRepository;
 
     @Override
-    public Token saveToken(String userId, TokenRequest tokenRequest) {
-        // Check if token already exists for this user and device
-        Optional<Token> existingToken = tokenRepository.findByUserIdAndDeviceId(userId, tokenRequest.getDeviceId());
-        
-        if (existingToken.isPresent()) {
-            // Update existing token
-            Token token = existingToken.get();
-            token.setToken(tokenRequest.getToken());
-            return tokenRepository.save(token);
-        } else {
-            // Create new token
-            Token token = new Token();
-            token.setUserId(userId);
-            token.setToken(tokenRequest.getToken());
-            token.setDeviceId(tokenRequest.getDeviceId());
-            return tokenRepository.save(token);
+    @Transactional(readOnly = true)
+    public Optional<TokenResponse> getToken(String userId) {
+        return tokenRepository.findByUserId(userId)
+                .map(this::mapToResponse);
+    }
+
+    @Override
+    public TokenResponse saveToken(String userId, String fcmToken, String deviceType, String deviceId) {
+        // Deactivate existing token for this user/device combination
+        tokenRepository.deactivateTokenByUserAndDevice(userId, deviceId);
+
+        Token token = Token.builder()
+                .userId(userId)
+                .fcmToken(fcmToken)
+                .deviceType(deviceType)
+                .deviceId(deviceId)
+                .isActive(true)
+                .build();
+
+        Token savedToken = tokenRepository.save(token);
+        return mapToResponse(savedToken);
+    }
+
+    @Override
+    public TokenResponse updateToken(String userId, String fcmToken) {
+        Token token = tokenRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Token not found for user: " + userId));
+
+        token.setFcmToken(fcmToken);
+        Token updatedToken = tokenRepository.save(token);
+        return mapToResponse(updatedToken);
+    }
+
+    @Override
+    public boolean deleteToken(String userId) {
+        Optional<Token> token = tokenRepository.findByUserId(userId);
+        if (token.isPresent()) {
+            tokenRepository.delete(token.get());
+            return true;
         }
+        return false;
     }
 
     @Override
-    public Optional<Token> getTokenByUserId(String userId) {
-        List<Token> tokens = tokenRepository.findByUserId(userId);
-        return tokens.stream().findFirst();
+    public boolean deactivateToken(String userId, String deviceId) {
+        int updated = tokenRepository.deactivateTokenByUserAndDevice(userId, deviceId);
+        return updated > 0;
     }
 
     @Override
-    public List<Token> getAllTokensByUserId(String userId) {
-        return tokenRepository.findByUserId(userId);
+    public boolean deactivateAllTokens(String userId) {
+        int updated = tokenRepository.deactivateAllTokensByUser(userId);
+        return updated > 0;
     }
 
     @Override
-    public Optional<Token> getTokenByTokenValue(String token) {
-        return tokenRepository.findByToken(token);
+    @Transactional(readOnly = true)
+    public List<TokenResponse> getActiveTokensByUser(String userId) {
+        return tokenRepository.findByUserIdAndIsActiveTrue(userId)
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public boolean existsByUserIdAndToken(String userId, String token) {
-        return tokenRepository.existsByUserIdAndToken(userId, token);
+    @Transactional(readOnly = true)
+    public List<TokenResponse> getAllActiveTokens() {
+        return tokenRepository.findAllActiveTokens()
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void deleteToken(String userId, String token) {
-        tokenRepository.deleteByUserIdAndToken(userId, token);
+    @Transactional(readOnly = true)
+    public long getActiveTokenCount(String userId) {
+        return tokenRepository.countActiveTokensByUser(userId);
     }
 
     @Override
-    public void deleteAllTokensByUserId(String userId) {
-        tokenRepository.deleteAllByUserId(userId);
+    @Transactional(readOnly = true)
+    public boolean hasActiveToken(String userId) {
+        return tokenRepository.countActiveTokensByUser(userId) > 0;
     }
 
-    @Override
-    public void updateToken(String userId, TokenRequest tokenRequest) {
-        Optional<Token> existingToken = tokenRepository.findByUserIdAndDeviceId(userId, tokenRequest.getDeviceId());
-        
-        if (existingToken.isPresent()) {
-            Token token = existingToken.get();
-            token.setToken(tokenRequest.getToken());
-            tokenRepository.save(token);
-        } else {
-            saveToken(userId, tokenRequest);
-        }
+    private TokenResponse mapToResponse(Token token) {
+        return TokenResponse.builder()
+                .userId(token.getUserId())
+                .fcmToken(token.getFcmToken())
+                .deviceType(token.getDeviceType())
+                .deviceId(token.getDeviceId())
+                .createdAt(token.getCreatedAt())
+                .updatedAt(token.getUpdatedAt())
+                .isActive(token.getIsActive())
+                .build();
     }
 }

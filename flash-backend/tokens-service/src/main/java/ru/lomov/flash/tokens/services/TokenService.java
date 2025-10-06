@@ -1,26 +1,30 @@
 package ru.lomov.flash.tokens.services;
 
-import ru.lomov.flash.tokens.entities.Token;
-import ru.lomov.flash.tokens.dto.TokenRequest;
+import ru.lomov.flash.tokens.dto.TokenResponse;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface TokenService {
-    
-    Token saveToken(String userId, TokenRequest tokenRequest);
-    
-    Optional<Token> getTokenByUserId(String userId);
-    
-    List<Token> getAllTokensByUserId(String userId);
-    
-    Optional<Token> getTokenByTokenValue(String token);
-    
-    boolean existsByUserIdAndToken(String userId, String token);
-    
-    void deleteToken(String userId, String token);
-    
-    void deleteAllTokensByUserId(String userId);
-    
-    void updateToken(String userId, TokenRequest tokenRequest);
+
+    // Firebase-compatible methods
+    Optional<TokenResponse> getToken(String userId);
+
+    TokenResponse saveToken(String userId, String fcmToken, String deviceType, String deviceId);
+
+    TokenResponse updateToken(String userId, String fcmToken);
+
+    boolean deleteToken(String userId);
+
+    boolean deactivateToken(String userId, String deviceId);
+
+    boolean deactivateAllTokens(String userId);
+
+    List<TokenResponse> getActiveTokensByUser(String userId);
+
+    List<TokenResponse> getAllActiveTokens();
+
+    long getActiveTokenCount(String userId);
+
+    boolean hasActiveToken(String userId);
 }

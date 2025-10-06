@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/flash-backend/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/ads-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/api-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/auth-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/balance-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/calling-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/follow-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/groups-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/likes-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/live-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/media-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/notification-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/party-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/podcast-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/post-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/product-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/reels-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/saves-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/service-discovery/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/story-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/tokens-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/user-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/admin-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/chat-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/code-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/location-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/report-post-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/request-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/verification-service/pom.xml" />
+        <option value="$PROJECT_DIR$/flash-backend/websocket-service/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" default="true" project-jdk-name="openjdk-23" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

@@ -1,11 +1,11 @@
-package ru.lomov.flash.request;
+package ru.lomov.flashbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RequestServiceApplication {
+public class ReportReelServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(RequestServiceApplication.class, args);
+        SpringApplication.run(ReportReelServiceApplication.class, args);
     }
 }

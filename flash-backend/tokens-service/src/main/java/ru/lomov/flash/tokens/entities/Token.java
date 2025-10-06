@@ -1,38 +1,42 @@
 package ru.lomov.flash.tokens.entities;
 
-import lombok.Data;
-import javax.persistence.*;
+import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_tokens")
-@Data
+@Table(name = "tokens")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Token {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(name = "user_id", nullable = false)
-    private String userId;
-    
-    @Column(name = "token", nullable = false, length = 500)
-    private String token;
-    
-    @Column(name = "device_id", length = 100)
+    private String userId; // Firebase-compatible String ID
+
+    private String fcmToken;
+
+    private String deviceType; // android, ios, web
+
     private String deviceId;
-    
-    @Column(name = "created_at", nullable = false, updatable = false)
+
     private LocalDateTime createdAt;
-    
-    @Column(name = "updated_at", nullable = false)
+
     private LocalDateTime updatedAt;
-    
+
+    private Boolean isActive;
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
-        updatedAt = createdAt;
+        if (updatedAt == null) {
+            updatedAt = createdAt;
+        }
+        if (isActive == null) {
+            isActive = true;
+        }
     }
-    
+
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();

@@ -10,20 +10,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface LikeRepository extends JpaRepository<Like, Long> {
-    List<Like> findByPostId(Long postId);
-    List<Like> findByUserId(Long userId);
-    Optional<Like> findByPostIdAndUserId(Long postId, Long userId);
-    long countByPostId(Long postId);
-    long countByUserId(Long userId);
-    boolean existsByPostIdAndUserId(Long postId, Long userId);
-    
+public interface LikeRepository extends JpaRepository<Like, String> {
+    List<Like> findByPostId(String postId);
+    List<Like> findByUserId(String userId);
+    Optional<Like> findByPostIdAndUserId(String postId, String userId);
+    long countByPostId(String postId);
+    long countByUserId(String userId);
+    boolean existsByPostIdAndUserId(String postId, String userId);
+
     @Query("SELECT l FROM Like l WHERE l.postId = :postId AND l.reactionType = :reactionType")
-    List<Like> findByPostIdAndReactionType(@Param("postId") Long postId, @Param("reactionType") String reactionType);
-    
+    List<Like> findByPostIdAndReactionType(@Param("postId") String postId, @Param("reactionType") String reactionType);
+
     @Query("SELECT COUNT(l) FROM Like l WHERE l.postId = :postId AND l.reactionType = :reactionType")
-    long countByPostIdAndReactionType(@Param("postId") Long postId, @Param("reactionType") String reactionType);
-    
+    long countByPostIdAndReactionType(@Param("postId") String postId, @Param("reactionType") String reactionType);
+
     @Query("SELECT l.postId, COUNT(l) FROM Like l WHERE l.postId IN :postIds GROUP BY l.postId")
-    List<Object[]> countLikesByPostIds(@Param("postIds") List<Long> postIds);
+    List<Object[]> countLikesByPostIds(@Param("postIds") List<String> postIds);
 }

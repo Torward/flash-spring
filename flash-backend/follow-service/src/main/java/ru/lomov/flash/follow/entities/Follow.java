@@ -2,6 +2,8 @@ package ru.lomov.flash.follow.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
@@ -14,6 +16,8 @@ import java.time.LocalDateTime;
 })
 @Data
 public class Follow {
+    // Firebase-compatible getters
+
     @Id
     @UuidGenerator
     @Column(name = "follow_id", nullable = false, unique = true, updatable = false)
@@ -43,26 +47,23 @@ public class Follow {
     @Column(name = "following_id")
     private String followingId;
 
+    @Getter
+    @Setter
     @Column(name = "follower_count")
     private int followerCount = 0;
 
+    @Getter
+    @Setter
     @Column(name = "following_count")
     private int followingCount = 0;
 
+    @Setter
     @Column(name = "is_following")
     private boolean isFollowing = false;
 
+    @Setter
     @Column(name = "is_followed_back")
     private boolean isFollowedBack = false;
-
-    // Firebase-compatible getters
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getFollowerId() {
         return followerId != null ? followerId : userId;
@@ -72,35 +73,12 @@ public class Follow {
         return followingId != null ? followingId : targetUserId;
     }
 
-    public int getFollowerCount() {
-        return followerCount;
-    }
-
-    public void setFollowerCount(int followerCount) {
-        this.followerCount = followerCount;
-    }
-
-    public int getFollowingCount() {
-        return followingCount;
-    }
-
-    public void setFollowingCount(int followingCount) {
-        this.followingCount = followingCount;
-    }
-
     public boolean getIsFollowing() {
         return isFollowing;
-    }
-
-    public void setIsFollowing(boolean isFollowing) {
-        this.isFollowing = isFollowing;
     }
 
     public boolean getIsFollowedBack() {
         return isFollowedBack;
     }
 
-    public void setIsFollowedBack(boolean isFollowedBack) {
-        this.isFollowedBack = isFollowedBack;
-    }
 }

@@ -105,6 +105,42 @@ services:
     networks:
       - flash-spring-network
 
+  # Balance Service
+  balance-service:
+    build: ./balance-service
+    ports:
+      - "8089:8089"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-discovery:8761/eureka/
+    depends_on:
+      - service-discovery
+    networks:
+      - flash-spring-network
+
+  # Tokens Service
+  tokens-service:
+    build: ./tokens-service
+    ports:
+      - "8090:8090"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-discovery:8761/eureka/
+    depends_on:
+      - service-discovery
+    networks:
+      - flash-spring-network
+
+  # WebSocket Service
+  websocket-service:
+    build: ./websocket-service
+    ports:
+      - "8091:8091"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://service-discovery:8761/eureka/
+    depends_on:
+      - service-discovery
+    networks:
+      - flash-spring-network
+
 networks:
   flash-spring-network:
     driver: bridge

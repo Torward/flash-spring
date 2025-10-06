@@ -2,10 +2,12 @@ package ru.lomov.flashbackend.adminservice.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -15,10 +17,11 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private java.util.UUID adminId;
+    private String adminId;
 
     @Column(nullable = false, unique = true)
     private String userId;

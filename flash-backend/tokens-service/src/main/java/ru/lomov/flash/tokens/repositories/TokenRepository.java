@@ -11,23 +11,25 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface TokenRepository extends JpaRepository<Token, Long> {
-    
-    List<Token> findByUserId(String userId);
-    
-    Optional<Token> findByToken(String token);
-    
-    Optional<Token> findByUserIdAndToken(String userId, String token);
-    
-    Optional<Token> findByUserIdAndDeviceId(String userId, String deviceId);
-    
+public interface TokenRepository extends JpaRepository<Token, String> {
+
+    Optional<Token> findByUserId(String userId);
+
+    List<Token> findByUserIdAndIsActiveTrue(String userId);
+
+    List<Token> findByDeviceId(String deviceId);
+
+    @Query("SELECT t FROM Token t WHERE t.isActive = true")
+    List<Token> findAllActiveTokens();
+
     @Modifying
-    @Query("DELETE FROM Token t WHERE t.userId = :userId AND t.token = :token")
-    void deleteByUserIdAndToken(@Param("userId") String userId, @Param("token") String token);
-    
+    @Query("UPDATE Token t SET t.isActive = false WHERE t.userId = :userId AND t.deviceId = :deviceId")
+    int deactivateTokenByUserAndDevice(@Param("userId") String userId, @Param("deviceId") String deviceId);
+
     @Modifying
-    @Query("DELETE FROM Token t WHERE t.userId = :userId")
-    void deleteAllByUserId(@Param("userId") String userId);
-    
-    boolean existsByUserIdAndToken(String userId, String token);
+    @Query("UPDATE Token t SET t.isActive = false WHERE t.userId = :userId")
+    int deactivateAllTokensByUser(@Param("userId") String userId);
+
+    @Query("SELECT COUNT(t) FROM Token t WHERE t.userId = :userId AND t.isActive = true")
+    long countActiveTokensByUser(@Param("userId") String userId);
 }

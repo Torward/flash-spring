@@ -15,17 +15,12 @@
 - `GET /saves/post/{postId}/count` - Получить количество сохранений поста
 - `GET /saves/{postId}/{userId}/isSaved` - Проверить, сохранен ли пост пользователем
 
-### Firebase-совместимые эндпоинты
+## Архитектура
 
-- `POST /saves/firebase/{postId}/{userId}` - Сохранить пост (Firebase)
-- `DELETE /saves/firebase/{postId}/{userId}` - Удалить пост из сохраненных (Firebase)
-
-## Firebase-совместимость
-
-Сервис полностью совместим с Firebase Realtime Database:
+Сервис построен на микросервисной архитектуре с использованием Spring Boot:
 - Использует String ID (UUID)
 - Поддерживает все необходимые поля и методы
-- Соответствует структуре данных Firebase
+- Интегрируется с PostgreSQL базой данных
 
 ## Запуск
 

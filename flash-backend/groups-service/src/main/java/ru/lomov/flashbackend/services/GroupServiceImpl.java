@@ -20,7 +20,7 @@ public class GroupServiceImpl implements GroupService {
     }
     
     @Override
-    public Group getGroupById(Long id) {
+    public Group getGroupById(String id) {
         return groupRepository.findById(id)
             .orElseThrow(() -> new GroupNotFoundException("Group not found with id: " + id));
     }
@@ -31,33 +31,33 @@ public class GroupServiceImpl implements GroupService {
     }
     
     @Override
-    public Group updateGroup(Long id, Group group) {
+    public Group updateGroup(String id, Group group) {
         Group existingGroup = groupRepository.findById(id)
             .orElseThrow(() -> new GroupNotFoundException("Group not found with id: " + id));
-        
+
         existingGroup.setName(group.getName());
         existingGroup.setDescription(group.getDescription());
         existingGroup.setPrivacy(group.getPrivacy());
         existingGroup.setParticipants(group.getParticipants());
-        
+
         return groupRepository.save(existingGroup);
     }
-    
+
     @Override
-    public void deleteGroup(Long id) {
+    public void deleteGroup(String id) {
         Group group = groupRepository.findById(id)
             .orElseThrow(() -> new GroupNotFoundException("Group not found with id: " + id));
-        
+
         groupRepository.delete(group);
     }
-    
+
     @Override
-    public List<Group> getGroupsByCreatorId(Long creatorId) {
+    public List<Group> getGroupsByCreatorId(String creatorId) {
         return groupRepository.findByCreatorId(creatorId);
     }
-    
+
     @Override
-    public List<Group> getGroupsByParticipant(Long userId) {
+    public List<Group> getGroupsByParticipant(String userId) {
         return groupRepository.findByParticipantsContaining(userId);
     }
     

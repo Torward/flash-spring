@@ -10,17 +10,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findByPostId(Long postId);
-    List<Comment> findByPostIdAndIsDeletedFalse(Long postId);
-    List<Comment> findByUserId(Long userId);
-    List<Comment> findByParentCommentId(Long parentCommentId);
-    Optional<Comment> findByCommentIdAndIsDeletedFalse(Long commentId);
-    long countByPostId(Long postId);
-    long countByPostIdAndIsDeletedFalse(Long postId);
-    
-    @Query("SELECT c FROM Comment c WHERE c.postId = :postId AND c.parentCommentId IS NULL ORDER BY c.createdAt DESC")
-    List<Comment> findTopLevelCommentsByPostId(@Param("postId") Long postId);
+public interface CommentRepository extends JpaRepository<ru.lomov.flashbackend.entities.Comment, String> {
+    List<ru.lomov.flashbackend.entities.Comment> findByPostId(String postId);
+    List<ru.lomov.flashbackend.entities.Comment> findByPostIdAndIsDeletedFalse(String postId);
+    List<ru.lomov.flashbackend.entities.Comment> findByUserId(String userId);
+    List<ru.lomov.flashbackend.entities.Comment> findByParentCommentId(String parentCommentId);
+    Optional<ru.lomov.flashbackend.entities.Comment> findByCommentIdAndIsDeletedFalse(String commentId);
+    long countByPostId(String postId);
+    long countByPostIdAndIsDeletedFalse(String postId);
 
-    Long countByUserId(Long userId);
+    @Query("SELECT c FROM Comment c WHERE c.postId = :postId AND c.parentCommentId IS NULL ORDER BY c.createdAt DESC")
+    List<ru.lomov.flashbackend.entities.Comment> findTopLevelCommentsByPostId(@Param("postId") String postId);
+
+    Long countByUserId(String userId);
 }

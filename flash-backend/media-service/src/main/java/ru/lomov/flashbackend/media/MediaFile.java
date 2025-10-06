@@ -4,8 +4,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,8 +18,10 @@ import java.time.LocalDateTime;
 public class MediaFile {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "id", columnDefinition = "VARCHAR(36)")
+    private String id;
 
     @Column(name = "original_file_name", nullable = false)
     private String originalFileName;
@@ -45,7 +48,7 @@ public class MediaFile {
     private String tags;
 
     @Column(name = "uploaded_by_user_id", nullable = false)
-    private Long uploadedByUserId;
+    private String uploadedByUserId;
 
     @Column(name = "is_public", nullable = false)
     private Boolean isPublic;

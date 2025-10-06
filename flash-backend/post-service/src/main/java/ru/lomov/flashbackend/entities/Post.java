@@ -188,6 +188,16 @@ public class Post {
     @Column
     private String postType = "STANDARD"; // STANDARD, STORY, REEL, LIVE, POLL, QUIZ
 
+    // Content type fields for Firebase compatibility
+    @Column
+    private String type; // "text", "image", "video", "bg", "meme"
+
+    @Column
+    private String vine; // Video URL for vine-type posts
+
+    @Column
+    private String meme; // Image URL for meme-type posts
+
     // Poll-specific fields
     @ElementCollection
     @CollectionTable(name = "post_poll_options", joinColumns = @JoinColumn(name = "post_id"))

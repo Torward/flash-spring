@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.lomov.flashbackend.dto.CommentDto;
+import ru.lomov.flashbackend.dto.CreateCommentReplyDto;
 import ru.lomov.flashbackend.services.CommentService;
 
 import java.util.List;
@@ -79,5 +80,24 @@ public class CommentController {
             @PathVariable Long userId) {
         CommentDto updatedComment = commentService.unlikeComment(commentId, userId);
         return ResponseEntity.ok(updatedComment);
+    }
+
+    // Reply endpoints
+    @PostMapping("/reply")
+    public ResponseEntity<CommentDto> createCommentReply(@RequestBody CreateCommentReplyDto replyDto) {
+        CommentDto createdReply = commentService.createCommentReply(replyDto);
+        return ResponseEntity.ok(createdReply);
+    }
+
+    @GetMapping("/{commentId}/replies")
+    public ResponseEntity<List<CommentDto>> getCommentReplies(@PathVariable Long commentId) {
+        List<CommentDto> replies = commentService.getCommentReplies(commentId);
+        return ResponseEntity.ok(replies);
+    }
+
+    @GetMapping("/{commentId}/reply-count")
+    public ResponseEntity<Long> getCommentReplyCount(@PathVariable Long commentId) {
+        Long count = commentService.getCommentReplyCount(commentId);
+        return ResponseEntity.ok(count);
     }
 }

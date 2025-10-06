@@ -12,7 +12,7 @@ public interface AdminService {
 
     AdminDto createAdmin(CreateAdminDto createAdminDto);
 
-    AdminDto getAdminById(UUID adminId);
+    AdminDto getAdminById(String adminId);
 
     AdminDto getAdminByUserId(String userId);
 
@@ -26,13 +26,13 @@ public interface AdminService {
 
     List<AdminDto> getAdminsByRoleAndStatus(Admin.AdminRole role, Admin.AdminStatus status);
 
-    AdminDto updateAdmin(java.util.UUID adminId, UpdateAdminDto updateAdminDto);
+    AdminDto updateAdmin(String adminId, UpdateAdminDto updateAdminDto);
 
-    void deleteAdmin(java.util.UUID adminId);
+    void deleteAdmin(String adminId);
 
-    void suspendAdmin(java.util.UUID adminId);
+    void suspendAdmin(String adminId);
 
-    void activateAdmin(java.util.UUID adminId);
+    void activateAdmin(String adminId);
 
     boolean existsByUserId(String userId);
 
@@ -42,7 +42,7 @@ public interface AdminService {
 
     List<AdminDto> getAdminsByPermission(String permission);
 
-    boolean hasPermission(java.util.UUID adminId, Admin.AdminPermission permission);
+    boolean hasPermission(String adminId, Admin.AdminPermission permission);
 
-    void updateAdminPermissions(java.util.UUID adminId, List<Admin.AdminPermission> permissions);
+    void updateAdminPermissions(String adminId, List<Admin.AdminPermission> permissions);
 }

@@ -3,20 +3,18 @@ package ru.lomov.flashbackend.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Table(name = "groups")
@@ -27,8 +25,9 @@ import lombok.Setter;
 @Builder
 public class Group {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @UuidGenerator
+    @Column(name = "group_id", nullable = false, unique = true, updatable = false)
+    private String id;
 
     @Column(nullable = false)
     private String name;
@@ -37,10 +36,10 @@ public class Group {
     private String description;
 
     @Column(name = "creator_id", nullable = false)
-    private Long creatorId;
+    private String creatorId;
 
     @ElementCollection
-    private List<Long> participants;
+    private List<String> participants;
 
     @Column(nullable = false)
     private String privacy;
@@ -51,5 +50,14 @@ public class Group {
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+    }
+
+    // Firebase-compatible getter
+    public String getGroupId() {
+        return id;
+    }
+
+    public void setGroupId(String groupId) {
+        this.id = groupId;
     }
 }

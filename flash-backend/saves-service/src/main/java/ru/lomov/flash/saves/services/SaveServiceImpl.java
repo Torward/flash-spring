@@ -99,13 +99,5 @@ public class SaveServiceImpl implements SaveService {
         return saveRepository.isPostSaved(postId, userId);
     }
 
-    @Override
-    public SaveResponse savePostFirebase(String postId, String userId) {
-        return savePost(postId, userId);
-    }
 
-    @Override
-    public SaveResponse unsavePostFirebase(String postId, String userId) {
-        return unsavePost(postId, userId);
-    }
 }

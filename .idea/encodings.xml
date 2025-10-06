@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/flash-backend/admin-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/ads-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/api-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/auth-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/balance-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/calling-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/chat-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/code-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/groups-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/live-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/location-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/notification-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/party-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/podcast-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/post-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/product-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/reels-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/report-post-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/request-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/service-discovery/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/story-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/tokens-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/user-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/verification-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flash-backend/websocket-service/src/main/java" charset="UTF-8" />
+  </component>
+</project>

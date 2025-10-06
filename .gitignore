@@ -1,0 +1,81 @@
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build
+target/
+build/
+bin/
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# Logs
+logs/
+*.log
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven
+.mvn/
+mvnw
+mvnw.cmd
+
+# Gradle
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# Database
+*.db
+*.sqlite
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Uploads
+uploads/
+uploads-service/
+
+# SSL
+ssl/
+
+# Extracted files
+gh_extracted/
+
+# System files
+flash-spring-system-report.md
+
+# Installation files
+gh.msi
+gh.zip
+java17.zip
+maven.zip
+install-maven-java.ps1
+install-maven-java-fixed.ps1

@@ -1,6 +1,7 @@
 package ru.lomov.flashbackend.services;
 
 import ru.lomov.flashbackend.dto.CommentDto;
+import ru.lomov.flashbackend.dto.CreateCommentReplyDto;
 import ru.lomov.flashbackend.entities.Comment;
 
 import java.util.List;
@@ -16,4 +17,9 @@ public interface CommentService {
     Long getCommentCountByUserId(Long userId);
     CommentDto likeComment(Long commentId, Long userId);
     CommentDto unlikeComment(Long commentId, Long userId);
+
+    // Reply management methods
+    CommentDto createCommentReply(CreateCommentReplyDto replyDto);
+    List<CommentDto> getCommentReplies(Long commentId);
+    Long getCommentReplyCount(Long commentId);
 }

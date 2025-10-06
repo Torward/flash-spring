@@ -4,14 +4,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "podcasts")
 @Data
 public class Podcast {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id", updatable = false, nullable = false)
+    private String id = UUID.randomUUID().toString();
     
     @Column(name = "room_id", unique = true, nullable = false)
     private String roomId;

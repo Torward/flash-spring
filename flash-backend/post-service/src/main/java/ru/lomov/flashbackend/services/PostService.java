@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ru.lomov.flashbackend.entities.Post;
 import ru.lomov.flashbackend.exceptions.PostNotFoundException;
+import ru.lomov.flashbackend.dto.UpdatePostTypeDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,20 +15,21 @@ public interface PostService {
     
     // Basic CRUD operations
     Post createPost(Post post);
-    Post getPostById(Long postId) throws PostNotFoundException;
-    Post updatePost(Long postId, Post post) throws PostNotFoundException;
-    void deletePost(Long postId, Long userId) throws PostNotFoundException;
-    void archivePost(Long postId, Long userId) throws PostNotFoundException;
-    void restorePost(Long postId, Long userId) throws PostNotFoundException;
-    
+    Post getPostById(String postId) throws PostNotFoundException;
+    Post updatePost(String postId, Post post) throws PostNotFoundException;
+    Post updatePostType(String postId, UpdatePostTypeDto updatePostTypeDto) throws PostNotFoundException;
+    void deletePost(String postId, String userId) throws PostNotFoundException;
+    void archivePost(String postId, String userId) throws PostNotFoundException;
+    void restorePost(String postId, String userId) throws PostNotFoundException;
+
     // User posts
-    Page<Post> getUserPosts(Long userId, Pageable pageable);
-    Page<Post> getUserPublicPosts(Long userId, Pageable pageable);
-    Page<Post> getUserDraftPosts(Long userId, Pageable pageable);
-    Page<Post> getUserArchivedPosts(Long userId, Pageable pageable);
-    
+    Page<Post> getUserPosts(String userId, Pageable pageable);
+    Page<Post> getUserPublicPosts(String userId, Pageable pageable);
+    Page<Post> getUserDraftPosts(String userId, Pageable pageable);
+    Page<Post> getUserArchivedPosts(String userId, Pageable pageable);
+
     // Feed and discovery
-    Page<Post> getFeedPosts(Long userId, Pageable pageable);
+    Page<Post> getFeedPosts(String userId, Pageable pageable);
     Page<Post> getDiscoverPosts(Pageable pageable);
     Page<Post> getTrendingPosts(Pageable pageable);
     Page<Post> getPopularPosts(Pageable pageable);
@@ -36,78 +38,78 @@ public interface PostService {
     Page<Post> searchPosts(String query, Pageable pageable);
     Page<Post> searchPostsByHashtag(String hashtag, Pageable pageable);
     Page<Post> searchPostsByLocation(Double latitude, Double longitude, Double radius, Pageable pageable);
-    Page<Post> searchPostsByMention(Long mentionedUserId, Pageable pageable);
-    
+    Page<Post> searchPostsByMention(String mentionedUserId, Pageable pageable);
+
     // Content moderation
     Page<Post> getPostsForModeration(Pageable pageable);
-    Post moderatePost(Long postId, String status, String reason, Double score) throws PostNotFoundException;
+    Post moderatePost(String postId, String status, String reason, Double score) throws PostNotFoundException;
     Page<Post> getModeratedPosts(String status, Pageable pageable);
-    
+
     // Analytics and insights
-    Map<String, Object> getUserPostStats(Long userId);
-    Map<String, Object> getPostAnalytics(Long postId) throws PostNotFoundException;
+    Map<String, Object> getUserPostStats(String userId);
+    Map<String, Object> getPostAnalytics(String postId) throws PostNotFoundException;
     Map<String, Object> getTrendingHashtags(int limit);
     Map<String, Object> getLocationInsights(Double latitude, Double longitude, Double radius);
     
     // Engagement operations
-    Post likePost(Long postId, Long userId) throws PostNotFoundException;
-    Post unlikePost(Long postId, Long userId) throws PostNotFoundException;
-    Post viewPost(Long postId, Long userId) throws PostNotFoundException;
-    Post savePost(Long postId, Long userId) throws PostNotFoundException;
-    Post unsavePost(Long postId, Long userId) throws PostNotFoundException;
-    Post sharePost(Long postId, Long userId) throws PostNotFoundException;
-    
+    Post likePost(String postId, String userId) throws PostNotFoundException;
+    Post unlikePost(String postId, String userId) throws PostNotFoundException;
+    Post viewPost(String postId, String userId) throws PostNotFoundException;
+    Post savePost(String postId, String userId) throws PostNotFoundException;
+    Post unsavePost(String postId, String userId) throws PostNotFoundException;
+    Post sharePost(String postId, String userId) throws PostNotFoundException;
+
     // Comments management (delegated to comment service)
-    Post addComment(Long postId, Long userId, String comment) throws PostNotFoundException;
-    Post removeComment(Long postId, Long commentId, Long userId) throws PostNotFoundException;
-    
+    Post addComment(String postId, String userId, String comment) throws PostNotFoundException;
+    Post removeComment(String postId, String commentId, String userId) throws PostNotFoundException;
+
     // Poll operations
-    Post voteInPoll(Long postId, Long userId, int optionIndex) throws PostNotFoundException;
-    Post createPoll(Long userId, String question, List<String> options, LocalDateTime endsAt);
-    Post closePoll(Long postId, Long userId) throws PostNotFoundException;
-    
+    Post voteInPoll(String postId, String userId, int optionIndex) throws PostNotFoundException;
+    Post createPoll(String userId, String question, List<String> options, LocalDateTime endsAt);
+    Post closePoll(String postId, String userId) throws PostNotFoundException;
+
     // Live stream operations
-    Post startLiveStream(Long userId, String title, String description);
-    Post endLiveStream(Long postId, Long userId) throws PostNotFoundException;
-    Post updateLiveViewers(Long postId, int viewerCount) throws PostNotFoundException;
-    
+    Post startLiveStream(String userId, String title, String description);
+    Post endLiveStream(String postId, String userId) throws PostNotFoundException;
+    Post updateLiveViewers(String postId, int viewerCount) throws PostNotFoundException;
+
     // Scheduled posts
-    Page<Post> getScheduledPosts(Long userId, Pageable pageable);
+    Page<Post> getScheduledPosts(String userId, Pageable pageable);
     Post schedulePost(Post post, LocalDateTime scheduleTime);
-    Post publishScheduledPost(Long postId) throws PostNotFoundException;
-    void cancelScheduledPost(Long postId, Long userId) throws PostNotFoundException;
+    Post publishScheduledPost(String postId) throws PostNotFoundException;
+    void cancelScheduledPost(String postId, String userId) throws PostNotFoundException;
     
     // Sponsored content
     Page<Post> getSponsoredPosts(Pageable pageable);
     Post createSponsoredPost(Post post, String sponsorId, String campaignId);
-    Post updateSponsorship(Long postId, String sponsorId, String campaignId, Double cpmRate) throws PostNotFoundException;
-    
+    Post updateSponsorship(String postId, String sponsorId, String campaignId, Double cpmRate) throws PostNotFoundException;
+
     // Bulk operations
     List<Post> bulkCreatePosts(List<Post> posts);
-    void bulkDeletePosts(List<Long> postIds, Long userId);
-    void bulkArchivePosts(List<Long> postIds, Long userId);
-    void bulkPublishPosts(List<Long> postIds);
-    
+    void bulkDeletePosts(List<String> postIds, String userId);
+    void bulkArchivePosts(List<String> postIds, String userId);
+    void bulkPublishPosts(List<String> postIds);
+
     // Export and backup
-    String exportUserPosts(Long userId, String format);
+    String exportUserPosts(String userId, String format);
     void backupPosts(LocalDateTime beforeDate);
     void restorePostsFromBackup(String backupId);
-    
+
     // Content recommendations
-    Page<Post> getRecommendedPosts(Long userId, Pageable pageable);
-    Page<Post> getSimilarPosts(Long postId, Pageable pageable);
-    Page<Post> getPostsYouMayLike(Long userId, Pageable pageable);
-    
+    Page<Post> getRecommendedPosts(String userId, Pageable pageable);
+    Page<Post> getSimilarPosts(String postId, Pageable pageable);
+    Page<Post> getPostsYouMayLike(String userId, Pageable pageable);
+
     // Social features
-    Page<Post> getPostsFromFollowing(Long userId, Pageable pageable);
-    Page<Post> getPostsLikedByUser(Long userId, Pageable pageable);
-    Page<Post> getPostsSavedByUser(Long userId, Pageable pageable);
-    Page<Post> getPostsSharedByUser(Long userId, Pageable pageable);
-    
+    Page<Post> getPostsFromFollowing(String userId, Pageable pageable);
+    Page<Post> getPostsLikedByUser(String userId, Pageable pageable);
+    Page<Post> getPostsSavedByUser(String userId, Pageable pageable);
+    Page<Post> getPostsSharedByUser(String userId, Pageable pageable);
+
     // Administrative operations
     Page<Post> getAllPosts(Pageable pageable);
     Page<Post> getDeletedPosts(Pageable pageable);
-    void permanentlyDeletePost(Long postId);
+    void permanentlyDeletePost(String postId);
     void purgeOldPosts(LocalDateTime threshold);
     
     // System operations
@@ -118,21 +120,21 @@ public interface PostService {
     
     // Validation and utilities
     boolean validatePostContent(Post post);
-    boolean checkPostPermissions(Long postId, Long userId);
-    boolean isPostVisibleToUser(Long postId, Long userId);
+    boolean checkPostPermissions(String postId, String userId);
+    boolean isPostVisibleToUser(String postId, String userId);
     Set<String> extractHashtags(String content);
-    Set<Long> extractMentions(String content);
-    
+    Set<String> extractMentions(String content);
+
     // Cache operations
-    void evictPostCache(Long postId);
-    void evictUserPostsCache(Long userId);
+    void evictPostCache(String postId);
+    void evictUserPostsCache(String userId);
     void evictTrendingPostsCache();
-    
+
     // Event publishing
     void publishPostCreatedEvent(Post post);
     void publishPostUpdatedEvent(Post post);
-    void publishPostDeletedEvent(Long postId);
-    void publishPostEngagementEvent(Long postId, String eventType, Long userId);
+    void publishPostDeletedEvent(String postId);
+    void publishPostEngagementEvent(String postId, String eventType, String userId);
     
     // Health and monitoring
     Map<String, Object> getServiceHealth();

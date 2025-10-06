@@ -24,8 +24,8 @@ public class FollowServiceImpl implements FollowService {
         Follow follow;
         if (existingFollow.isPresent()) {
             follow = existingFollow.get();
-            follow.setIsActive(true);
-            follow.setIsFollowing(true);
+            follow.setActive(true);
+            follow.setFollowing(true);
             follow.setUpdatedAt(LocalDateTime.now());
         } else {
             follow = new Follow();
@@ -33,8 +33,8 @@ public class FollowServiceImpl implements FollowService {
             follow.setTargetUserId(targetUserId);
             follow.setFollowerId(userId);
             follow.setFollowingId(targetUserId);
-            follow.setIsActive(true);
-            follow.setIsFollowing(true);
+            follow.setActive(true);
+            follow.setFollowing(true);
         }
         
         Follow savedFollow = followRepository.save(follow);
@@ -47,8 +47,8 @@ public class FollowServiceImpl implements FollowService {
         
         if (existingFollow.isPresent()) {
             Follow follow = existingFollow.get();
-            follow.setIsActive(false);
-            follow.setIsFollowing(false);
+            follow.setActive(false);
+            follow.setFollowing(false);
             follow.setUpdatedAt(LocalDateTime.now());
             
             Follow savedFollow = followRepository.save(follow);

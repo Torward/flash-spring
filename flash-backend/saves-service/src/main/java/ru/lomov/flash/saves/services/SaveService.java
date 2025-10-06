@@ -22,8 +22,5 @@ public interface SaveService {
     
     boolean isPostSaved(String postId, String userId);
     
-    // Firebase-compatible methods
-    SaveResponse savePostFirebase(String postId, String userId);
-    
-    SaveResponse unsavePostFirebase(String postId, String userId);
+
 }

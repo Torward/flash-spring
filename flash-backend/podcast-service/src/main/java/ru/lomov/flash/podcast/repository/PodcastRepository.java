@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PodcastRepository extends JpaRepository<Podcast, Long> {
+public interface PodcastRepository extends JpaRepository<Podcast, String> {
     Optional<Podcast> findByRoomId(String roomId);
     List<Podcast> findByUserId(String userId);
     List<Podcast> findByIsActiveTrue();

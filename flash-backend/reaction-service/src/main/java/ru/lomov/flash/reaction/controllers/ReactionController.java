@@ -93,30 +93,5 @@ public class ReactionController {
         return reactionType != null ? ResponseEntity.ok(reactionType) : ResponseEntity.notFound().build();
     }
 
-    // Firebase-compatible endpoints
-    @PostMapping("/firebase/{postId}/{userId}/{type}")
-    public ResponseEntity<ReactionResponse> addReactionFirebase(
-            @PathVariable String postId,
-            @PathVariable String userId,
-            @PathVariable String type) {
-        ReactionResponse response = reactionService.addReactionFirebase(postId, userId, type);
-        return ResponseEntity.ok(response);
-    }
 
-    @PutMapping("/firebase/{postId}/{userId}/{type}")
-    public ResponseEntity<ReactionResponse> updateReactionFirebase(
-            @PathVariable String postId,
-            @PathVariable String userId,
-            @PathVariable String type) {
-        ReactionResponse response = reactionService.updateReactionFirebase(postId, userId, type);
-        return response != null ? ResponseEntity.ok(response) : ResponseEntity.notFound().build();
-    }
-
-    @DeleteMapping("/firebase/{postId}/{userId}")
-    public ResponseEntity<ReactionResponse> removeReactionFirebase(
-            @PathVariable String postId,
-            @PathVariable String userId) {
-        ReactionResponse response = reactionService.removeReactionFirebase(postId, userId);
-        return response != null ? ResponseEntity.ok(response) : ResponseEntity.notFound().build();
-    }
 }

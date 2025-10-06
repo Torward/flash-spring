@@ -1,21 +1,36 @@
 server:
-  port: 8087
+  port: 8090
 
 spring:
   application:
     name: tokens-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/flashdb
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
-    fetch-registry: true
-    register-with-eureka: true
+      defaultZone: http://localhost:8761/eureka/
   instance:
-    prefer-ip-address: true
+    hostname: localhost
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, info
+logging:
+  level:
+    ru.lomov.flash.tokens: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# Prohibition notice: NO Firebase dependencies allowed
+# This service implements Firebase-compatible FCM token management without Firebase SDK

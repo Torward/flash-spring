@@ -55,6 +55,12 @@ public class PostDto {
     private int version;
     private Long originalPostId;
     private String postType;
+
+    // Content type fields for Firebase compatibility
+    private String type; // "text", "image", "video", "bg", "meme"
+    private String vine; // Video URL for vine-type posts
+    private String meme; // Image URL for meme-type posts
+
     private Set<String> pollOptions = new HashSet<>();
     private Set<Integer> pollVotes = new HashSet<>();
     private LocalDateTime pollEndsAt;
@@ -117,6 +123,9 @@ public class PostDto {
         this.version = post.getVersion();
         this.originalPostId = post.getOriginalPostId();
         this.postType = post.getPostType();
+        this.type = post.getType();
+        this.vine = post.getVine();
+        this.meme = post.getMeme();
         this.pollOptions = post.getPollOptions();
         this.pollVotes = post.getPollVotes();
         this.pollEndsAt = post.getPollEndsAt();

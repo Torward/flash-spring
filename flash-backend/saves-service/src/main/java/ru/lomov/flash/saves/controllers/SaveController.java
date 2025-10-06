@@ -75,20 +75,5 @@ public class SaveController {
         return ResponseEntity.ok(isSaved);
     }
 
-    // Firebase-compatible endpoints
-    @PostMapping("/firebase/{postId}/{userId}")
-    public ResponseEntity<SaveResponse> savePostFirebase(
-            @PathVariable String postId,
-            @PathVariable String userId) {
-        SaveResponse response = saveService.savePostFirebase(postId, userId);
-        return ResponseEntity.ok(response);
-    }
 
-    @DeleteMapping("/firebase/{postId}/{userId}")
-    public ResponseEntity<SaveResponse> unsavePostFirebase(
-            @PathVariable String postId,
-            @PathVariable String userId) {
-        SaveResponse response = saveService.unsavePostFirebase(postId, userId);
-        return response != null ? ResponseEntity.ok(response) : ResponseEntity.notFound().build();
-    }
 }

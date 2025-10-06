@@ -1,11 +1,11 @@
 server:
-  port: 8083
+  port: 8089
 
 spring:
   application:
     name: balance-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/flash_balance_db
+    url: jdbc:postgresql://localhost:5432/flashdb
     username: postgres
     password: password
     driver-class-name: org.postgresql.Driver
@@ -22,13 +22,15 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
-    fetch-registry: true
-    register-with-eureka: true
   instance:
-    prefer-ip-address: true
+    hostname: localhost
 
 logging:
   level:
     ru.lomov.flash.balance: DEBUG
+    org.springframework.web: DEBUG
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# Prohibition notice: NO Firebase or AWS services allowed
+# This service implements Firebase-compatible balance management without Firebase dependencies

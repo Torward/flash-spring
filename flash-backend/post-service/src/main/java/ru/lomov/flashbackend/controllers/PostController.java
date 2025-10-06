@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.lomov.flashbackend.entities.Post;
 import ru.lomov.flashbackend.exceptions.PostNotFoundException;
 import ru.lomov.flashbackend.services.PostService;
+import ru.lomov.flashbackend.dto.UpdatePostTypeDto;
 
 @RestController
 @RequestMapping("/posts")
@@ -24,7 +25,7 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<Post> getPostById(@PathVariable Long postId) {
+    public ResponseEntity<Post> getPostById(@PathVariable String postId) {
         try {
             Post post = postService.getPostById(postId);
             return new ResponseEntity<>(post, HttpStatus.OK);
@@ -35,9 +36,9 @@ public class PostController {
 
     @PutMapping("/{postId}")
     public ResponseEntity<Post> updatePost(
-            @PathVariable Long postId, 
+            @PathVariable String postId,
             @RequestBody Post post,
-            @RequestHeader("X-User-Id") Long userId) {
+            @RequestHeader("X-User-Id") String userId) {
         try {
             // Check if user has permission to update this post
             if (!postService.checkPostPermissions(postId, userId)) {
@@ -52,8 +53,8 @@ public class PostController {
 
     @DeleteMapping("/{postId}")
     public ResponseEntity<Void> deletePost(
-            @PathVariable Long postId,
-            @RequestHeader("X-User-Id") Long userId) {
+            @PathVariable String postId,
+            @RequestHeader("X-User-Id") String userId) {
         try {
             // Check if user has permission to delete this post
             if (!postService.checkPostPermissions(postId, userId)) {
@@ -67,19 +68,19 @@ public class PostController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<Page<Post>> getUserPosts(@PathVariable Long userId, Pageable pageable) {
+    public ResponseEntity<Page<Post>> getUserPosts(@PathVariable String userId, Pageable pageable) {
         Page<Post> posts = postService.getUserPosts(userId, pageable);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
     @GetMapping("/public/user/{userId}")
-    public ResponseEntity<Page<Post>> getUserPublicPosts(@PathVariable Long userId, Pageable pageable) {
+    public ResponseEntity<Page<Post>> getUserPublicPosts(@PathVariable String userId, Pageable pageable) {
         Page<Post> posts = postService.getUserPublicPosts(userId, pageable);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
     @GetMapping("/feed/{userId}")
-    public ResponseEntity<Page<Post>> getFeedPosts(@PathVariable Long userId, Pageable pageable) {
+    public ResponseEntity<Page<Post>> getFeedPosts(@PathVariable String userId, Pageable pageable) {
         Page<Post> posts = postService.getFeedPosts(userId, pageable);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
@@ -110,7 +111,7 @@ public class PostController {
 
     // Like endpoints
     @PostMapping("/{postId}/like")
-    public ResponseEntity<Post> likePost(@PathVariable Long postId, @RequestParam Long userId) {
+    public ResponseEntity<Post> likePost(@PathVariable String postId, @RequestParam String userId) {
         try {
             Post post = postService.likePost(postId, userId);
             return new ResponseEntity<>(post, HttpStatus.OK);
@@ -120,10 +121,28 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}/like")
-    public ResponseEntity<Post> unlikePost(@PathVariable Long postId, @RequestParam Long userId) {
+    public ResponseEntity<Post> unlikePost(@PathVariable String postId, @RequestParam String userId) {
         try {
             Post post = postService.unlikePost(postId, userId);
             return new ResponseEntity<>(post, HttpStatus.OK);
+        } catch (PostNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Post type management endpoint
+    @PatchMapping("/{postId}/type")
+    public ResponseEntity<Post> updatePostType(
+            @PathVariable String postId,
+            @RequestBody UpdatePostTypeDto updatePostTypeDto,
+            @RequestHeader("X-User-Id") String userId) {
+        try {
+            // Check if user has permission to update this post
+            if (!postService.checkPostPermissions(postId, userId)) {
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            }
+            Post updatedPost = postService.updatePostType(postId, updatePostTypeDto);
+            return new ResponseEntity<>(updatedPost, HttpStatus.OK);
         } catch (PostNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

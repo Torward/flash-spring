@@ -6,9 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "comments")
@@ -18,20 +21,30 @@ import java.time.LocalDateTime;
 @Builder
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long commentId;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "comment_id", columnDefinition = "VARCHAR(36)")
+    private String commentId;
 
     @Column(nullable = false)
-    private Long postId;
+    private String postId;
 
     @Column(nullable = false)
-    private Long userId;
+    private String userId;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @Column
-    private Long parentCommentId; // Для вложенных комментариев
+    private String parentCommentId; // Для вложенных комментариев
+
+    @ElementCollection
+    @CollectionTable(name = "comment_replies", joinColumns = @JoinColumn(name = "comment_id"))
+    @Column(name = "reply_id")
+    private Set<String> replyIds = new HashSet<>(); // Child reply IDs
+
+    @Column(nullable = false)
+    private int replyCount = 0; // Number of replies
 
     @Column(nullable = false)
     private int likeCount = 0;
