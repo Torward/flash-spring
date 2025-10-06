@@ -1,0 +1,12 @@
+
+
+.albums-container{
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    color: rgb(0, 200, 255);
+
+}
+.albums-container__payload{
+    margin: auto 5px;
+}

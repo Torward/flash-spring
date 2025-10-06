@@ -1,3 +1,5 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
 # IDE
 .idea/
 .vscode/
@@ -79,3 +81,16 @@ java17.zip
 maven.zip
 install-maven-java.ps1
 install-maven-java-fixed.ps1
+
+# dependencies
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
