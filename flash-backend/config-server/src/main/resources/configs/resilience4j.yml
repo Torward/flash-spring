@@ -1,0 +1,138 @@
+# ===================================================================
+# RESILIENCE4J CIRCUIT BREAKER CONFIGURATION
+# Fault tolerance for microservices
+# ===================================================================
+
+resilience4j:
+  # Circuit Breaker Configuration
+  circuitbreaker:
+    configs:
+      default:
+        # Number of failures to trip the circuit breaker
+        failureRateThreshold: 50
+        # Time window for calculating failure rate
+        slidingWindowSize: 10
+        # Minimum number of calls before calculating failure rate
+        minimumNumberOfCalls: 5
+        # Wait time in open state before transitioning to half-open
+        waitDurationInOpenState: 10000
+        # Number of calls allowed in half-open state
+        permittedNumberOfCallsInHalfOpenState: 5
+        # Automatically transition from open to half-open
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        # Sliding window type: COUNT_BASED or TIME_BASED
+        slidingWindowType: COUNT_BASED
+        # Record exceptions as failures
+        recordExceptions:
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+          - org.springframework.web.client.ResourceAccessException
+        # Ignore exceptions (don't count as failures)
+        ignoreExceptions:
+          - org.springframework.web.client.HttpClientErrorException
+    
+    instances:
+      auth-service:
+        baseConfig: default
+        failureRateThreshold: 40
+        waitDurationInOpenState: 15000
+      
+      user-service:
+        baseConfig: default
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+      
+      post-service:
+        baseConfig: default
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+      
+      notification-service:
+        baseConfig: default
+        failureRateThreshold: 60
+        waitDurationInOpenState: 5000
+  
+  # Retry Configuration
+  retry:
+    configs:
+      default:
+        maxAttempts: 3
+        waitDuration: 1000
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+        retryExceptions:
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+        ignoreExceptions:
+          - org.springframework.web.client.HttpClientErrorException
+    
+    instances:
+      auth-service:
+        baseConfig: default
+        maxAttempts: 5
+      
+      user-service:
+        baseConfig: default
+        maxAttempts: 3
+  
+  # Rate Limiter Configuration
+  ratelimiter:
+    configs:
+      default:
+        # Number of permits per second
+        limitForPeriod: 100
+        # Timeout for acquiring a permit (in nanoseconds)
+        timeoutDuration: 500
+        # Refresh period (in seconds)
+        limitRefreshPeriod: 1
+    
+    instances:
+      auth-service:
+        baseConfig: default
+        limitForPeriod: 50 # Limit login attempts
+      
+      post-service:
+        baseConfig: default
+        limitForPeriod: 200 # Allow more post operations
+  
+  # Bulkhead Configuration (concurrent calls limit)
+  bulkhead:
+    configs:
+      default:
+        maxConcurrentCalls: 10
+        maxWaitDuration: 1000
+    
+    instances:
+      auth-service:
+        baseConfig: default
+        maxConcurrentCalls: 20
+      
+      user-service:
+        baseConfig: default
+        maxConcurrentCalls: 15
+  
+  # Time Limiter Configuration
+  timelimiter:
+    configs:
+      default:
+        timeoutDuration: 3s
+        cancelRunningFuture: true
+    
+    instances:
+      auth-service:
+        baseConfig: default
+        timeoutDuration: 5s
+      
+      user-service:
+        baseConfig: default
+        timeoutDuration: 3s
+
+# Actuator endpoints for monitoring
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,circuitbreakers,circuitevents

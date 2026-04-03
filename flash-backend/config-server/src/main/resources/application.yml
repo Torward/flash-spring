@@ -1,0 +1,55 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        # Native profile - uses local filesystem
+        native:
+          search-locations: file:./config-server/src/main/resources/configs,file:../configs,classpath:/configs
+        # Git profile (alternative) - uncomment to use Git repository
+        # git:
+        #   uri: https://github.com/your-org/flash-config.git
+        #   default-label: main
+        #   timeout: 5
+        #   clone-on-start: true
+        #   force-pull: true
+  profiles:
+    active: native
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${random.value}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh
+  endpoint:
+    health:
+      show-details: always
+  info:
+    env:
+      enabled: true
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: "Spring Cloud Config Server for Flash Social Network"
+    version: "1.0.0"
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.config.server: DEBUG
+    org.springframework.cloud.config: DEBUG

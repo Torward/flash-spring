@@ -1,96 +1,53 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# Build
-target/
-build/
-bin/
-*.jar
-*.war
-*.ear
-*.zip
-*.tar.gz
-
-# Logs
-logs/
-*.log
-
-# Node.js
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Java
+```
+# Compiled and build artifacts
 *.class
-*.jar
-*.war
-*.ear
+*.o
+*.obj
+*.out
+target/
 
-# Maven
-.mvn/
-mvnw
-mvnw.cmd
-
-# Gradle
+# Dependencies
+.m2/
 .gradle/
-gradle-app.setting
-!gradle-wrapper.jar
+node_modules/
+__pycache__/
+*.egg-info/
 
-# Database
-*.db
-*.sqlite
+# Logs and temp files
+*.log
+*.tmp
+*.swp
 
-# Environment variables
+# Environment
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+*.env.*
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Temporary files
-*.tmp
-*.temp
+# Testing
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+.pytest_cache/
+.coverage
+coverage/
+htmlcov/
 
-# Uploads
-uploads/
-uploads-service/
-
-# SSL
-ssl/
-
-# Extracted files
-gh_extracted/
-
-# System files
-flash-spring-system-report.md
-
-# Installation files
-gh.msi
-gh.zip
-java17.zip
-maven.zip
-install-maven-java.ps1
-install-maven-java-fixed.ps1
-
-# dependencies
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.DS_Store
+# Java/Maven specific
+*.jar
+*.war
+*.ear
+!*.jar
+!*.war
+!*.ear
+```
