@@ -1,0 +1,71 @@
+# ===================================================================
+# COMMON CONFIGURATION FOR ALL MICROSERVICES
+# This file contains settings shared across all services
+# ===================================================================
+
+spring:
+  application:
+    name: ${SPRING_APPLICATION_NAME}
+  
+  # Jackson JSON configuration
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false
+  
+  # Actuator configuration
+  cloud:
+    compatibility-verifier:
+      enabled: false
+
+# Logging configuration
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.hibernate: WARN
+    com.zaxxer.hikari: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# Spring Boot Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when_authorized
+      probes:
+        enabled: true
+    info:
+      enabled: true
+  info:
+    env:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# Health check configuration
+health:
+  livenessState:
+    enabled: true
+  readinessState:
+    enabled: true
+
+# Info endpoint
+info:
+  app:
+    name: ${spring.application.name}
+    description: "Flash Social Network Microservice"
+    version: "1.0.0"
+    java:
+      version: "${java.version}"
+    spring:
+      version: "${spring-boot.version}"

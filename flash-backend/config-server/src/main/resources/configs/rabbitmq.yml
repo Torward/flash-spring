@@ -1,0 +1,80 @@
+# ===================================================================
+# RABBITMQ MESSAGE BROKER CONFIGURATION
+# For asynchronous communication between microservices
+# ===================================================================
+
+spring:
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    virtual-host: ${RABBITMQ_VHOST:/}
+    
+    # Connection settings
+    connection-timeout: 60000
+    requested-heartbeat: 60
+    
+    # Publisher confirms
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    
+    # Listener settings
+    listener:
+      simple:
+        acknowledge-mode: manual
+        concurrency: 3
+        max-concurrency: 10
+        prefetch: 1
+        retry:
+          enabled: true
+          initial-interval: 1000
+          max-attempts: 3
+          max-interval: 10000
+          multiplier: 2.0
+      direct:
+        acknowledge-mode: manual
+        prefetch: 1
+
+# RabbitMQ queues and exchanges configuration
+rabbitmq:
+  queues:
+    notifications:
+      name: flash.notifications
+      durable: true
+      auto-delete: false
+    emails:
+      name: flash.emails
+      durable: true
+      auto-delete: false
+    events:
+      name: flash.events
+      durable: true
+      auto-delete: false
+    analytics:
+      name: flash.analytics
+      durable: true
+      auto-delete: false
+  
+  exchanges:
+    topic:
+      name: flash.topic
+      type: topic
+      durable: true
+      auto-delete: false
+    fanout:
+      name: flash.fanout
+      type: fanout
+      durable: true
+      auto-delete: false
+  
+  bindings:
+    - queue: flash.notifications
+      exchange: flash.topic
+      routing-key: notification.*
+    - queue: flash.emails
+      exchange: flash.topic
+      routing-key: email.*
+    - queue: flash.events
+      exchange: flash.fanout
+      routing-key: ""
