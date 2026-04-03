@@ -1,0 +1,105 @@
+# Resilience4j Configuration for Flash-Spring Microservices
+# Add this to each service's application.yml or Config Server
+
+resilience4j:
+  # Circuit Breaker Configuration
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10
+        recordExceptions:
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+          - org.springframework.web.client.ResourceAccessException
+    instances:
+      user-service:
+        baseConfig: default
+      post-service:
+        baseConfig: default
+      auth-service:
+        baseConfig: default
+      notification-service:
+        baseConfig: default
+      media-service:
+        baseConfig: default
+
+  # Retry Configuration
+  retry:
+    configs:
+      default:
+        maxAttempts: 3
+        waitDuration: 1s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+        retryExceptions:
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+          - org.springframework.web.client.ResourceAccessException
+    instances:
+      user-service:
+        baseConfig: default
+      post-service:
+        baseConfig: default
+
+  # Rate Limiter Configuration
+  ratelimiter:
+    configs:
+      default:
+        limitForPeriod: 100
+        limitRefreshPeriod: 1s
+        timeoutDuration: 0s
+    instances:
+      api-endpoint:
+        baseConfig: default
+
+  # Bulkhead Configuration (for thread pool isolation)
+  bulkhead:
+    configs:
+      default:
+        maxConcurrentCalls: 50
+        maxWaitDuration: 10s
+    instances:
+      database-operations:
+        baseConfig: default
+      external-api-calls:
+        baseConfig: default
+
+  # Time Limiter Configuration
+  timelimiter:
+    configs:
+      default:
+        timeoutDuration: 3s
+        cancelRunningFuture: true
+    instances:
+      slow-external-service:
+        baseConfig: default
+
+# Spring Cloud Circuit Breaker Configuration
+spring:
+  cloud:
+    circuitbreaker:
+      resilience4j:
+        enabled: true
+
+# Actuator endpoints for monitoring
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,circuitbreakers,circuitbreakerevents
