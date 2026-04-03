@@ -1,0 +1,103 @@
+# RabbitMQ Configuration for Flash-Spring Microservices
+# Add this to each service's application.yml or Config Server
+
+spring:
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_DEFAULT_USER:guest}
+    password: ${RABBITMQ_DEFAULT_PASS:guest}
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: manual
+        concurrency: 3
+        max-concurrency: 10
+        prefetch: 10
+        retry:
+          enabled: true
+          initial-interval: 1s
+          max-attempts: 3
+          max-interval: 10s
+          multiplier: 2.0
+      direct:
+        acknowledge-mode: manual
+        prefetch: 10
+
+# RabbitMQ Queues and Exchanges for Flash-Spring
+flash:
+  rabbitmq:
+    queues:
+      notifications:
+        name: flash.notifications
+        durable: true
+        auto-delete: false
+      emails:
+        name: flash.emails
+        durable: true
+        auto-delete: false
+      push-notifications:
+        name: flash.push-notifications
+        durable: true
+        auto-delete: false
+      user-events:
+        name: flash.user-events
+        durable: true
+        auto-delete: false
+      post-events:
+        name: flash.post-events
+        durable: true
+        auto-delete: false
+      media-processing:
+        name: flash.media-processing
+        durable: true
+        auto-delete: false
+      audit-logs:
+        name: flash.audit-logs
+        durable: true
+        auto-delete: false
+    
+    exchanges:
+      main:
+        name: flash.main.exchange
+        type: topic
+        durable: true
+        auto-delete: false
+      dead-letter:
+        name: flash.dl.exchange
+        type: direct
+        durable: true
+        auto-delete: false
+    
+    routing-keys:
+      notification-created: notification.created
+      notification-sent: notification.sent
+      email-send: email.send
+      push-send: push.send
+      user-created: user.created
+      user-updated: user.updated
+      user-deleted: user.deleted
+      post-created: post.created
+      post-updated: post.updated
+      post-deleted: post.deleted
+      media-upload: media.upload
+      media-processed: media.processed
+      audit-event: audit.event
+
+# Dead Letter Queue Configuration
+flash:
+  rabbitmq:
+    dlq:
+      enabled: true
+      ttl: 86400000 # 24 hours in milliseconds
+      max-length: 10000
+
+# Management UI (for monitoring)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,rabbitmq
+  endpoint:
+    rabbitmq:
+      enabled: true

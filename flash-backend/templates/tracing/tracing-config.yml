@@ -1,0 +1,80 @@
+# Distributed Tracing Configuration for Flash-Spring Microservices
+# Uses Micrometer Tracing with Zipkin backend
+# Add this to each service's application.yml or Config Server
+
+# Micrometer Tracing Configuration
+management:
+  tracing:
+    sampling:
+      probability: 1.0 # Sample all requests (adjust for production: 0.1 = 10%)
+    propagation:
+      type: tracecontext,b3 # W3C Trace Context + B3 format
+    baggage:
+      remote-fields:
+        - X-Request-ID
+        - X-Correlation-ID
+      fields:
+        - userId
+        - sessionId
+        - tenantId
+
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_ENDPOINT:http://localhost:9411/api/v2/spans}
+      sender:
+        type: web # Use WebClient for sending spans
+
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+        http.client.requests: true
+
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,tracing
+
+  endpoint:
+    prometheus:
+      enabled: true
+
+# Logging configuration for tracing
+logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id:-},%X{span_id:-}]"
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [${spring.application.name},%X{trace_id:-},%X{span_id:-}] %t %-40.40logger{39} : %m%n"
+
+# Spring Cloud Sleuth legacy support (if needed)
+spring:
+  sleuth:
+    enabled: true
+    sampler:
+      probability: 1.0
+    baggage:
+      remote-fields:
+        - X-Request-ID
+        - X-Correlation-ID
+      fields:
+        - userId
+        - sessionId
+
+# Prometheus metrics export
+management:
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+        step: 60s
+
+# Custom tracing tags
+flash:
+  tracing:
+    enabled: true
+    service-name: ${spring.application.name}
+    custom-tags:
+      environment: ${ENVIRONMENT:development}
+      version: ${SERVICE_VERSION:1.0.0}
+      region: ${AWS_REGION:us-east-1}
